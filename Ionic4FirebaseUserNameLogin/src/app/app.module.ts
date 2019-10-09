@@ -9,15 +9,30 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 
-//TODO: implement correct routing for logged in users and such...
+import {environment} from "../environments/environment";
+import {AuthService} from "./service/auth.service";
+import {AngularFireAuthModule} from 'angularfire2/auth'
+
+import  * as firebase from 'firebase';
+
+firebase.initializeApp(environment.firebase);
+
+
 @NgModule({
     declarations: [AppComponent],
     entryComponents: [],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-    providers: [
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        AngularFireAuthModule
+    ],
+    providers:[
         StatusBar,
         SplashScreen,
+        AuthService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+
     ],
     bootstrap: [AppComponent]
 })
