@@ -10,7 +10,6 @@ import { ToastController} from '@ionic/angular';
 export class LoginPage implements OnInit {
 
   private loginForm: FormGroup;
-  private userName;
   private submitted = false;
 
   constructor(public toastController: ToastController, private formBuilder: FormBuilder) {
