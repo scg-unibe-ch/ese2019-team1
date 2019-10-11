@@ -1,9 +1,36 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>
+      <ion-icon name="globe"></ion-icon>
+      Welcome to &lt;name&gt;
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+  <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <ion-item class="input">
+      <ion-label position="floating">User Name</ion-label>
+      <ion-input value="" formControlName="userName" type="text"></ion-input>
+      <ion-icon name="person" slot="end"></ion-icon>
+    </ion-item>
+    <ion-label class="error" color="danger" *ngIf="loginForm.get('userName').hasError('required')">Username is required</ion-label>
 
+    <ion-item class="input">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input value="" formControlName="password" type="password" required="true"></ion-input>
+      <ion-icon name="key" slot="end"></ion-icon>
+    </ion-item>
+    <ion-label class="error" color="danger" *ngIf="loginForm.get('password').hasError('required')">Password is required</ion-label>
+
+    <ion-button [disabled]="!loginForm.valid" id="loginButton" expand="block" size="large" color="primary" (click)="onSubmit()">
+      login&nbsp;
+      <ion-icon name="log-in"></ion-icon>
+    </ion-button>
+  </form>
+
+  <div id="text">
+    <p>New to our Website?</p>
+    <p>Register <ion-label color="primary" routerLink="/register" routerDirection="forward">here</ion-label></p>
+  </div>
 </ion-content>
