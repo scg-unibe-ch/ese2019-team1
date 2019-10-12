@@ -9,11 +9,11 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 
-import {environment} from "../environments/environment";
-import {AuthService} from "./service/auth.service";
-import {AngularFireAuthModule} from 'angularfire2/auth'
+import {environment} from '../environments/environment';
+import {AuthService} from './service/auth.service';
+import {AngularFireAuthModule} from 'angularfire2/auth';
 
-import  * as firebase from 'firebase';
+import * as firebase from 'firebase';
 
 firebase.initializeApp(environment.firebase);
 
