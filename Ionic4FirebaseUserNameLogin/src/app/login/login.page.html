@@ -1,16 +1,16 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
+<ion-header class="header">
+  <ion-toolbar color= "primary" class="toolbar" >
+    <ion-title class="title">
       <ion-icon name="globe"></ion-icon>
-      Welcome to &lt;name&gt;
+      Welcome to {{name}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<ion-content class="ion-padding">
+  <form  [formGroup]="loginForm" (ngSubmit)="onSubmit()" class = "form">
     <ion-item class="input">
-      <ion-label position="floating">User Name</ion-label>
+      <ion-label position="floating">Username</ion-label>
       <ion-input value="" formControlName="userName" type="text"></ion-input>
       <ion-icon name="person" slot="end"></ion-icon>
     </ion-item>
