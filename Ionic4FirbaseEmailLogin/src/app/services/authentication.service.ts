@@ -12,7 +12,7 @@ export class AuthenticateService {
           .then(
               res => resolve(res),
               err => reject(err))
-    })
+    });
   }
 
   loginUser(value){
