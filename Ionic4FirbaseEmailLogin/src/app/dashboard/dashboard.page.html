@@ -1,39 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController } from '@ionic/angular';
-import { AuthenticateService } from '../services/authentication.service';
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Dashboard</ion-title>
+    </ion-toolbar>
+</ion-header>
 
-@Component({
-selector: 'app-dashboard',
-templateUrl: './dashboard.page.html',
-styleUrls: ['./dashboard.page.scss'],
-})
-export class DashboardPage implements OnInit {
+<ion-content padding>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col text-center>
+                Welcome to Dashboard!
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-center>
+                Your Registered EmailID : {{userEmail}}
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
 
-userEmail: string;
-
-constructor(
-private navCtrl: NavController,
-private authService: AuthenticateService
-) {}
-
-ngOnInit(){
-
-if(this.authService.userDetails()){
-this.userEmail = this.authService.userDetails().email;
-}else{
-this.navCtrl.navigateBack('');
-}
-}
-
-logout(){
-this.authService.logoutUser()
-.then(res => {
-console.log(res);
-this.navCtrl.navigateBack('');
-})
-.catch(error => {
-console.log(error);
-})
-}
-        }
+</ion-content>
+<ion-footer (click)="logout()">
+    <ion-toolbar color="secondary">
+        <ion-title>Log out</ion-title>
+    </ion-toolbar>
+</ion-footer>
