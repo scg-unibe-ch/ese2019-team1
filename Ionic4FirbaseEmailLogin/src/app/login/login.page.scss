@@ -1,23 +1,38 @@
-.header{
+.header {
   display: flex;
   height: 25%;
   align-content: center;
+  justify-content: center;
 }
 
-.toolbar{
+.toolbar {
   display: flex;
   background-color: darkgreen;
   text-align: center;
+  width: 100%;
 }
 
-.content-login{
+.form {
+  display: block;
+  align-content: center;
+  margin: auto;
+  width: 75%;
+}
+
+.content-login {
   display: flex;
   padding: 4%;
-  width: 75%;
   align-content: center;
+  text-align: center;
+  margin: auto;
 }
 
-.item-login{
-  display: block;
-  align-content: inherit;
+.item-login {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.submit-btn {
+  margin: 10px;
 }
