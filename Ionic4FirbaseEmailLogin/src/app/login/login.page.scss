@@ -1,0 +1,23 @@
+.header{
+  display: flex;
+  height: 25%;
+  align-content: center;
+}
+
+.toolbar{
+  display: flex;
+  background-color: darkgreen;
+  text-align: center;
+}
+
+.content-login{
+  display: flex;
+  padding: 4%;
+  width: 75%;
+  align-content: center;
+}
+
+.item-login{
+  display: block;
+  align-content: inherit;
+}

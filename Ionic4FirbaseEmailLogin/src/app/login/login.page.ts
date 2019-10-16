@@ -10,9 +10,6 @@ import { AuthenticateService } from '../services/authentication.service';
 })
 export class LoginPage implements OnInit {
 
-  validations_form: FormGroup;
-  errorMessage: string = '';
-
   constructor(
 
       private navCtrl: NavController,
@@ -21,7 +18,27 @@ export class LoginPage implements OnInit {
 
   ) { }
 
+  // tslint:disable-next-line:variable-name
+  validations_form: FormGroup;
+  errorMessage = '';
+  public name;
+
+
+  // tslint:disable-next-line:variable-name
+  validation_messages = {
+    email: [
+      { type: 'required', message: 'Email is required.' },
+      { type: 'pattern', message: 'Please enter a valid email.' }
+    ],
+    password: [
+      { type: 'required', message: 'Password is required.' },
+      { type: 'minlength', message: 'Password must be at least 5 characters long.' }
+    ]
+  };
+
   ngOnInit() {
+
+    this.name = 'our Website';
 
     this.validations_form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
@@ -36,30 +53,18 @@ export class LoginPage implements OnInit {
   }
 
 
-  validation_messages = {
-    'email': [
-      { type: 'required', message: 'Email is required.' },
-      { type: 'pattern', message: 'Please enter a valid email.' }
-    ],
-    'password': [
-      { type: 'required', message: 'Password is required.' },
-      { type: 'minlength', message: 'Password must be at least 5 characters long.' }
-    ]
-  };
-
-
-  loginUser(value){
+  loginUser(value) {
     this.authService.loginUser(value)
         .then(res => {
           console.log(res);
-          this.errorMessage = "";
+          this.errorMessage = '';
           this.navCtrl.navigateForward('/dashboard');
         }, err => {
           this.errorMessage = err.message;
-        })
+        });
   }
 
-  goToRegisterPage(){
+  goToRegisterPage() {
     this.navCtrl.navigateForward('/register');
   }
 
