@@ -1,0 +1,50 @@
+
+.input {
+  padding-top: 4%;
+}
+
+#loginButton {
+  padding-top: 2%;
+}
+
+#text {
+  padding-top: 2%;
+  text-align: center;
+}
+
+.error {
+  font-size: small;
+}
+
+.header{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 20%;
+}
+
+.toolbar{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+}
+
+.title {
+  display: flex;
+  width: inherit;
+  text-align: center;
+}
+
+.ion-padding{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.form{
+  display: block;
+  width: 75%;
+  margin: auto;
+
+}

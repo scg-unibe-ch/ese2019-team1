@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><p align="center">Signup</p></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form>
+    <ion-list>
+
+
+
+
+
+      <ion-list>
+        <ion-radio-group>
+          <ion-list-header>
+            <ion-label>Choose an option to proceed</ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-label>I provide services</ion-label>
+            <ion-radio slot="start" value="biff" checked></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>I'm searching for services</ion-label>
+            <ion-radio slot="start" value="griff"></ion-radio>
+          </ion-item>
+
+        </ion-radio-group>
+      </ion-list>
+
+
+        <ion-item>
+          <ion-label positions="floating
+          d">Your Name</ion-label>
+          <ion-input type='text'></ion-input>
+          <ion-icon name="person" slot="end"></ion-icon>
+        </ion-item>
+
+      <ion-item>
+        <ion-label positions="floating">Usernamee</ion-label>
+        <ion-input type='text'></ion-input>
+        <ion-icon name="contact" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item>
+        <ion-label positions="floating">Email</ion-label>
+        <ion-input type='text'></ion-input>
+        <ion-icon name="mail" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item>
+        <ion-label positions="floating">Password</ion-label>
+        <ion-input type='text'></ion-input>
+        <ion-icon name="key" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item>
+        <ion-label positions="floating">Repeat Password</ion-label>
+        <ion-input type='text'></ion-input>
+        <ion-icon name="key" slot="end"></ion-icon>
+      </ion-item>
+
+
+<!--
+
+
+      <ion-item class="input">
+        <ion-label position="floating">Name</ion-label>
+        <ion-input value="" formControlName="password" type="password" required="true"></ion-input>
+        <ion-icon name="key" slot="end"></ion-icon>
+      </ion-item>
+
+
+
+
+      <ion-item class="input">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input value="" formControlName="password" type="password" required="true"></ion-input>
+        <ion-icon name="key" slot="end"></ion-icon>
+      </ion-item>
+
+
+      <ion-item class="input">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input value="" formControlName="password" type="password" required="true"></ion-input>
+        <ion-icon name="key" slot="end"></ion-icon>
+      </ion-item>
+
+      <ion-item class="input">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input value="" formControlName="password" type="password" required="true"></ion-input>
+        <ion-icon name="key" slot="end"></ion-icon>
+      </ion-item>
+
+-->
+    </ion-list>
+  </form>
+
+
+
+  <div id="text">
+    <p>Already have an Account?</p>
+    <p>Login <ion-label color="primary" routerLink="/login" routerDirection="back">here</ion-label></p>
+  </div>
+</ion-content>
