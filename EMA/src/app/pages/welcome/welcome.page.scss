@@ -2,18 +2,25 @@ ion-slide{
   padding: 300px;
   display:block;
   h1{
+    display: flex;
     font-size: 36px;
     font-weight:bold;
 
   }
+  p{
+    display:flex;
+  }
+
 }
 
 
 
 
 #bild {
-  position:absolte;
+  display: flex;
+  position:absolute;
   overflow: hidden;
+  size: 100%;
 
 }
 
