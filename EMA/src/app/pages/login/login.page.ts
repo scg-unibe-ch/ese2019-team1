@@ -1,46 +1,60 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ToastController} from '@ionic/angular';
+import {NavController, ToastController} from '@ionic/angular';
+import {AuthenticateService} from '../../services/authentication.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+    selector: 'app-login',
+    templateUrl: './login.page.html',
+    styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
 
-  private loginForm: FormGroup;
-  private submitted = false;
-  public name: string;
+    private loginForm: FormGroup;
+    private submitted = false;
 
-  constructor(public toastController: ToastController, private formBuilder: FormBuilder) {
-    this.loginForm = this.formBuilder.group({
-      userName: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-    this.name = 'our website';
-  }
-
-  ngOnInit() {
-  }
-
-  async presentToast(msg: string, time: number) {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: time
-    });
-    toast.present();
-  }
-
-  onSubmit() {
-    this.submitted = true;
-
-    if (this.loginForm.invalid) {
-      return;
+    constructor(public toastController: ToastController,
+                private navCtrl: NavController,
+                private authService: AuthenticateService,
+                private formBuilder: FormBuilder) {
+        this.loginForm = this.formBuilder.group({
+            email: new FormControl('', Validators.compose([
+                Validators.required,
+                Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+            ])),
+            password: new FormControl('', Validators.compose([
+                Validators.minLength(6),
+                Validators.required
+            ])),
+        });
     }
 
-    this.presentToast('logged in successfuly', 2000);
-    alert('logged in');
-  }
+    ngOnInit() {
+    }
+
+    async presentToast(msg: string, time: number) {
+        const toast = await this.toastController.create({
+            message: msg,
+            duration: time
+        });
+        toast.present();
+    }
+
+    onSubmit(value) {
+        this.submitted = true;
+
+        if (this.loginForm.invalid) {
+            return;
+        }
+
+        this.authService.loginUser(value)
+            .then(res => {
+                console.log(res);
+                this.navCtrl.navigateForward('/home');
+                this.presentToast('logged in successfuly', 2000);
+            }, err => {
+              console.log('Error:' + err);
+            });
+    }
 
 }

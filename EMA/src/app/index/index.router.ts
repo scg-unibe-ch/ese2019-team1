@@ -20,7 +20,7 @@ const routes: Routes = [
             {
                 path: 'signup',
                 loadChildren: () =>
-                    import('../pages/signup/signup.module').then(m => m.SignupPageModule)
+                    import('../pages/signup/signup.module').then(m => m.SignUpPageModule)
 
             }
         ]
@@ -31,4 +31,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class IndexRouter{}
+export class IndexRouter {}

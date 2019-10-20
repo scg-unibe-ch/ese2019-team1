@@ -6,13 +6,13 @@
 
 
 <ion-content class="ion-padding">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" class="form">
     <ion-item class="input">
-      <ion-label position="floating">Username</ion-label>
-      <ion-input value="" formControlName="userName" type="text"></ion-input>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input value="" formControlName="email" type="text"></ion-input>
       <ion-icon name="person" slot="end"></ion-icon>
     </ion-item>
-    <ion-label class="error" color="danger" *ngIf="loginForm.get('userName').hasError('required')">Username is
+    <ion-label class="error" color="danger" *ngIf="loginForm.get('email').hasError('required')">Email is
       required
     </ion-label>
 
@@ -25,10 +25,8 @@
       required
     </ion-label>
 
-    <ion-button [disabled]="!loginForm.valid" id="loginButton" expand="block" size="large" color="primary"
-                (click)="onSubmit()" routerLink="/dashboard">
+    <ion-button [disabled]="!loginForm.valid" type="submit" id="loginButton" expand="block" size="large" color="primary">
       login&nbsp;
-      <ion-icon name="log-in"></ion-icon>
     </ion-button>
   </form>
 

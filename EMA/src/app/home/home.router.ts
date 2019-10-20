@@ -4,7 +4,7 @@ import { HomePage } from './home.page';
 
 const routes: Routes = [
     {
-        path: 'home',
+        path: '',
         component: HomePage,
         children: [
             {
@@ -42,4 +42,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class HomeRouter{}
+export class HomeRouter {}
