@@ -42,4 +42,5 @@ export class AuthenticateService {
     userDetails() {
         return firebase.auth().currentUser;
     }
-}
+}//save commit
+
