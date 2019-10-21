@@ -1,11 +1,11 @@
 <ion-header class="header">
-  <ion-toolbar class="toolbar">
+  <ion-toolbar class="toolbar" color="success">
     <ion-title class="title" no-padding><p>Welcome to EMA</p></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" class="form">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" class="form" no-margin>
     <ion-item class="item" no-padding>
       <ion-label class="label" position="floating">Email</ion-label>
       <ion-input class="input" value="" formControlName="email" type="text"></ion-input>
