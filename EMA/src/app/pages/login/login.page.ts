@@ -23,8 +23,8 @@ export class LoginPage implements OnInit {
                 Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
             ])),
             password: new FormControl('', Validators.compose([
-                Validators.minLength(6),
-                Validators.required
+                Validators.required,
+                Validators.minLength(6)
             ])),
         });
     }
@@ -50,10 +50,11 @@ export class LoginPage implements OnInit {
         this.authService.loginUser(value)
             .then(res => {
                 console.log(res);
-                this.navCtrl.navigateForward('/home');
+                this.navCtrl.navigateForward('/home/feed');
                 this.presentToast('logged in successfuly', 2000);
             }, err => {
-              console.log('Error:' + err);
+                this.presentToast('invalid email or password', 2000);
+                console.log('Error:' + err);
             });
     }
 

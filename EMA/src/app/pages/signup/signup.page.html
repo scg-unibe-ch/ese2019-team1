@@ -4,8 +4,61 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm.value)" class="form">
+        <ion-item class="input">
+            <ion-label position="floating">Name</ion-label>
+            <ion-input value="" formControlName="name" type="text"></ion-input>
+            <ion-icon name="person" slot="end"></ion-icon>
+        </ion-item>
+        <ion-label class="error" color="danger" *ngIf="signupForm.get('name').hasError('required')">
+            Name is required
+        </ion-label>
 
+        <ion-item class="input">
+            <ion-label position="floating">Username</ion-label>
+            <ion-input value="" formControlName="username" type="text"></ion-input>
+            <ion-icon name="contact" slot="end"></ion-icon>
+        </ion-item>
+        <ion-label class="error" color="danger" *ngIf="signupForm.get('username').hasError('required')">
+            Username is required
+        </ion-label>
+
+        <ion-item class="input">
+            <ion-label position="floating">Email</ion-label>
+            <ion-input value="" formControlName="email" type="email"></ion-input>
+            <ion-icon name="mail" slot="end"></ion-icon>
+        </ion-item>
+        <ion-label class="error" color="danger" *ngIf="signupForm.get('email').hasError('required')">
+            E-Mail is required
+        </ion-label>
+
+        <ion-item class="input">
+            <ion-label position="floating">Password</ion-label>
+            <ion-input value="" formControlName="password" type="password"></ion-input>
+            <ion-icon name="key" slot="end"></ion-icon>
+        </ion-item>
+        <ion-label class="error" color="danger" *ngIf="signupForm.get('password').hasError('required')">
+            Password is required
+        </ion-label>
+
+        <ion-item class="input">
+            <ion-label position="floating">Repeat Password</ion-label>
+            <ion-input value="" formControlName="repeatpassword" type="password"></ion-input>
+            <ion-icon name="key" slot="end"></ion-icon>
+        </ion-item>
+        <ion-label class="error" color="danger" *ngIf="signupForm.get('repeatpassword').hasError('required')">
+            Repeat Password is required
+        </ion-label>
+
+        <ion-button [disabled]="!signupForm.valid || signupForm.get('password').value !== signupForm.get('repeatpassword').value" type="submit" id="signupButton" expand="block" size="large" color="primary">
+            Sign Up
+        </ion-button>
+    </form>
+
+
+
+    <!--
     <form name="signupform" #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm.value)" class="form">
         <ion-list>
 
@@ -40,7 +93,7 @@
                 <ion-input [(ngModel)]="repeatpassword" id="repeatpassword" name="password" type='text' minlength="6" required></ion-input>
                 <ion-icon name="key" slot="end"></ion-icon>
             </ion-item>
-
+-->
 
             <!--
 
@@ -73,8 +126,9 @@
                     <ion-icon name="key" slot="end"></ion-icon>
                   </ion-item>
 
-            -->
+
         </ion-list>
+
 
         <ion-button [disabled]="!signupForm.valid || password !== repeatpassword" type="submit" id="signupButton" expand="block" size="large"
                     color="primary">
@@ -82,6 +136,7 @@
             <ion-icon name="login"></ion-icon>
         </ion-button>
     </form>
+    -->
 
 
     <div id="text">

@@ -1,4 +1,11 @@
 
+ion-toolbar {
+}
+
+ion-content {
+  position: fixed;
+}
+
 .input {
   padding-top: 4%;
 }
@@ -20,7 +27,6 @@
   display: flex;
   justify-content: center;
   align-content: center;
-  height: 20%;
 }
 
 .toolbar{
@@ -36,15 +42,8 @@
   text-align: center;
 }
 
-.ion-padding{
-  display: flex;
-  align-content: center;
-  justify-content: center;
-}
-
 .form{
   display: block;
-  width: 75%;
+  width: 90%;
   margin: auto;
-
 }
