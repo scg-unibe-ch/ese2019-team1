@@ -16,7 +16,10 @@ import {SignUpPageModule} from './pages/signup/signup.module';
 import * as firebase from 'firebase';
 import {environment} from '../environments/environment';
 
+
+
 firebase.initializeApp(environment.firebase);
+firebase.firestore().settings({timestampsInSnapshots: true});
 
 @NgModule({
     declarations: [AppComponent],
