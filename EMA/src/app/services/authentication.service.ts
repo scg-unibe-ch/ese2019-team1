@@ -1,5 +1,7 @@
 import * as firebase from 'firebase/app';
 import {Injectable} from '@angular/core';
+import {FirestoreService} from './firestore.service';
+import {AngularFirestore} from "@angular/fire/firestore";
 
 
 
@@ -7,8 +9,9 @@ import {Injectable} from '@angular/core';
 )
 export class AuthenticateService {
     constructor() {
-    }
 
+    }
+    db = new FirestoreService(AngularFirestore.prototype);
 
     registerUser(value) {
         return new Promise<any>((resolve, reject) => {
@@ -16,6 +19,7 @@ export class AuthenticateService {
                 .then(
                     res => {
                         resolve(res);
+                        return this.db.createUserProfile({uid: res.user.uid, email: value.email, username: value.username});
                     },
                     err => reject(err));
 
@@ -45,18 +49,13 @@ export class AuthenticateService {
         return firebase.auth().currentUser;
     }
 
-    async addUserProfile(value) {
-        const data = {
-            Email: value.email,
-            UserName: value.username,
-        };
-        // @ts-ignore
-        await firebase.firestore().collection('https://eseproject2019team1.firebaseio.com/UserDB').doc(this.userDetails().uid).set(data);
-    }
-
-    get isAuthenticated(): boolean{
+    get isAuthenticated(): boolean {
         const user = firebase.auth().currentUser;
-        if (user) {return true; } else {return false; }
+        if (user) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
