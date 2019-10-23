@@ -9,7 +9,6 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AuthenticateService} from './services/authentication.service';
-import {FirestoreService} from './services/firestore.service';
 
 import {SignUpPageModule} from './pages/signup/signup.module';
 
@@ -35,7 +34,6 @@ firebase.firestore().settings({timestampsInSnapshots: true});
         StatusBar,
         SplashScreen,
         AuthenticateService,
-        FirestoreService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]
