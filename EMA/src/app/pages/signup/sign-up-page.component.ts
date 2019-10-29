@@ -1,7 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
+import {FirestoreCRUDService} from '../../services/firestore-crud.service';
 
+@Injectable({
+    providedIn: 'root'
+})
 @Component({
     selector: 'app-sign-up',
     templateUrl: './sign-up-page.component.html',
@@ -19,7 +23,8 @@ export class SignUpPage implements OnInit {
 
     constructor(public toastController: ToastController,
                 private navCtrl: NavController,
-                private authService: AuthenticateService) {
+                private authService: AuthenticateService,
+                private fs: FirestoreCRUDService) {
     }
 
     ngOnInit() {
@@ -30,15 +35,16 @@ export class SignUpPage implements OnInit {
             message: msg,
             duration: time
         });
-        toast.present();
+        await toast.present();
     }
 
     onSubmit(value) {
         this.submitted = true;
-
         this.authService.registerUser({email: this.email, password: this.password})
-            .then(res => {
+            .then(async res => {
                 console.log(res);
+                this.fs.addUser({uid: res.user.uid, username: this.username, email: this.email,
+                }).then(r => console.log(r));
                 this.navCtrl.navigateForward('/home');
                 this.presentToast('signed in successfully', 2000);
             }, err => {
