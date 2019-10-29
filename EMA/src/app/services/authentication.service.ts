@@ -20,6 +20,7 @@ export class AuthenticateService {
                     err => reject(err));
 
         });
+
     }
 
     loginUser(value) {
@@ -27,13 +28,9 @@ export class AuthenticateService {
         return firebase.auth().signInWithEmailAndPassword(value.email, value.password);
     }
 
-    get isAuthenticated(): boolean {
-        const user = firebase.auth().currentUser;
-        if (user) {
-            return true;
-        } else {
-            return false;
-        }
+    isAuthenticated() {
+        firebase.auth().onAuthStateChanged((usr) => {
+                return !!usr;
+            });
     }
-
 }
