@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {NavController} from '@ionic/angular';
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPage implements OnInit {
 
-  constructor() { }
+  private profile = {'': false};
+  private settings = {'': false};
+
+  constructor(private navCtrl: NavController) { }
 
   ngOnInit() {
   }
 
+  changeState(card) {
+    card[''] = card[''] === true ? false : true;
+  }
+
+  expanded(card) {
+    return card[''];
+  }
+
+  logout() {
+
+  }
+
+  createProviderAccount() {
+  }
 }
