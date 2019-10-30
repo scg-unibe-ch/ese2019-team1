@@ -13,7 +13,7 @@ export class WelcomePage implements OnInit {
     }
 
     slideOpts = {
-        initialSlide: 1,
+        initialSlide: 0,
         speed: 400,
         updateAutoHeight: true,
     };

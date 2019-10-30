@@ -11,6 +11,8 @@ export class SettingsPage implements OnInit {
   private profile = {'': false};
   private settings = {'': false};
 
+  private items = new Array(10);
+
   constructor(private navCtrl: NavController) { }
 
   ngOnInit() {

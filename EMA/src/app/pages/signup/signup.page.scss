@@ -1,3 +1,4 @@
+/*
 #text {
   margin-left: 5%;
   margin-right: 5%;
@@ -53,4 +54,38 @@
   align-content: center;
   justify-content: center;
   margin: auto;
+}
+*/
+
+
+#toolbar {
+  position: sticky;
+}
+
+#title {
+  text-align: center;
+}
+
+#content {
+  position: fixed;
+  top: 10%;
+  bottom: 0%;
+  height: 90%;
+}
+
+#form {
+  padding: 10%;
+}
+
+.error {
+  font-size: small;
+}
+
+#signupButton {
+  margin-top: 2%;
+}
+
+#text {
+  padding: 5%;
+  text-align: center;
 }

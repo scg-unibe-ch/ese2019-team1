@@ -1,16 +1,17 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title><p align="center">Settings</p></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-card>
-    <ion-item [(ngModel)]="profile" button="true" (click)="changeState(profile)">
-      <ion-title>Profile</ion-title>
-      <ion-icon *ngIf="!expanded(profile)" name="arrow-dropdown" slot="end"></ion-icon>
-      <ion-icon *ngIf="expanded(profile)" name="arrow-dropup" slot="end"></ion-icon>
-    </ion-item>
+    <ion-card-header [(ngModel)]="profile" button="true" (click)="changeState(profile)">
+      <ion-card-title class="card_title">Profile
+        <ion-icon *ngIf="!expanded(profile)" name="arrow-dropdown"></ion-icon>
+        <ion-icon *ngIf="expanded(profile)" name="arrow-dropup"></ion-icon>
+      </ion-card-title>
+    </ion-card-header>
 
     <ion-card-content *ngIf="expanded(profile)">
       <ion-item>
@@ -26,14 +27,17 @@
   </ion-card>
 
   <ion-card>
-    <ion-item [(ngModel)]="settings" button="true" (click)="changeState(settings)">
-      <ion-title>Settings</ion-title>
-      <ion-icon *ngIf="!expanded(settings)" name="arrow-dropdown" slot="end"></ion-icon>
-      <ion-icon *ngIf="expanded(settings)" name="arrow-dropup" slot="end"></ion-icon>
-    </ion-item>
+    <ion-card-header [(ngModel)]="settings" button="true" (click)="changeState(settings)">
+      <ion-card-title>Settings
+      <ion-icon *ngIf="!expanded(settings)" name="arrow-dropdown"></ion-icon>
+      <ion-icon *ngIf="expanded(settings)" name="arrow-dropup"></ion-icon>
+      </ion-card-title>
+    </ion-card-header>
 
     <ion-card-content *ngIf="expanded(settings)">
       <p></p>
     </ion-card-content>
   </ion-card>
 </ion-content>
+
+

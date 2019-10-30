@@ -1,4 +1,4 @@
-
+/*
 .item {
   display: flex;
   flex-direction: column;
@@ -73,3 +73,41 @@
   margin-top: 200px;
   align-content: center;
 }
+*/
+
+#toolbar {
+  position: sticky;
+}
+
+#title {
+  text-align: center;
+}
+
+#content {
+  position: fixed;
+  top: 10%;
+  bottom: 0%;
+  height: 90%;
+}
+
+#form {
+  padding: 10%;
+}
+
+.input {
+  margin-top: 4%;
+}
+
+.error {
+  font-size: small;
+}
+
+#loginButton {
+  margin-top: 5%;
+}
+
+#text {
+  padding: 5%;
+  text-align: center;
+}
+

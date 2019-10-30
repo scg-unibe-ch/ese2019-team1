@@ -1,3 +1,4 @@
+/*
 ion-slide {
   padding: 20%;
   display: flex;
@@ -29,5 +30,23 @@ ion-slide {
   display: flex;
   flex-direction: column;
 }
+*/
 
 
+#slides {
+  position: fixed;
+  width: 100%;
+  top: 0%;
+  bottom: 15%;
+}
+
+#startButton {
+  position: fixed;
+  bottom: 0%;
+  margin: 5%;
+  width: 90%;
+}
+
+.slide {
+  padding: 5%;
+}

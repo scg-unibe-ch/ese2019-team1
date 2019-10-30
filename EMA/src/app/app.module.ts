@@ -10,7 +10,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AuthenticateService} from './services/authentication.service';
 import {FirestoreCRUDService} from './services/firestore-crud.service';
-import {SignUpPageModule} from './pages/signup/signup.module';
 
 
 import * as firebase from 'firebase';
@@ -30,7 +29,6 @@ firebase.initializeApp(environment.firebase);
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
-        SignUpPageModule,
         AngularFireDatabaseModule,
         AngularFirestoreModule,
     ],
