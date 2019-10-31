@@ -1,15 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {NavController} from '@ionic/angular';
+import {Component, Injectable, OnInit} from '@angular/core';
+import {NavController, ToastController} from '@ionic/angular';
+import {AuthenticateService} from '../../services/authentication.service';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.page.html',
-  styleUrls: ['./settings.page.scss'],
+    selector: 'app-settings',
+    templateUrl: './settings.page.html',
+    styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage {
 
-  private profile = {'': false};
-  private settings = {'': false};
+    private profile = {'': false};
+    private settings = {'': false};
+
+    constructor(private navCtrl: NavController,
+                private auth: AuthenticateService,
+                private toastCtrl: ToastController,
+    ) {
+    }
 
   private items = new Array(10);
 
@@ -18,18 +25,32 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
   }
 
-  changeState(card) {
-    card[''] = card[''] === true ? false : true;
-  }
+    changeState(card) {
+        card[''] = card[''] !== true;
+    }
 
-  expanded(card) {
-    return card[''];
-  }
+    expanded(card) {
+        return card[''] === true;
+    }
 
-  logout() {
+    logout() {
+        console.log('button clicked');
+        this.auth.logoutUser();
+        this.presentToast('Logged out', 1000);
+        this.navCtrl.navigateBack('/login');
+    }
 
-  }
+    createProviderAccount() {
+        console.log('got to settings.ts');
+    }
 
-  createProviderAccount() {
-  }
+    async presentToast(msg, time) {
+        const toast = await this.toastCtrl.create({
+            message: msg,
+            duration: time
+        });
+        await toast.present();
+    }
+
+
 }

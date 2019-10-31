@@ -11,17 +11,12 @@ import {AppComponent} from './app.component';
 import {AuthenticateService} from './services/authentication.service';
 import {FirestoreCRUDService} from './services/firestore-crud.service';
 
-
-import * as firebase from 'firebase';
 import {environment} from '../environments/environment';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 
-
-
-
-
-firebase.initializeApp(environment.firebase);
 @NgModule({
     declarations: [AppComponent],
     entryComponents: [],
@@ -30,6 +25,8 @@ firebase.initializeApp(environment.firebase);
         IonicModule.forRoot(),
         AppRoutingModule,
         AngularFireDatabaseModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
         AngularFirestoreModule,
     ],
     providers: [
