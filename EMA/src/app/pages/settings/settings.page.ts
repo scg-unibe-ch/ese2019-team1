@@ -18,12 +18,8 @@ export class SettingsPage {
     ) {
     }
 
-  private items = new Array(10);
+    private items = new Array(10);
 
-  constructor(private navCtrl: NavController) { }
-
-  ngOnInit() {
-  }
 
     changeState(card) {
         card[''] = card[''] !== true;
