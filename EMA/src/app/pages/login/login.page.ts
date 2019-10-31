@@ -49,10 +49,12 @@ export class LoginPage implements OnInit {
 
         this.authService.loginUser(value)
             .then(res => {
-                this.navCtrl.navigateForward('/home/feed');
-                this.presentToast('logged in successfuly', 2000);
-            }, err => {
-                console.log('Error:' + err);
+                this.navCtrl.navigateForward('/home/feed').then( result => {
+                    this.presentToast('logged in successfuly', 2000);
+                });
+            }, error => {
+                console.log('Error:' + error);
+                this.presentToast('no user with these credentials', 2000);
             });
     }
 

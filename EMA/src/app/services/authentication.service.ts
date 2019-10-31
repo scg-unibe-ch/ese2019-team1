@@ -30,18 +30,37 @@ export class AuthenticateService {
         });
     }
 
+    /**
+     * register user with firebase REST api and adds user data entry in firestore
+     * @param value user data
+     * @param password user password
+     */
     registerUser(value, password) {
-        return this.afAuth.auth.createUserWithEmailAndPassword(value.email, password).then(
-            async result => {
-                this.userData = {...value, uid: result.user.uid};
-                await this.fs.addUser(this.userData);
+        return new Promise<any>(((resolve, reject) => {
+            this.afAuth.auth.createUserWithEmailAndPassword(value.email, password).then(
+                result => {
+                    this.userData = {...value, uid: result.user.uid, isprovider: false};
+                    this.fs.addUser({...value, uid: result.user.uid }).then(
+                        () => {
+                            resolve(result);
+                        },
+                        error => {
+                            reject(error);
+                        });
 
-            },
-            error => console.log(error)
-        );
+                },
+                error => {
+                    console.log(error);
+                    reject(error);
+                }
+            );
+        }))
 
     }
 
+    /**
+     * removes user token from session storage
+     */
     logoutUser() {
         console.log('auth service reached');
         this.afAuth.auth.signOut().then(
@@ -58,25 +77,49 @@ export class AuthenticateService {
      */
 
     loginUser(value) {
-        return this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password).then(
-            result => {
-                this.userData = value;
-                // maybe navigation here?
-            },
-            error => console.log(error)
-        );
+        return new Promise<any>((resolve, reject) => {
+            this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password).then(
+                result => {
+                    this.userData = value;
+                    // maybe navigation here?
+                    resolve(result);
+                },
+                error => {
+                    console.log(error);
+                    reject(error);
+                });
+        });
     }
 
     /**
-     * returns boolean
+     * deletes user data from firestore and the account on firebase afterwards
+     */
+    deleteUser() {
+        this.fs.deleteUser(this.userData.uid).then(
+            () => {
+                this.afAuth.auth.currentUser.delete().then(
+                    () => {
+                        this.logoutUser();
+                        this.router.navigate(['login']);
+                    }
+                );
+            });
+    }
+
+    /**
+     * returns boolean if user token is found in session storage
+     * @see auth-guard.service
      */
 
-    get isAuthenticated(): boolean {
+    get isAuthenticated()
+        :
+        boolean {
         const user = JSON.parse(sessionStorage.getItem('user'));
         return user !== null;
     }
 
-    setUserData(value: any) {
+    setUserData(value: any
+    ) {
         this.userData = value;
     }
 }

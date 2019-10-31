@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import * as firebase from 'firebase';
+import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 
 @Injectable(
     {
@@ -7,24 +7,26 @@ import * as firebase from 'firebase';
     }
 )
 export class FirestoreCRUDService {
-    fs = firebase.firestore();
 
-    constructor() {
+
+    constructor(
+        private aFs: AngularFirestore
+    ) {
     }
 
     addUser(User) {
-        return this.fs.collection('UserDB/').doc(User.uid).set(User);
+        return this.aFs.collection('UserDB/').doc(User.uid).set(User);
     }
 
     readUser(uid) {
-        return this.fs.doc('UserDB/' + uid).get();
+        return this.aFs.doc('UserDB/' + uid).get();
     }
 
     updateUser(User) {
-        return this.fs.doc('UserDB/' + User.uid).update(User);
+        return this.aFs.doc('UserDB/' + User.uid).update(User);
     }
 
     deleteUser(uid) {
-        return this.fs.doc('UserDB/' + uid).delete();
+        return this.aFs.doc('UserDB/' + uid).delete();
     }
 }

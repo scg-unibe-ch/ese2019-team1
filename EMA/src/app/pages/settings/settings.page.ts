@@ -38,6 +38,7 @@ export class SettingsPage {
 
     createProviderAccount() {
         console.log('got to settings.ts');
+        this.auth.deleteUser();
     }
 
     async presentToast(msg, time) {
