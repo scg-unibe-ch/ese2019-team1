@@ -16,12 +16,12 @@
     <ion-card-content *ngIf="expanded(profile)">
       <ion-item>
         <p>Logout</p>
-        <ion-button slot="end" name="log-out" (click)="logout()"></ion-button>
+        <ion-button (click)="logout()" slot="end"><ion-icon name="log-out"></ion-icon></ion-button>
       </ion-item>
 
       <ion-item>
         <p>Create Provider Account!</p>
-        <ion-button slot="end"><ion-icon name="add-circle-outline" (click)="createProviderAccount()"></ion-icon></ion-button>
+        <ion-button (click)="createProviderAccount()" slot="end"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
       </ion-item>
     </ion-card-content>
   </ion-card>

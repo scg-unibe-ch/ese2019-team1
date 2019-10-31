@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
 
         this.authService.loginUser(value)
             .then(res => {
-                this.navCtrl.navigateForward('/home');
+                this.navCtrl.navigateForward('/home/feed');
                 this.presentToast('logged in successfuly', 2000);
             }, err => {
                 console.log('Error:' + err);
