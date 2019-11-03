@@ -37,14 +37,50 @@ export class SettingsPage {
     }
 
     createProviderAccount() {
-        console.log('got to settings.ts');
-        this.auth.deleteUser();
+
+    }
+
+    deleteAccountClicked() {
+        this.presentToastWithOptions('Are you sure want to delete your Account?');
+    }
+
+    private deleteAccount(del) {
+        if (del) {
+            console.log('got to settings.ts');
+            this.auth.deleteUser();
+        } else {
+            return;
+        }
     }
 
     async presentToast(msg, time) {
         const toast = await this.toastCtrl.create({
             message: msg,
             duration: time
+        });
+        await toast.present();
+    }
+
+    async presentToastWithOptions(msg) {
+        const toast = await this.toastCtrl.create({
+            message: msg,
+            position: 'bottom',
+            buttons: [
+                {
+                    side: 'end',
+                    icon: 'checkmark',
+                    handler: () => {
+                        this.deleteAccount(true);
+                    }
+                },
+                {
+                    side: 'end',
+                    icon: 'close',
+                    handler: () => {
+                        this.deleteAccount(false);
+                    }
+                }
+            ]
         });
         await toast.present();
     }
