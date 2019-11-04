@@ -4,30 +4,36 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {FirestoreCRUDService} from './firestore-crud.service';
 
 import {Router} from '@angular/router';
+import {Observable, Observer} from 'rxjs';
+import * as firebase from 'firebase';
 
 
 @Injectable(
     {providedIn: 'root'}
 )
 export class AuthenticateService {
-    // tslint:disable-next-line:variable-name
-    private userData: any;
+    private userDetails: firebase.User = null;
+    private user: Observable<firebase.User>;
 
     constructor(
         public afAuth: AngularFireAuth,
         private fs: FirestoreCRUDService,
         private router: Router
     ) {
-        this.afAuth.auth.onAuthStateChanged(user => {
-            if (user) {
-                this.setUserData(user);
-                sessionStorage.setItem('user', JSON.stringify(this.userData));
-                JSON.parse(sessionStorage.getItem('user'));
-            } else {
-                sessionStorage.setItem('user', null);
-                JSON.parse(sessionStorage.getItem('user'));
-            }
-        });
+        this.user = afAuth.authState;
+        this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+            () => {
+                this.user.subscribe((user) => {
+                    if (user) {
+                        this.userDetails = user;
+                        console.log('user logged in');
+                    } else {
+                        this.userDetails = null;
+                        console.log('user NOT logged in');
+                    }
+
+                });
+            });
     }
 
     /**
@@ -37,26 +43,30 @@ export class AuthenticateService {
      */
     registerUser(value, password) {
         return new Promise<any>(((resolve, reject) => {
-            this.afAuth.auth.createUserWithEmailAndPassword(value.email, password).then(
-                result => {
-                    this.userData = {...value, uid: result.user.uid, isprovider: false};
-                    this.fs.addUser({...value, uid: result.user.uid }).then(
-                        () => {
-                            resolve(result);
+            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+                () => {
+                    this.afAuth.auth.createUserWithEmailAndPassword(value.email, password).then(
+                        result => {
+                            this.userDetails = result.user;
+                            this.fs.addUser({...value, uid: result.user.uid}).then(
+                                () => {
+                                    resolve(result);
+                                },
+                                error => {
+                                    reject(error);
+                                });
+
                         },
                         error => {
+                            console.log(error);
                             reject(error);
-                        });
-
-                },
-                error => {
-                    console.log(error);
-                    reject(error);
-                }
-            );
-        }))
+                        }
+                    );
+                });
+        }));
 
     }
+
 
     /**
      * removes user token from session storage
@@ -78,15 +88,17 @@ export class AuthenticateService {
 
     loginUser(value) {
         return new Promise<any>((resolve, reject) => {
-            this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password).then(
-                result => {
-                    this.userData = value;
-                    // maybe navigation here?
-                    resolve(result);
-                },
-                error => {
-                    console.log(error);
-                    reject(error);
+            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+                () => {
+                    this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password).then(
+                        async result => {
+                            await this.router.navigate(['/home/feed']);
+                            resolve(result);
+                        },
+                        error => {
+                            console.log(error);
+                            reject(error);
+                        });
                 });
         });
     }
@@ -95,7 +107,7 @@ export class AuthenticateService {
      * deletes user data from firestore and the account on firebase afterwards
      */
     deleteUser() {
-        this.fs.deleteUser(this.userData.uid).then(
+        this.fs.deleteUser(this.userDetails.uid).then(
             () => {
                 this.afAuth.auth.currentUser.delete().then(
                     () => {
@@ -106,20 +118,21 @@ export class AuthenticateService {
             });
     }
 
+
     /**
      * returns boolean if user token is found in session storage
      * @see auth-guard.service
      */
 
-    get isAuthenticated()
-        :
-        boolean {
-        const user = JSON.parse(sessionStorage.getItem('user'));
-        return user !== null;
+    get isAuthenticated(): Observable<boolean> {
+        return new Observable<boolean>((obs) => {
+            this.user.subscribe((user) => {
+                if (user) {
+                    obs.next(true);
+                } else { obs.next(false); }
+                obs.complete();
+            });
+        });
     }
 
-    setUserData(value: any
-    ) {
-        this.userData = value;
-    }
 }
