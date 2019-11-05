@@ -11,7 +11,12 @@ import {AuthenticateService} from '../../services/authentication.service';
 const routes: Routes = [
     {
         path: '',
-        component: SettingsPage
+        component: SettingsPage,
+        children: [
+            {
+                path: 'signupprovider'
+            }
+        ]
     }
 ];
 

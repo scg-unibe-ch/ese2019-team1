@@ -37,11 +37,7 @@ export class SettingsPage {
     }
 
     createProviderAccount() {
-
-    }
-
-    deleteAccountClicked() {
-        this.presentToastWithOptions('Are you sure want to delete your Account?');
+        this.navCtrl.navigateForward('/signupprovider');
     }
 
     private deleteAccount(del) {
@@ -61,9 +57,9 @@ export class SettingsPage {
         await toast.present();
     }
 
-    async presentToastWithOptions(msg) {
+    async confirmDeleteAccount() {
         const toast = await this.toastCtrl.create({
-            message: msg,
+            message: 'Are you sure want to delete your Account?',
             position: 'bottom',
             buttons: [
                 {

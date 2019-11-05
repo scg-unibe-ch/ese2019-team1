@@ -13,7 +13,8 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   { path: 'basket', loadChildren: './pages/basket/basket.module#BasketPageModule',
-    canActivate: [AuthGuardService]},  { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' }
+    canActivate: [AuthGuardService]},  { path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule' },
+  { path: 'signupprovider', loadChildren: './pages/signupprovider/signupprovider.module#SignupproviderPageModule' }
 
 
 ];
