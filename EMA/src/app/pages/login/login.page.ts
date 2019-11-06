@@ -23,7 +23,6 @@ export class LoginPage implements OnInit {
                 Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
             ])),
             password: new FormControl('', Validators.compose([
-                Validators.minLength(6),
                 Validators.required
             ])),
         });
@@ -50,11 +49,11 @@ export class LoginPage implements OnInit {
         this.authService.loginUser(value)
             .then(res => {
                 this.navCtrl.navigateForward('/home/feed').then( result => {
-                    this.presentToast('logged in successfuly', 2000);
+                    this.presentToast('logged in successfuly', 1000);
                 });
             }, error => {
                 console.log('Error:' + error);
-                this.presentToast('no user with these credentials', 2000);
+                this.presentToast('no user with these credentials', 1000);
             });
     }
 

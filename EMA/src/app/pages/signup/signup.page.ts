@@ -71,10 +71,10 @@ export class SignupPage implements OnInit {
             .then(r => {
                     console.log(r);
                     this.navCtrl.navigateForward('/home/feed');
-                    this.presentToast('signed up successfuly', 2000);
+                    this.presentToast('signed up successfuly', 1000);
                 },
                 err => {
-                    this.presentToast('failed to sign up', 2000);
+                    this.presentToast('failed to sign up', 1000);
                     console.log('Error:' + err
                     );
                 }

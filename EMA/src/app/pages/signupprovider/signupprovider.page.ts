@@ -19,11 +19,14 @@ export class SignupproviderPage implements OnInit {
             name: new FormControl('', Validators.compose([
                 Validators.required
             ])),
+            email: new FormControl('', Validators.compose([
+                Validators.required,
+                Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+            ])),
             service: new FormControl('', Validators.compose([
                 Validators.required
             ]))
         });
-        this.navCtrl.setDirection('forward', true, 'forward')
     }
 
     ngOnInit() {

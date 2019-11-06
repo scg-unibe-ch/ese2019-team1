@@ -5,33 +5,45 @@
 </ion-header>
 
 <ion-content id="content">
-  <form id="form" [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm.value)">
-    <ion-item class="input">
-      <ion-label position="floating">Provider Name</ion-label>
-      <ion-input value="" formControlName="name" type="text"></ion-input>
-      <ion-icon name="planet" slot="end" align-self-center></ion-icon>
-    </ion-item>
-    <ion-label class="error" color="danger" *ngIf="signupForm.get('name').hasError('required')">
-      Provider Name is required
-    </ion-label>
+    <form id="form" [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm.value)">
+        <ion-item class="input">
+            <ion-label position="floating">Provider Name</ion-label>
+            <ion-input value="" formControlName="name" type="text"></ion-input>
+            <ion-icon name="planet" slot="end" align-self-center></ion-icon>
+        </ion-item>
+        <ion-label class="error" color="danger" *ngIf="signupForm.get('name').hasError('required')">
+            Provider Name is required
+        </ion-label>
 
-    <ion-item class="input">
-      <ion-label position="floating">Service</ion-label>
-      <ion-select value="" formControlName="service">
-        <ion-select-option value="photo">Photographer</ion-select-option>
-        <ion-select-option value="venue">Venue</ion-select-option>
-        <ion-select-option value="music">Music</ion-select-option>
-        <ion-select-option value="catering">Catering</ion-select-option>
-        <ion-select-option value="other">Other</ion-select-option>
-      </ion-select>
-      <ion-icon name="photos" slot="end" align-self-center></ion-icon>
-    </ion-item>
-    <ion-label class="error" color="danger" *ngIf="signupForm.get('service').hasError('required')">
-      Service is required
-    </ion-label>
+        <ion-item class="input">
+            <ion-label position="floating">Email</ion-label>
+            <ion-input value="" formControlName="email" type="email"></ion-input>
+            <ion-icon name="mail" slot="end" align-self-center></ion-icon>
+        </ion-item>
+        <ion-label class="error" color="danger" *ngIf="signupForm.get('email').hasError('required')">
+            Email is required
+        </ion-label>
+        <ion-label class="error" color="danger" *ngIf="signupForm.get('email').hasError('pattern') && !signupForm.get('email').hasError('required')">
+            Invalid Email address
+        </ion-label>
 
-    <ion-button id="signupButton" [disabled]="!signupForm.valid" type="submit" expand="block" size="large" color="primary">
-      Sign Up
-    </ion-button>
-  </form>
+        <ion-item class="input">
+            <ion-label position="floating">Service</ion-label>
+            <ion-select value="" formControlName="service">
+                <ion-select-option value="photo">Photographer</ion-select-option>
+                <ion-select-option value="venue">Venue</ion-select-option>
+                <ion-select-option value="music">Music</ion-select-option>
+                <ion-select-option value="catering">Catering</ion-select-option>
+                <ion-select-option value="other">Other</ion-select-option>
+            </ion-select>
+            <ion-icon name="photos" slot="end" align-self-center></ion-icon>
+        </ion-item>
+        <ion-label class="error" color="danger" *ngIf="signupForm.get('service').hasError('required')">
+            Service is required
+        </ion-label>
+
+        <ion-button id="signupButton" [disabled]="!signupForm.valid" type="submit" expand="block" size="large" color="primary">
+            Sign Up
+        </ion-button>
+    </form>
 </ion-content>
