@@ -1,62 +1,138 @@
-import * as firebase from 'firebase/app';
 import {Injectable} from '@angular/core';
 
+import {AngularFireAuth} from '@angular/fire/auth';
+import {FirestoreCRUDService} from './firestore-crud.service';
+
+import {Router} from '@angular/router';
+import {Observable, Observer} from 'rxjs';
+import * as firebase from 'firebase';
 
 
 @Injectable(
+    {providedIn: 'root'}
 )
 export class AuthenticateService {
-    constructor() {
+    private userDetails: firebase.User = null;
+    private user: Observable<firebase.User>;
+
+    constructor(
+        public afAuth: AngularFireAuth,
+        private fs: FirestoreCRUDService,
+        private router: Router
+    ) {
+        this.user = afAuth.authState;
+        this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+            () => {
+                this.user.subscribe((user) => {
+                    if (user) {
+                        this.userDetails = user;
+                        console.log('user logged in');
+                    } else {
+                        this.userDetails = null;
+                        console.log('user NOT logged in');
+                    }
+
+                });
+            });
+    }
+
+    /**
+     * register user with firebase REST api and adds user data entry in firestore
+     * @param value user data
+     * @param password user password
+     */
+    registerUser(value, password) {
+        return new Promise<any>(((resolve, reject) => {
+            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+                () => {
+                    this.afAuth.auth.createUserWithEmailAndPassword(value.email, password).then(
+                        result => {
+                            this.userDetails = result.user;
+                            this.fs.addUser({...value, uid: result.user.uid}).then(
+                                () => {
+                                    resolve(result);
+                                },
+                                error => {
+                                    reject(error);
+                                });
+
+                        },
+                        error => {
+                            console.log(error);
+                            reject(error);
+                        }
+                    );
+                });
+        }));
+
     }
 
 
-    registerUser(value) {
-        return new Promise<any>((resolve, reject) => {
-            firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
-                .then(
-                    res => {
-                        resolve(res);
-                    },
-                    err => reject(err));
-
-        });
+    /**
+     * removes user token from session storage
+     */
+    logoutUser() {
+        console.log('auth service reached');
+        this.afAuth.auth.signOut().then(
+            () => {
+                console.log('signout activated');
+                sessionStorage.removeItem('user');
+            }
+        );
     }
+
+    /**
+     * logs user in via firebase REST
+     * @param value user-email and password
+     */
 
     loginUser(value) {
-        console.log(value);
-        return firebase.auth().signInWithEmailAndPassword(value.email, value.password);
-    }
-
-    logoutUser() {
-        return new Promise((resolve, reject) => {
-            if (firebase.auth().currentUser) {
-                firebase.auth().signOut()
-                    .then(() => {
-                        console.log('LOG Out');
-                        resolve();
-                    }).catch((error) => {
-                    reject();
+        return new Promise<any>((resolve, reject) => {
+            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+                () => {
+                    this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password).then(
+                        async result => {
+                            await this.router.navigate(['/home/feed']);
+                            resolve(result);
+                        },
+                        error => {
+                            console.log(error);
+                            reject(error);
+                        });
                 });
-            }
         });
     }
 
-    userDetails() {
-        return firebase.auth().currentUser;
+    /**
+     * deletes user data from firestore and the account on firebase afterwards
+     */
+    deleteUser() {
+        this.fs.deleteUser(this.userDetails.uid).then(
+            () => {
+                this.afAuth.auth.currentUser.delete().then(
+                    () => {
+                        this.logoutUser();
+                        this.router.navigate(['login']);
+                    }
+                );
+            });
     }
 
-    async addUserProfile(value) {
-        const data = {
-            Email: value.email,
-            UserName: value.username,
-        };
-        // @ts-ignore
-        await firebase.firestore().collection('https://eseproject2019team1.firebaseio.com/UserDB').doc(this.userDetails().uid).set(data);
-    }
 
-    get isAuthenticated(): boolean{
-        const user = firebase.auth().currentUser;
-        if (user) {return true; } else {return false; }
+    /**
+     * returns boolean if user token is found in session storage
+     * @see auth-guard.service
+     */
+
+    get isAuthenticated(): Observable<boolean> {
+        return new Observable<boolean>((obs) => {
+            this.user.subscribe((user) => {
+                if (user) {
+                    obs.next(true);
+                } else { obs.next(false); }
+                obs.complete();
+            });
+        });
     }
 
 }

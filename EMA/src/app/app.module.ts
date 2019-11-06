@@ -9,17 +9,13 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AuthenticateService} from './services/authentication.service';
+import {FirestoreCRUDService} from './services/firestore-crud.service';
 
-import {SignUpPageModule} from './pages/signup/signup.module';
-
-
-import * as firebase from 'firebase';
 import {environment} from '../environments/environment';
-
-
-
-firebase.initializeApp(environment.firebase);
-firebase.firestore().settings({timestampsInSnapshots: true});
+import {AngularFireDatabaseModule} from '@angular/fire/database';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 
 @NgModule({
     declarations: [AppComponent],
@@ -28,12 +24,16 @@ firebase.firestore().settings({timestampsInSnapshots: true});
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
-        SignUpPageModule
+        AngularFireDatabaseModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
+        AngularFirestoreModule,
     ],
     providers: [
         StatusBar,
         SplashScreen,
         AuthenticateService,
+        FirestoreCRUDService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

@@ -1,75 +1,37 @@
 
-.item {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+#toolbar {
+  position: sticky;
+}
+
+#title {
+  text-align: center;
+}
+
+#content {
+  position: fixed;
+  top: 10%;
+  bottom: 0%;
+  height: 90%;
+}
+
+#form {
+  padding: 10%;
 }
 
 .input {
-  display: flex;
   margin-top: 4%;
-}
-
-.label {
-  display: flex;
-}
-
-.icon {
-  display: flex;
-
-}
-
-#loginButton {
-  margin-top: 2%;
-}
-
-#text {
-  margin-top: 4%;
-  margin-left: 5%;
-  margin-right: 5%;
-  text-align: center;
 }
 
 .error {
   font-size: small;
 }
 
-.header {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  text-align: center;
-  height: 10%;
+#loginButton {
+  margin-top: 5%;
 }
 
-.toolbar {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  text-align: center;
-  width: 100%;
-}
-
-.title {
-  display: flex;
-  width: inherit;
+#text {
+  padding: 5%;
   text-align: center;
 }
 
-.ion-padding {
-  display: flex;
-  align-self: center;
-  align-items: center;
-  flex-direction: column;
-  vertical-align: center;
-}
-
-.form {
-  display: flex;
-  vertical-align: central;
-  flex-direction: column;
-  width: 500px;
-  margin: auto;
-  margin-top: 200px;
-  align-content: center;
-}

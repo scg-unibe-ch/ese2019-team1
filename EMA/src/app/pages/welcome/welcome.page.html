@@ -1,21 +1,23 @@
-<ion-slides pager="true" [options]="slideOpts">
 
-    <ion-slide class="welcomeTitleAndText">
-        <h1>Welcome to EMA</h1>
-        <p> Your Event managing application for any occasion.</p>
-    </ion-slide>
+<ion-content>
+    <ion-slides id="slides" pager="true" [options]="slideOpts">
 
-    <ion-slide>
-        <div class="bild">
-            <img src="/assets/bild.jpg" alt=""/>
-        </div>
-    </ion-slide>
+        <ion-slide class="slide">
+            <h1>Welcome to EMA</h1>
+            <p> Your Event managing application for any occasion.</p>
+        </ion-slide>
 
-    <ion-slide>
-        <h1>Slide 3</h1>
-    </ion-slide>
-</ion-slides>
+        <ion-slide class="slide">
+            <div id="imageSlide">
+                <img src="/assets/bild.jpg" alt=""/>
+            </div>
+        </ion-slide>
 
-<ion-footer>
-    <ion-button expand="block" color='warning' (click)="navigateToLoginPage()">Start</ion-button>
-</ion-footer>
+        <ion-slide class="slide">
+            <h1>Slide 3</h1>
+        </ion-slide>
+    </ion-slides>
+
+    <ion-button id="startButton" expand="block" color='warning' size="large" (click)="navigateToLoginPage()">Start</ion-button>
+</ion-content>
+

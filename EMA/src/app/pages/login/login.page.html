@@ -1,38 +1,41 @@
-<ion-header class="header">
-  <ion-toolbar class="toolbar" color="primary">
-    <ion-title class="title" no-padding><p>Welcome to EMA</p></ion-title>
-  </ion-toolbar>
+<ion-header>
+    <ion-toolbar id="toolbar" color="primary">
+        <ion-title id="title">Welcome to EMA</ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" class="form" no-margin>
-    <ion-item class="item" no-padding>
-      <ion-label class="label" position="floating">Email</ion-label>
-      <ion-input class="input" value="" formControlName="email" type="text"></ion-input>
-      <ion-icon name="person" class="icon" slot="end"></ion-icon>
-    </ion-item>
-    <ion-label class="error" color="danger" *ngIf="loginForm.get('email').hasError('required')">Email is
-      required
-    </ion-label>
+<ion-content id="content">
+    <form id="form" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+        <ion-item class="item" no-padding>
+            <ion-label class="label" position="floating">Email</ion-label>
+            <ion-input class="input" value="" formControlName="email" type="email"></ion-input>
+            <ion-icon name="person" slot="end" align-self-center></ion-icon>
+        </ion-item>
+        <ion-label class="error" color="danger" *ngIf="loginForm.get('email').hasError('required')">
+            Email is required
+        </ion-label>
+        <ion-label class="error" color="danger" *ngIf="loginForm.get('email').hasError('pattern') && !loginForm.get('email').hasError('required')">
+            Invalid Email address
+        </ion-label>
 
-    <ion-item class="item" no-padding>
-      <ion-label class="label" position="floating">Password</ion-label>
-      <ion-input class="input" value="" formControlName="password" type="password" required="true"></ion-input>
-      <ion-icon name="key" slot="end"></ion-icon>
-    </ion-item>
-    <ion-label class="error" color="danger" *ngIf="loginForm.get('password').hasError('required')">Password is
-      required
-    </ion-label>
+        <ion-item class="item" no-padding>
+            <ion-label class="label" position="floating">Password</ion-label>
+            <ion-input class="input" value="" formControlName="password" type="password" required="true"></ion-input>
+            <ion-icon name="key" slot="end" align-self-center></ion-icon>
+        </ion-item>
+        <ion-label class="error" color="danger" *ngIf="loginForm.get('password').hasError('required')">
+            Password is required
+        </ion-label>
 
-    <ion-button [disabled]="!loginForm.valid" type="submit" id="loginButton" expand="block" size="large" color="primary">
-      login&nbsp;
-    </ion-button>
-  </form>
+        <ion-button id="loginButton" [disabled]="!loginForm.valid" type="submit" expand="block" size="large" color="primary">
+            Login
+        </ion-button>
+    </form>
 
-  <div id="text">
-    <p>New to our Website?</p>
-    <p>Signup
-      <ion-label color="primary" routerLink="/signup" routerDirection="forward">here</ion-label>
-    </p>
-  </div>
+    <div id="text">
+        <p>New to our Website?</p>
+        <p>Signup
+            <ion-label color="primary" routerLink="/signup" routerDirection="forward">here</ion-label>
+        </p>
+    </div>
 </ion-content>

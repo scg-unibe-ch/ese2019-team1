@@ -1,0 +1,32 @@
+
+#toolbar {
+  position: sticky;
+}
+
+#title {
+  text-align: center;
+}
+
+#content {
+  position: fixed;
+  top: 10%;
+  bottom: 0%;
+  height: 90%;
+}
+
+#form {
+  padding: 10%;
+}
+
+.input {
+  margin-top: 4%;
+}
+
+.error {
+  font-size: small;
+}
+
+#signupButton {
+  margin-top: 5%;
+}
+
