@@ -1,0 +1,9 @@
+Bandname: Happy Duo
+Members: Michael Weber (Keybord and Vocals)
+	Daniela Schmidt (Vocals)
+Description: Happy Duo will come to your party and brighten up the mood with jazz, blues,
+Schlager and disco music.
+
+Pictures from:
+https://images.unsplash.com/photo-1471614654469-512ee6a4397a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80
+https://as1.ftcdn.net/jpg/02/31/77/72/500_F_231777277_xS8d3nxNSagWbSnQ9SdhnNDtC3pyTVJH.jpg
