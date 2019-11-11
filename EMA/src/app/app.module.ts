@@ -16,9 +16,15 @@ import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
+import {HomePage} from './home/home.page';
+import {ProviderProfileComponent} from './pages/provider-profile/provider-profile.component';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [
+        AppComponent,
+        // HomePage
+        ProviderProfileComponent
+    ],
     entryComponents: [],
     imports: [
         BrowserModule,
@@ -35,6 +41,9 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
         AuthenticateService,
         FirestoreCRUDService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+    ],
+    exports: [
+        ProviderProfileComponent
     ],
     bootstrap: [AppComponent]
 })
