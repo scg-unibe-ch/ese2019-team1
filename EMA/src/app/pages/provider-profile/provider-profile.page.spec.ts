@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProviderProfileComponent } from './provider-profile.component';
+import { ProviderProfilePage } from './provider-profile.page';
 
-describe('ProviderProfileComponent', () => {
-  let component: ProviderProfileComponent;
-  let fixture: ComponentFixture<ProviderProfileComponent>;
+describe('ProviderProfilePage', () => {
+  let component: ProviderProfilePage;
+  let fixture: ComponentFixture<ProviderProfilePage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProviderProfileComponent ],
+      declarations: [ ProviderProfilePage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProviderProfileComponent);
+    fixture = TestBed.createComponent(ProviderProfilePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
