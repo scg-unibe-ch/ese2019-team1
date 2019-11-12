@@ -1,0 +1,36 @@
+.content{
+  display: flex;
+}
+
+.quick_display{
+  display: flex;
+  flex-direction: row;
+}
+
+.profile_image{
+  display: flex;
+  margin-top: 5%;
+  margin-left: 30%;
+  margin-right: 2%;
+  width: 300px;
+}
+
+.essentials{
+  display: block;
+  margin-top: auto;
+  margin-right: auto;
+}
+
+.pictures{
+  display: flex;
+  width: 600px;
+  margin: auto;
+  margin-top: 5%;
+}
+
+.description{
+ display: block;
+  width: 75%;
+  margin: auto;
+  margin-top: 5%;
+}
