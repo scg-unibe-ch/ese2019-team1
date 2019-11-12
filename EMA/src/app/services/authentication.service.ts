@@ -48,7 +48,7 @@ export class AuthenticateService {
                     this.afAuth.auth.createUserWithEmailAndPassword(value.email, password).then(
                         result => {
                             this.userDetails = result.user;
-                            this.fs.addUser({...value, uid: result.user.uid}).then(
+                            this.fs.addUser({...value, uid: result.user.uid, isProvider: false}).then(
                                 () => {
                                     resolve(result);
                                 },
@@ -129,7 +129,9 @@ export class AuthenticateService {
             this.user.subscribe((user) => {
                 if (user) {
                     obs.next(true);
-                } else { obs.next(false); }
+                } else {
+                    obs.next(false);
+                }
                 obs.complete();
             });
         });

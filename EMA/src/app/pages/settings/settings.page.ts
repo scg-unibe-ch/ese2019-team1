@@ -1,6 +1,8 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
+import {FirestoreCRUDService} from "../../services/firestore-crud.service";
+import {ProfileHandlerService} from "../../services/profile-handler.service";
 
 @Component({
     selector: 'app-settings',
@@ -15,6 +17,8 @@ export class SettingsPage {
     constructor(private navCtrl: NavController,
                 private auth: AuthenticateService,
                 private toastCtrl: ToastController,
+                private crudServ: FirestoreCRUDService,
+                private profileHandler: ProfileHandlerService
     ) {
     }
 
@@ -37,6 +41,14 @@ export class SettingsPage {
     }
 
     createProviderAccount() {
+        this.crudServ.readUser(this.auth.afAuth.auth.currentUser.uid).then(
+            res => {
+                console.log(res);
+                this.profileHandler.createProvider(res).then(r => {
+                   console.log(r);
+                });
+            }
+        );
         this.navCtrl.navigateForward('/signupprovider');
     }
 
