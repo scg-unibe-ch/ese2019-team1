@@ -20,7 +20,10 @@ routes = [
 
     {path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule'},
     {path: 'signupprovider', loadChildren: './pages/signupprovider/signupprovider.module#SignupproviderPageModule'},
-    {path: 'provider-profile', loadChildren: './pages/provider-profile/provider-profile.module#ProviderProfilePageModule'}
+    {
+        path: 'provider-profile',
+        loadChildren: './pages/provider-profile/provider-profile.module#ProviderProfilePageModule'
+    }
 
 ];
 
