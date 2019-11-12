@@ -19,41 +19,31 @@
     <ion-card class="description" color="light">
         <ion-card-header>
             <ion-card-title>
-                <h4>Service Description:</h4>
+                <h4>Service Description</h4>
             </ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-            labore et
-            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-            Stet
-            clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-            amet,
-            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat,
-            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-            no
-            sea takimata sanctus est Lorem ipsum dolor sit amet.
+           <p>{{serviceDescription}}</p>
+            <div *ngIf="clickedService" class="editSpace">
+                <ion-textarea placeholder="Enter information" [(ngModel)]="tempServiceDescription"></ion-textarea>
+            </div>
+            <ion-button class="edit/saveButton" (click)="editService()">{{serviceButtonContent}}</ion-button>
         </ion-card-content>
     </ion-card>
+
     <ion-card class="description" color="light">
         <ion-card-header>
             <ion-card-title>
-                <h4>Information on big boss:</h4>
+                <h4>About the owner</h4>
             </ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-            labore et
-            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-            Stet
-            clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-            amet,
-            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat,
-            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
-            no
-            sea takimata sanctus est Lorem ipsum dolor sit amet.
+            <p>{{ownerDescription}}</p>
+            <div *ngIf="clickedOwner" class="editSpace">
+                <ion-textarea placeholder="Enter information" [(ngModel)]="tempOwnerDescription"></ion-textarea>
+            </div>
+            <ion-button class="edit/saveButton" (click)="editOwner()">{{ownerButtonContent}}</ion-button>
         </ion-card-content>
     </ion-card>
+
 </ion-content>
