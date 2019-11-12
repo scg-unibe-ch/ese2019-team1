@@ -19,11 +19,19 @@ export class FirestoreCRUDService {
         this.docRef = this.aFs.collection('UserDB/');
     }
 
+    /**
+     *  creates a new user document on firestore with the user id given from firebase authentication
+     *  @param user user data as defined in the user-interface
+     */
     addUser(user: User) {
         return this.docRef.doc(user.uid).set(user);
     }
 
-    readUser(uid): Promise<User> {
+    /**
+     * returns user data (as defined in user interface) as a promise from firestore database
+     * @param uid user-ID as defined from firebase authentication
+     */
+    readUser(uid: string): Promise<User> {
         return new Promise<User>(async (resolve, reject) => {
             let user: User;
             if (!this.docRef.doc(uid)) {
@@ -50,6 +58,10 @@ export class FirestoreCRUDService {
         });
     }
 
+    /**
+     * updates user data
+     * @param user user data as defined in user interface
+     */
     updateUser(user: User) {
         return new Promise<any>((resolve, reject) => {
             this.docRef.doc(user.uid).update(user).then(
@@ -58,7 +70,11 @@ export class FirestoreCRUDService {
         });
     }
 
-    deleteUser(uid) {
+    /**
+     * Deletes user data on database
+     * @param uid user-ID from firebase authentication
+     */
+    deleteUser(uid: string) {
         return this.aFs.doc('UserDB/' + uid).delete();
     }
 }
