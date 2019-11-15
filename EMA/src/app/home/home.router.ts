@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HomePage } from './home.page';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {HomePage} from './home.page';
 
 const routes: Routes = [
     {
@@ -34,12 +34,19 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('../pages/settings/settings.module').then(m => m.SettingsPageModule)
 
+            },
+            {
+                path: 'provider-profile',
+                loadChildren: () =>
+                    import('../pages/provider-profile/provider-profile.module').then(m => m.ProviderProfilePageModule)
             }
         ]
     }
 ];
-@NgModule ({
+
+@NgModule({
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class HomeRouter {}
+export class HomeRouter {
+}

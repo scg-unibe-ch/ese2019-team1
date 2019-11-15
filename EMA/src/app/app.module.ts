@@ -18,7 +18,10 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations:
+        [
+            AppComponent
+        ],
     entryComponents: [],
     imports: [
         BrowserModule,
@@ -35,6 +38,8 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
         AuthenticateService,
         FirestoreCRUDService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+    ],
+    exports: [
     ],
     bootstrap: [AppComponent]
 })
