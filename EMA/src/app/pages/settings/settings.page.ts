@@ -1,8 +1,8 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
-import {FirestoreCRUDService} from "../../services/firestore-crud.service";
-import {ProfileHandlerService} from "../../services/profile-handler.service";
+import {FirestoreCRUDService} from '../../services/firestore-crud.service';
+import {ProfileHandlerService} from '../../services/profile-handler.service';
 
 @Component({
     selector: 'app-settings',

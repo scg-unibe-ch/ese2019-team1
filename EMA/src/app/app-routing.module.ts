@@ -4,25 +4,26 @@ import {AuthGuardService} from './services/auth-guard.service';
 
 let routes: Routes;
 routes = [
-    {
-        path: '',
-        loadChildren: () => import('./index/index.module').then(m => m.IndexPageModule)
-    },
+    {path: '', loadChildren: () => import('./index/index.module').then(m => m.IndexPageModule)},
     {
         path: 'home',
         loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
         canActivate: [AuthGuardService]
     },
     {
-        path: 'basket', loadChildren: './pages/basket/basket.module#BasketPageModule',
+        path: 'basket',
+        loadChildren: () => import('./pages/basket/basket.module').then(m => m.BasketPageModule),
         canActivate: [AuthGuardService]
     },
 
-    {path: 'signup', loadChildren: './pages/signup/signup.module#SignupPageModule'},
-    {path: 'signupprovider', loadChildren: './pages/signupprovider/signupprovider.module#SignupproviderPageModule'},
+    {path: 'signup', loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule)},
+    {
+        path: 'signupprovider',
+        loadChildren: () => import('./pages/signupprovider/signupprovider.module').then(m => m.SignupproviderPageModule)
+    },
     {
         path: 'provider-profile',
-        loadChildren: './pages/provider-profile/provider-profile.module#ProviderProfilePageModule'
+        loadChildren: () => import('./pages/provider-profile/provider-profile.module').then(m => m.ProviderProfilePageModule)
     }
 
 ];
