@@ -1,20 +1,25 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {User} from './user';
-import {FirestoreCRUDService} from './firestore-crud.service';
+import {UserHandler} from './user-handler';
 import {Categories, Profile} from './profile';
+import {Img} from './img';
+import {ImageHandlerService} from './image-handler.service';
+import * as firebase from 'firebase';
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileHandlerService {
-    private docRef: AngularFirestoreCollection;
 
     constructor(private fs: AngularFirestore,
-                private crudService: FirestoreCRUDService) {
-        this.docRef = this.fs.collection('ProviderProfiles/');
+                private userHandler: UserHandler,
+                private imageHandler: ImageHandlerService) {
     }
+
+    private docRef = this.fs.collection('ProviderProfiles/');
+    private imgRef = this.fs.collection('imgDB/');
 
     /**
      * updates user to an provider. updates first user database and stores provider-flag. it then opens up a new entry
@@ -24,11 +29,11 @@ export class ProfileHandlerService {
     createProvider(user: User) {
         return new Promise<any>(async (resolve, reject) => {
             user.isProvider = true;
-            await this.crudService.updateUser(user).then(async () => {
+            await this.userHandler.updateUser(user).then(async () => {
                 await this.docRef.add({uid: user.uid}).then(async res => {
                     user.ppid = res.id;
                     await this.docRef.doc(user.ppid).update({ppid: user.ppid});
-                    await this.crudService.updateUser(user).then(() => {
+                    await this.userHandler.updateUser(user).then(() => {
                             resolve();
                         },
                         err => reject(err));
@@ -60,7 +65,7 @@ export class ProfileHandlerService {
         return new Promise((resolve, reject) => {
             let usr: User = null;
             this.docRef.doc(pprofile.ppid).delete().then(() => {
-                this.crudService.readUser(pprofile.uid).then((user) => {
+                this.userHandler.readUser(pprofile.uid).then((user) => {
                     usr = user;
                 }, err => reject(err));
             }, err => reject(err));
@@ -68,7 +73,7 @@ export class ProfileHandlerService {
                 usr.isProvider = false;
                 usr.ppid = null;
             }
-            this.crudService.updateUser(usr).then((res) => resolve(res));
+            this.userHandler.updateUser(usr).then((res) => resolve(res));
         });
 
     }
@@ -81,19 +86,88 @@ export class ProfileHandlerService {
         return new Promise<Profile>((resolve, reject) => {
             let pprofile: Profile = null;
             this.docRef.doc(ppid).ref.get().then((doc) => {
-                pprofile = {
-                    ppid: doc.get('ppid') as string,
-                    uid: doc.get('uid') as string
-                };
-                if (doc.get('companyName') !== null) {
-                    pprofile.companyName = doc.get('companyName') as string;
-                }
-                if (doc.get('category') !== null) {
-                    pprofile.category = doc.get('category') as Categories;
-                }
-                resolve(pprofile);
-            },
+                    pprofile = {
+                        ppid: doc.get('ppid') as string,
+                        uid: doc.get('uid') as string
+                    };
+                    if (doc.get('companyName') !== null) {
+                        pprofile.companyName = doc.get('companyName') as string;
+                    }
+                    if (doc.get('category') !== null) {
+                        pprofile.category = doc.get('category') as Categories;
+                    }
+                    resolve(pprofile);
+                },
                 err => reject(err));
         });
+    }
+
+    addMainImage(pprofile: Profile, image: Img): Promise<any> {
+        return new Promise<any>(
+            (resolve, reject) => {
+                const doc = this.imgRef.doc();
+                doc.set({
+                    imageName: image.name,
+                    createdAt: image.createdAt
+                }).then(
+                    async () => {
+                        image.$key = doc.ref.id;
+                        await this.imgRef.doc(image.$key).update({$key: image.$key});
+
+                        this.imageHandler.uploadImage(image).then(
+                            async (img) => {
+                                await this.imgRef.doc(image.$key).update({
+                                    url: img.url
+                                });
+                            },
+                            async err => {
+                                await this.docRef.doc(image.$key).delete();
+                                reject(err);
+                            });
+                    },
+                    err => reject(err)).then(
+                    () => {
+                        pprofile.mainImgUrl = image.url as string;
+                        this.docRef.doc(pprofile.ppid).update(pprofile).then(
+                            () => {
+                                resolve();
+                            }
+                        );
+
+                    });
+
+            });
+
+    }
+
+    addSecondaryImage(pprofile: Profile, image: Img): Promise<any> {
+        return new Promise<any>(
+            (resolve, reject) => {
+                const doc = this.imgRef.doc();
+                doc.set({
+                    imageName: image.name,
+                    createdAt: image.createdAt
+                }).then(
+                    async () => {
+                        image.$key = doc.ref.id;
+                        await this.imgRef.doc(image.$key).update({$key: image.$key});
+
+                        this.imageHandler.uploadImage(image).then(
+                            async (img) => {
+                                await this.imgRef.doc(image.$key).update({});
+                            },
+                            async err => {
+                                await this.docRef.doc(image.$key).delete();
+                                reject(err);
+                            });
+                    },
+                    err => reject(err)).then(
+                    () => {
+                        this.docRef.doc(pprofile.ppid).update({secondaryImgUrls:
+                                firebase.firestore.FieldValue.arrayUnion(image.url)}).then(() => resolve());
+                    });
+
+            });
+
     }
 }

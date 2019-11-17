@@ -1,3 +1,5 @@
+import {Img} from './img';
+
 export interface Profile {
     ppid: string;
     uid: string;

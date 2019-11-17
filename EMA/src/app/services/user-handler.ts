@@ -9,14 +9,13 @@ import {map} from 'rxjs/operators';
         providedIn: 'root'
     }
 )
-export class FirestoreCRUDService {
+export class UserHandler {
 
-    private docRef: AngularFirestoreCollection;
-
+    private userRef: AngularFirestoreCollection;
     constructor(
         private aFs: AngularFirestore
     ) {
-        this.docRef = this.aFs.collection('UserDB/');
+        this.userRef = this.aFs.collection('UserDB/');
     }
 
     /**
@@ -24,7 +23,7 @@ export class FirestoreCRUDService {
      *  @param user user data as defined in the user-interface
      */
     addUser(user: User) {
-        return this.docRef.doc(user.uid).set(user);
+        return this.userRef.doc(user.uid).set(user);
     }
 
     /**
@@ -34,10 +33,10 @@ export class FirestoreCRUDService {
     readUser(uid: string): Promise<User> {
         return new Promise<User>(async (resolve, reject) => {
             let user: User;
-            if (!this.docRef.doc(uid)) {
+            if (!this.userRef.doc(uid)) {
                 reject();
             } else {
-                await this.docRef.doc(uid).ref.get().then((doc) => {
+                await this.userRef.doc(uid).ref.get().then((doc) => {
                     user = {
                         uid: doc.get('uid') as string,
                         username: doc.get('username') as string,
@@ -64,7 +63,7 @@ export class FirestoreCRUDService {
      */
     updateUser(user: User) {
         return new Promise<any>((resolve, reject) => {
-            this.docRef.doc(user.uid).update(user).then(
+            this.userRef.doc(user.uid).update(user).then(
                 () => resolve(),
                 err => reject(err));
         });

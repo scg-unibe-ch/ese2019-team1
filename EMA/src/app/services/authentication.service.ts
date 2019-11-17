@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import {AngularFireAuth} from '@angular/fire/auth';
-import {FirestoreCRUDService} from './firestore-crud.service';
+import {UserHandler} from './user-handler';
 
 import {Router} from '@angular/router';
 import {Observable, Observer} from 'rxjs';
@@ -17,7 +17,7 @@ export class AuthenticateService {
 
     constructor(
         public afAuth: AngularFireAuth,
-        private fs: FirestoreCRUDService,
+        private fs: UserHandler,
         private router: Router
     ) {
         this.user = afAuth.authState;

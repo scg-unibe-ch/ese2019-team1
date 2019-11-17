@@ -1,7 +1,7 @@
 import {Component, Injectable, OnInit} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
-import {FirestoreCRUDService} from '../../services/firestore-crud.service';
+import {UserHandler} from '../../services/user-handler';
 import {ProfileHandlerService} from '../../services/profile-handler.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class SettingsPage {
     constructor(private navCtrl: NavController,
                 private auth: AuthenticateService,
                 private toastCtrl: ToastController,
-                private crudServ: FirestoreCRUDService,
+                private crudServ: UserHandler,
                 private profileHandler: ProfileHandlerService
     ) {
     }
