@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {ImageHandlerService} from '../../services/image-handler.service';
+import {Img} from '../../services/img';
+import {ProfileHandlerService} from '../../services/profile-handler.service';
 
 @Component({
     selector: 'app-provider-profile',
@@ -16,8 +19,9 @@ export class ProviderProfilePage implements OnInit {
     clickedService = false;
     ownerButtonContent: string;
     serviceButtonContent: string;
+    inputFile: Img;
 
-    constructor() {
+    constructor(private profileHandlerService: ProfileHandlerService) {
     }
 
     ngOnInit() {
@@ -43,5 +47,26 @@ export class ProviderProfilePage implements OnInit {
             this.serviceButtonContent = 'Edit';
             this.serviceDescription = this.tempServiceDescription;
         }
+    }
+
+    addProfilePicture(imageInput: any) {
+        console.log(imageInput.files[0]);
+        const file: File = imageInput.files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener('load', (event: any) => {
+
+            this.inputFile = new Img(file);
+
+            this.profileHandlerService.addMainImage( new Profile() , this.inputFile).then(
+                (res) => { console.log(res);
+
+                },
+                (err) => {
+                    console.log(err);
+                });
+        });
+
+        reader.readAsDataURL(file);
     }
 }

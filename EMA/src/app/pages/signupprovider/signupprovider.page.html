@@ -1,7 +1,7 @@
 <ion-header>
-  <ion-toolbar id="toolbar" color="primary">
-    <ion-title id="title">Signup Provider</ion-title>
-  </ion-toolbar>
+    <ion-toolbar id="toolbar" color="primary">
+        <ion-title id="title">Signup Provider</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content id="content">
@@ -23,7 +23,8 @@
         <ion-label class="error" color="danger" *ngIf="signupForm.get('email').hasError('required')">
             Email is required
         </ion-label>
-        <ion-label class="error" color="danger" *ngIf="signupForm.get('email').hasError('pattern') && !signupForm.get('email').hasError('required')">
+        <ion-label class="error" color="danger"
+                   *ngIf="signupForm.get('email').hasError('pattern') && !signupForm.get('email').hasError('required')">
             Invalid Email address
         </ion-label>
 
@@ -42,8 +43,12 @@
             Service is required
         </ion-label>
 
-        <ion-button id="signupButton" [disabled]="!signupForm.valid" type="submit" expand="block" size="large" color="primary" >
+        <ion-button id="signupButton" [disabled]="!signupForm.valid" type="submit" expand="block" size="large"
+                    color="primary">
             Sign Up
         </ion-button>
     </form>
+
+                <ion-back-button></ion-back-button>
+
 </ion-content>

@@ -29,7 +29,7 @@ export class ImageHandlerService {
      */
 
     uploadImage(image: Img): Promise<Img> {
-        let promise = new Promise<Img>((resolve, reject) => {
+        const promise = new Promise<Img>((resolve, reject) => {
             const imgRef = this.storageRef.child(image.$key);
             imgRef.put(image.img).then(
                 (res) => {
