@@ -10,8 +10,10 @@ import {AngularFirestore} from "@angular/fire/firestore";
 })
 export class ImageHandlerService {
 
-    constructor(private afStorage: AngularFireStorage,
-                private afDB: AngularFirestore) {
+    constructor(
+        private afStorage: AngularFireStorage,
+        private afDB: AngularFirestore
+    ) {
     }
 
     private storageRef = this.afStorage.ref('/profileImages/');
@@ -27,21 +29,22 @@ export class ImageHandlerService {
      */
 
     uploadImage(image: Img): Promise<Img> {
-        return new Promise<Img>(
-            (resolve, reject) => {
-                const imgRef = this.storageRef.child(image.$key);
-                imgRef.put(image.img).then(
-                    (res) => {
-                        image.progress = (res.bytesTransferred / res.totalBytes) * 100;
-                    },
-                    err => {
-                        console.log(err);
-                        reject(err);
-                    }).finally(
-                    () => {
-                        image.url = imgRef.getDownloadURL();
-                        resolve(image);
-                    });
-            });
+        let promise = new Promise<Img>((resolve, reject) => {
+            const imgRef = this.storageRef.child(image.$key);
+            imgRef.put(image.img).then(
+                (res) => {
+                    image.progress = (res.bytesTransferred / res.totalBytes) * 100;
+                },
+                err => {
+                    console.log(err);
+                    reject(err);
+                }).finally(
+                () => {
+                    image.url = imgRef.getDownloadURL();
+                    resolve(image);
+                });
+        });
+        console.log(promise);
+        return promise;
     }
 }

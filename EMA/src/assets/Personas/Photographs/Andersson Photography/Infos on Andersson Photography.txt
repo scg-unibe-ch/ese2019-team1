@@ -1,0 +1,11 @@
+Company name: Andersson Photography
+
+Owner: Ludvig Andersson
+Age: 28
+
+Description: I am a young, talented and ambitious photographer from Sweden. I will capture the most precious
+moments of your life forever.
+
+Pictures from:
+https://66.media.tumblr.com/d4874e202a95b81bdaa1017f84cd2954/tumblr_pce4tfXeLR1w5t8ryo6_r1_250.png
+https://www.setaswall.com/wp-content/uploads/2017/06/Camera-Wallpapers-47-2800-x-1867.jpg

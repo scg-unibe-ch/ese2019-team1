@@ -13,9 +13,11 @@ import * as firebase from 'firebase';
 })
 export class ProfileHandlerService {
 
-    constructor(private fs: AngularFirestore,
-                private userHandler: UserHandler,
-                private imageHandler: ImageHandlerService) {
+    constructor(
+        private fs: AngularFirestore,
+        private userHandler: UserHandler,
+        private imageHandler: ImageHandlerService
+    ) {
     }
 
     private docRef = this.fs.collection('ProviderProfiles/');
@@ -114,16 +116,18 @@ export class ProfileHandlerService {
                         image.$key = doc.ref.id;
                         await this.imgRef.doc(image.$key).update({$key: image.$key});
 
-                        this.imageHandler.uploadImage(image).then(
-                            async (img) => {
-                                await this.imgRef.doc(image.$key).update({
-                                    url: img.url
+                        this.imageHandler
+                            .uploadImage(image)
+                            .then(
+                                async (img) => {
+                                    await this.imgRef
+                                        .doc(image.$key)
+                                        .update({url: img.url});
+                                },
+                                async err => {
+                                    await this.docRef.doc(image.$key).delete();
+                                    reject(err);
                                 });
-                            },
-                            async err => {
-                                await this.docRef.doc(image.$key).delete();
-                                reject(err);
-                            });
                     },
                     err => reject(err)).then(
                     () => {
@@ -163,8 +167,10 @@ export class ProfileHandlerService {
                     },
                     err => reject(err)).then(
                     () => {
-                        this.docRef.doc(pprofile.ppid).update({secondaryImgUrls:
-                                firebase.firestore.FieldValue.arrayUnion(image.url)}).then(() => resolve());
+                        this.docRef.doc(pprofile.ppid).update({
+                            secondaryImgUrls:
+                                firebase.firestore.FieldValue.arrayUnion(image.url)
+                        }).then(() => resolve());
                     });
 
             });
