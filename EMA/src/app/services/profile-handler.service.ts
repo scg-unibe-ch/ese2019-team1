@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from './user';
 import {UserHandler} from './user-handler';
 import {Categories, Profile} from './profile';
 import {Img} from './img';
 import {ImageHandlerService} from './image-handler.service';
 import * as firebase from 'firebase';
+
 
 
 @Injectable({
@@ -102,6 +103,20 @@ export class ProfileHandlerService {
                 },
                 err => reject(err));
         });
+    }
+
+    /**
+     * returns all profiles in the Database as an Array
+     *
+     */
+    getAllProfiles(): Array<Profile> {
+        const profileList = Array<Profile>();
+        this.docRef.get().subscribe(snapshot => {
+            snapshot.forEach( doc => {
+                profileList.push(doc.data() as Profile);
+            });
+        });
+        return profileList;
     }
 
     addMainImage(pprofile: Profile, image: Img): Promise<any> {

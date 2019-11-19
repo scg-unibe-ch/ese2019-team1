@@ -1,7 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ImageHandlerService} from '../../services/image-handler.service';
 import {Img} from '../../services/img';
-import {ProfileHandlerService} from '../../services/profile-handler.service';
+import {AuthenticateService} from '../../services/authentication.service';
+import {ProfileGuardService} from '../../services/profile-guard.service';
+import {Profile} from '../../services/profile';
+import {createJobHandler} from "@angular-devkit/core/src/experimental/jobs";
+import {ProfileHandlerService} from "../../services/profile-handler.service";
+
 
 @Component({
     selector: 'app-provider-profile',
@@ -21,7 +25,9 @@ export class ProviderProfilePage implements OnInit {
     serviceButtonContent: string;
     inputFile: Img;
 
-    constructor(private profileHandlerService: ProfileHandlerService) {
+    constructor(private authGuard: AuthenticateService,
+                private profileGuard: ProfileGuardService,
+                private profilehandler: ProfileHandlerService) {
     }
 
     ngOnInit() {
@@ -57,16 +63,17 @@ export class ProviderProfilePage implements OnInit {
         reader.addEventListener('load', (event: any) => {
 
             this.inputFile = new Img(file);
-
-            this.profileHandlerService.addMainImage( new Profile() , this.inputFile).then(
-                (res) => { console.log(res);
-
+            let pprofile;
+            this.profileGuard.getProfile(this.authGuard.afAuth.auth.currentUser.uid).then(
+                (profile) => {
+                    pprofile = profile as Profile;
                 },
-                (err) => {
+                err => {
                     console.log(err);
                 });
-        });
 
-        reader.readAsDataURL(file);
+
+            reader.readAsDataURL(file);
+        });
     }
 }

@@ -17,7 +17,7 @@ routes = [
         path: 'basket',
         loadChildren: () => import('./pages/basket/basket.module').then(m => m.BasketPageModule),
         canActivate: [AuthGuardService]
-    },
+      },
     {
         path: 'signup',
         loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule)
