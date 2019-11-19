@@ -9,7 +9,7 @@
         <ion-item class="input">
             <ion-label position="floating">Name</ion-label>
             <ion-input value="" formControlName="name" type="text"></ion-input>
-            <ion-icon name="person" slot="end" align-self-center></ion-icon>
+            <ion-icon name="person" slot="end" class="ion-align-self-center"></ion-icon>
         </ion-item>
         <ion-label class="error" color="danger" *ngIf="signupForm.get('name').hasError('required')">
             Name is required
@@ -18,7 +18,7 @@
         <ion-item class="input">
             <ion-label position="floating">Username</ion-label>
             <ion-input value="" formControlName="username" type="text"></ion-input>
-            <ion-icon name="contact" slot="end" align-self-center></ion-icon>
+            <ion-icon name="contact" slot="end" class="ion-align-self-center"></ion-icon>
         </ion-item>
         <ion-label class="error" color="danger" *ngIf="signupForm.get('username').hasError('required')">
             Username is required
@@ -27,7 +27,7 @@
         <ion-item class="input">
             <ion-label position="floating">Email</ion-label>
             <ion-input value="" formControlName="email" type="email"></ion-input>
-            <ion-icon name="mail" slot="end" align-self-center></ion-icon>
+            <ion-icon name="mail" slot="end" class="ion-align-self-center"></ion-icon>
         </ion-item>
         <ion-label class="error" color="danger" *ngIf="signupForm.get('email').hasError('required')">
             Email is required
@@ -52,7 +52,7 @@
         <ion-item class="input">
             <ion-label position="floating">Repeat Password</ion-label>
             <ion-input value="" formControlName="repeatpassword" type="password"></ion-input>
-            <ion-icon name="key" slot="end" align-self-center></ion-icon>
+            <ion-icon name="key" slot="end" class="ion-align-self-center"></ion-icon>
         </ion-item>
         <ion-label class="error" color="danger" *ngIf="signupForm.get('repeatpassword').hasError('required')">
             Repeat Password is required
