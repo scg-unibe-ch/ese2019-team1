@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { FeedPage } from './feed.page';
+import {EventComponent} from '../../components/event/event.component';
+import {EventViewComponent} from '../../components/event-view/event-view.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [FeedPage]
+  declarations: [FeedPage, EventComponent, EventViewComponent]
 })
 export class FeedPageModule {}
