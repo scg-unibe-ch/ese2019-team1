@@ -37,7 +37,7 @@ export class SettingsPage {
         console.log('button clicked');
         this.auth.logoutUser();
         this.presentToast('Logged out', 1000);
-        this.navCtrl.navigateBack('/login');
+        this.navCtrl.navigateBack('/welcome');
     }
 
     createProviderAccount() {

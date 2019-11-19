@@ -17,7 +17,7 @@ routes = [
         path: 'basket',
         loadChildren: () => import('./pages/basket/basket.module').then(m => m.BasketPageModule),
         canActivate: [AuthGuardService]
-      },
+    },
     {
         path: 'signup',
         loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule)
@@ -30,6 +30,11 @@ routes = [
     {
         path: 'provider-profile',
         loadChildren: () => import('./pages/provider-profile/provider-profile.module').then(m => m.ProviderProfilePageModule)
+    },
+
+    {
+        path: 'welcome',
+        loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)
     }
 
 ];

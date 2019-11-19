@@ -3,8 +3,8 @@ import {Img} from '../../services/img';
 import {AuthenticateService} from '../../services/authentication.service';
 import {ProfileGuardService} from '../../services/profile-guard.service';
 import {Profile} from '../../services/profile';
-import {createJobHandler} from "@angular-devkit/core/src/experimental/jobs";
-import {ProfileHandlerService} from "../../services/profile-handler.service";
+import {createJobHandler} from '@angular-devkit/core/src/experimental/jobs';
+import {ProfileHandlerService} from '../../services/profile-handler.service';
 
 
 @Component({
