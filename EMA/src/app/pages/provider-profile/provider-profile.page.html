@@ -4,7 +4,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="content">
+<ion-content class="content" *ngIf="dataLoaded">
     <div class="quick_display">
         <form>
             <label> Add your profile picture
@@ -28,9 +28,9 @@
             </ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            <p>{{serviceDescription}}</p>
+            <p>{{profileData.serviceDescription}}</p>
             <div *ngIf="clickedService" class="editSpace">
-                <ion-textarea placeholder="Enter information" [(ngModel)]="tempServiceDescription"></ion-textarea>
+                <ion-textarea placeholder="Enter information" [(ngModel)]="profileData.serviceDescription"></ion-textarea>
             </div>
             <ion-button class="edit/saveButton" (click)="editService()">{{serviceButtonContent}}</ion-button>
         </ion-card-content>
@@ -43,9 +43,9 @@
             </ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            <p>{{ownerDescription}}</p>
+            <p>{{profileData.about}}</p>
             <div *ngIf="clickedOwner" class="editSpace">
-                <ion-textarea placeholder="Enter information" [(ngModel)]="tempOwnerDescription"></ion-textarea>
+                <ion-textarea placeholder="Enter information" [(ngModel)]="profileData.about"></ion-textarea>
             </div>
             <ion-button class="edit/saveButton" (click)="editOwner()">{{ownerButtonContent}}</ion-button>
         </ion-card-content>

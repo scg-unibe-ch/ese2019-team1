@@ -8,7 +8,6 @@ import {ImageHandlerService} from './image-handler.service';
 import * as firebase from 'firebase';
 
 
-
 @Injectable({
     providedIn: 'root'
 })
@@ -99,6 +98,18 @@ export class ProfileHandlerService {
                     if (doc.get('category') !== null) {
                         pprofile.category = doc.get('category') as Categories;
                     }
+                    if (doc.get('serviceDescription') != null) {
+                        pprofile.serviceDescription = doc.get('serviceDescription') as string;
+                    }
+                    if (doc.get('about') != null) {
+                        pprofile.about = doc.get('about') as string;
+                    }
+                    if (doc.get('mainImgUrl') != null) {
+                        pprofile.mainImgUrl = doc.get('mainImgUrl') as string;
+                    }
+                    if (doc.get('secondaryImgUrls') != null) {
+                        pprofile.secondaryImgUrls = doc.get('secondaryImgUrls') as Array<string>;
+                    }
                     resolve(pprofile);
                 },
                 err => reject(err));
@@ -112,7 +123,7 @@ export class ProfileHandlerService {
     getAllProfiles(): Array<Profile> {
         const profileList = Array<Profile>();
         this.docRef.get().subscribe(snapshot => {
-            snapshot.forEach( doc => {
+            snapshot.forEach(doc => {
                 profileList.push(doc.data() as Profile);
             });
         });

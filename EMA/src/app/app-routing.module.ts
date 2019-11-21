@@ -12,6 +12,7 @@ routes = [
         path: 'home',
         loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
         canActivate: [AuthGuardService]
+
     },
     {
         path: 'basket',
@@ -30,14 +31,17 @@ routes = [
     {
         path: 'provider-profile',
         loadChildren: () => import('./pages/provider-profile/provider-profile.module').then(m => m.ProviderProfilePageModule)
+
     },
 
     {
         path: 'welcome',
         loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)
-    }
+    },
 
-];
+
+]
+;
 
 @NgModule({
     imports: [
