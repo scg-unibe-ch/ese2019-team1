@@ -81,6 +81,24 @@ export class ProfileHandlerService {
     }
 
     /**
+     * updates provider Profile data.
+     * @param profile provider profile with changed data
+     */
+    updateProfile(profile: Profile): Promise<any> {
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.docRef.doc(profile.ppid).update(profile).then(
+                    () => {
+                        resolve();
+                    },
+                    err => {
+                        console.log(err);
+                        reject(err);
+                    });
+            });
+    }
+
+    /**
      * returns profile Data as defined in profile-interface
      * @param ppid profile-ID from user DB
      */
@@ -92,22 +110,22 @@ export class ProfileHandlerService {
                         ppid: doc.get('ppid') as string,
                         uid: doc.get('uid') as string
                     };
-                    if (doc.get('companyName') !== null) {
+                    if (doc.get('companyName') !== undefined) {
                         pprofile.companyName = doc.get('companyName') as string;
                     }
-                    if (doc.get('category') !== null) {
+                    if (doc.get('category') !== undefined) {
                         pprofile.category = doc.get('category') as Categories;
                     }
-                    if (doc.get('serviceDescription') != null) {
+                    if (doc.get('serviceDescription') !== undefined) {
                         pprofile.serviceDescription = doc.get('serviceDescription') as string;
                     }
-                    if (doc.get('about') != null) {
+                    if (doc.get('about') !== undefined) {
                         pprofile.about = doc.get('about') as string;
                     }
-                    if (doc.get('mainImgUrl') != null) {
+                    if (doc.get('mainImgUrl') !== undefined) {
                         pprofile.mainImgUrl = doc.get('mainImgUrl') as string;
                     }
-                    if (doc.get('secondaryImgUrls') != null) {
+                    if (doc.get('secondaryImgUrls') !== undefined) {
                         pprofile.secondaryImgUrls = doc.get('secondaryImgUrls') as Array<string>;
                     }
                     resolve(pprofile);

@@ -30,7 +30,7 @@
         <ion-card-content>
             <p>{{profileData.serviceDescription}}</p>
             <div *ngIf="clickedService" class="editSpace">
-                <ion-textarea placeholder="Enter information" [(ngModel)]="profileData.serviceDescription"></ion-textarea>
+                <ion-textarea placeholder="Enter information" [(ngModel)]="tempServiceDescription"></ion-textarea>
             </div>
             <ion-button class="edit/saveButton" (click)="editService()">{{serviceButtonContent}}</ion-button>
         </ion-card-content>
@@ -45,7 +45,7 @@
         <ion-card-content>
             <p>{{profileData.about}}</p>
             <div *ngIf="clickedOwner" class="editSpace">
-                <ion-textarea placeholder="Enter information" [(ngModel)]="profileData.about"></ion-textarea>
+                <ion-textarea placeholder="Enter information" [(ngModel)]="tempOwnerDescription"></ion-textarea>
             </div>
             <ion-button class="edit/saveButton" (click)="editOwner()">{{ownerButtonContent}}</ion-button>
         </ion-card-content>

@@ -33,11 +33,11 @@ export class ProviderProfilePage implements OnInit {
 
     }
 
-     ngOnInit() {
-         this.ownerButtonContent = 'Edit';
-         this.serviceButtonContent = 'Edit';
-         this.loadProfileData();
-     }
+    ngOnInit() {
+        this.ownerButtonContent = 'Edit';
+        this.serviceButtonContent = 'Edit';
+        this.loadProfileData();
+    }
 
     private loadProfileData() {
         this.userHandler.readUser(this.authGuard.afAuth.auth.currentUser.uid).then(
@@ -56,23 +56,28 @@ export class ProviderProfilePage implements OnInit {
             }
         );
     }
-    editOwner() {
+
+    async editOwner() {
         this.clickedOwner = !this.clickedOwner;
         if (this.ownerButtonContent === 'Edit') {
             this.ownerButtonContent = 'Save';
         } else if (this.ownerButtonContent === 'Save') {
             this.ownerButtonContent = 'Edit';
-            this.ownerDescription = this.tempOwnerDescription;
+            this.profileData.about = this.tempOwnerDescription;
+            // Todo: let user know something went wrong in the catch statement
+            await this.profileHandler.updateProfile(this.profileData).catch();
         }
     }
 
-    editService() {
+   async editService() {
         this.clickedService = !this.clickedService;
         if (this.serviceButtonContent === 'Edit') {
             this.serviceButtonContent = 'Save';
         } else if (this.serviceButtonContent === 'Save') {
             this.serviceButtonContent = 'Edit';
-            this.serviceDescription = this.tempServiceDescription;
+            this.profileData.serviceDescription = this.tempServiceDescription;
+            // Todo: let user know something went wrong in the catch statement
+            await this.profileHandler.updateProfile(this.profileData).catch();
         }
     }
 
@@ -88,16 +93,6 @@ export class ProviderProfilePage implements OnInit {
         reader.addEventListener('load', (event: any) => {
 
             this.inputFile = new Img(file);
-            let pprofile;
-            this.profileGuard.getProfile(this.authGuard.afAuth.auth.currentUser.uid).then(
-                (profile) => {
-                    pprofile = profile as Profile;
-                },
-                err => {
-                    console.log(err);
-                });
-
-
             reader.readAsDataURL(file);
         });
     }
