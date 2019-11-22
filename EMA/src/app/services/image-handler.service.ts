@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFireStorage} from '@angular/fire/storage';
-import {ProfileHandlerService} from './profile-handler.service';
 import {Img} from './img';
-import {AngularFirestore} from "@angular/fire/firestore";
+import {AngularFirestore} from '@angular/fire/firestore';
 
 
 @Injectable({
@@ -16,7 +15,7 @@ export class ImageHandlerService {
     ) {
     }
 
-    private storageRef = this.afStorage.ref('/profileImages/');
+    private storageRef = this.afStorage.ref('/profileImages');
     private imgRef = this.afDB.collection('imageDB');
 
     /**
@@ -29,22 +28,24 @@ export class ImageHandlerService {
      */
 
     uploadImage(image: Img): Promise<Img> {
-        const promise = new Promise<Img>((resolve, reject) => {
-            const imgRef = this.storageRef.child(image.$key);
-            imgRef.put(image.img).then(
-                (res) => {
-                    image.progress = (res.bytesTransferred / res.totalBytes) * 100;
-                },
-                err => {
-                    console.log(err);
-                    reject(err);
-                }).finally(
-                () => {
-                    image.url = imgRef.getDownloadURL();
-                    resolve(image);
-                });
-        });
-        console.log(promise);
-        return promise;
+        return new Promise<Img>((resolve, reject) => {
+                const task = this.storageRef.child('/img').put(image.img[0]);
+                task.on('state_changed', snap => {
+                        image.progress = (snap.bytesTransferred / snap.totalBytes) * 100;
+                    },
+                    err => {
+                        console.log(err);
+                        reject(err);
+                    },
+                    () => {
+                        task.snapshot.ref.getDownloadURL().then(url => {
+                                console.log('imageurl at:' + url);
+                                image.url = url as string;
+                                resolve(image);
+                            }
+                        );
+                    });
+            }
+        );
     }
 }

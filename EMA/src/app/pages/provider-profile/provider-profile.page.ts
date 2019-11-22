@@ -5,6 +5,7 @@ import {Profile} from '../../services/profile';
 import {ProfileHandlerService} from '../../services/profile-handler.service';
 import {UserHandler} from '../../services/user-handler';
 import {ProfileGuardService} from '../../services/profile-guard.service';
+import {ImageHandlerService} from '../../services/image-handler.service';
 
 
 @Component({
@@ -29,7 +30,8 @@ export class ProviderProfilePage implements OnInit {
     constructor(private authGuard: AuthenticateService,
                 private profileHandler: ProfileHandlerService,
                 private userHandler: UserHandler,
-                private profileGuard: ProfileGuardService) {
+                private profileGuard: ProfileGuardService,
+                private imageHandler: ImageHandlerService) {
 
     }
 
@@ -69,7 +71,7 @@ export class ProviderProfilePage implements OnInit {
         }
     }
 
-   async editService() {
+    async editService() {
         this.clickedService = !this.clickedService;
         if (this.serviceButtonContent === 'Edit') {
             this.serviceButtonContent = 'Save';
@@ -85,15 +87,14 @@ export class ProviderProfilePage implements OnInit {
         this.profileGuard.isProfileOwner(this.authGuard.afAuth.auth.currentUser.uid, this.profileData.ppid);
     }
 
-    addProfilePicture(imageInput: any) {
-        console.log(imageInput.files[0]);
-        const file: File = imageInput.files[0];
-        const reader = new FileReader();
-
-        reader.addEventListener('load', (event: any) => {
-
-            this.inputFile = new Img(file);
-            reader.readAsDataURL(file);
-        });
+    async addProfilePicture(imageInput: File) {
+        console.log(imageInput.name);
+        this.inputFile = new Img(imageInput);
+        // Todo: catch reject-case and let user know
+        await this.imageHandler.uploadImage(this.inputFile).then(async img => {
+            this.profileData.mainImgUrl = img.url;
+            await this.profileHandler.updateProfile(this.profileData);
+        },
+            (err) => {});
     }
 }

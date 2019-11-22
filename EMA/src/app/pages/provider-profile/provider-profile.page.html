@@ -8,7 +8,7 @@
     <div class="quick_display">
         <form>
             <label> Add your profile picture
-                <input #profilePicture type="file" accept="image/*" (change)="addProfilePicture(profilePicture)">
+                <input #profilePicture type="file" accept="image/*" (change)="addProfilePicture($event.target.files)">
             </label>
         </form>
         <img class="profile_image" src="../../../assets/images/im6.jpg">
