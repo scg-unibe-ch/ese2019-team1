@@ -57,19 +57,45 @@ export class ImageHandlerService {
             });
     }
 
+    /**
+     * retrieves the image location url as string from firestore vie image database
+     * @param imagekey ImageID
+     */
+
     getImageURL(imagekey: string): Promise<string> {
-       return new Promise<string>(
-           (resolve, reject) => {
-               let url: string;
-               this.imgRef.doc(imagekey).ref.get().then(
-                   doc => {
-                       url = doc.get('url') as string;
-                       resolve(url);
-                   },
+        return new Promise<string>(
+            (resolve, reject) => {
+                let url: string;
+                this.imgRef.doc(imagekey).ref.get().then(
+                    doc => {
+                        url = doc.get('url') as string;
+                        resolve(url);
+                    },
 
-                   err => reject(err)
-               );
-           });
+                    err => reject(err)
+                );
+            });
 
+    }
+
+    /**
+     * deletes image entry from image DB and file from storage
+     * @param imagekey imageID of image to be deleted
+     */
+
+    deleteImage(imagekey: string): Promise<any> {
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.imgRef.doc(imagekey).delete().then(
+                    () => {
+                        this.afStorage.ref(imagekey).delete().pipe(
+                            finalize(() => {
+                                resolve();
+                            })
+                        ).subscribe();
+                    },
+                    err => reject(err)
+                );
+            });
     }
 }

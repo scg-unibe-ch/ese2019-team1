@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Img} from '../../services/img';
 import {AuthenticateService} from '../../services/authentication.service';
 import {Profile} from '../../services/profile';
@@ -14,7 +14,7 @@ import {ImageHandlerService} from '../../services/image-handler.service';
     styleUrls: ['./provider-profile.page.scss'],
 })
 
-export class ProviderProfilePage implements OnInit {
+export class ProviderProfilePage implements OnInit, OnChanges {
     profileData: Profile;
     mainProfileImageUrl: string;
     private dataLoaded = false;
@@ -39,6 +39,15 @@ export class ProviderProfilePage implements OnInit {
     ngOnInit() {
         this.ownerButtonContent = 'Edit';
         this.serviceButtonContent = 'Edit';
+        this.loadProfile();
+    }
+    ngOnChanges(changes: SimpleChanges): void {
+        this.loadProfile();
+
+    }
+
+
+    private loadProfile() {
         this.loadProfileData().then(
             res => {
                 this.loadMainProfileImage().then(
@@ -105,6 +114,9 @@ export class ProviderProfilePage implements OnInit {
         this.inputFile = new Img(imageInput);
         this.inputFile.ownerId = this.profileData.uid;
         // Todo: catch reject-case and let user know
+        if (this.profileData.mainImgID !== undefined) {
+            await this.imageHandler.deleteImage(this.profileData.mainImgID);
+        }
         this.imageHandler.uploadImage(this.inputFile).then(
             img => {
                 this.profileData.mainImgID = img.$key;
