@@ -8,10 +8,10 @@
     <div class="quick_display">
         <form>
             <label> Add your profile picture
-                <input #profilePicture type="file" accept="image/*" (change)="addProfilePicture($event.target.files)">
+                <input #profilePicture type="file" accept="image/*" (change)="addProfilePicture($event.target.files.item(0))">
             </label>
         </form>
-        <img class="profile_image" src="../../../assets/images/im6.jpg">
+        <img class="profile_image" [src]="profileData.mainImgUrl">
         <div class="essentials">
             <h2>This is my firm</h2>
             <p>We operate in space and are available 24/7.</p>

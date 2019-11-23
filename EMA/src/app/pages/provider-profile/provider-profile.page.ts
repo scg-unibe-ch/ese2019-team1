@@ -6,6 +6,8 @@ import {ProfileHandlerService} from '../../services/profile-handler.service';
 import {UserHandler} from '../../services/user-handler';
 import {ProfileGuardService} from '../../services/profile-guard.service';
 import {ImageHandlerService} from '../../services/image-handler.service';
+import {finalize} from "rxjs/operators";
+import {templateJitUrl} from "@angular/compiler";
 
 
 @Component({
@@ -90,11 +92,14 @@ export class ProviderProfilePage implements OnInit {
     async addProfilePicture(imageInput: File) {
         console.log(imageInput.name);
         this.inputFile = new Img(imageInput);
+        this.inputFile.ownerId = this.profileData.uid;
         // Todo: catch reject-case and let user know
-        await this.imageHandler.uploadImage(this.inputFile).then(async img => {
-            this.profileData.mainImgUrl = img.url;
-            await this.profileHandler.updateProfile(this.profileData);
-        },
-            (err) => {});
+        this.imageHandler.uploadImage(this.inputFile).then(
+            img => {
+                this.profileData.mainImgUrl = img.url;
+                this.profileHandler.updateProfile(this.profileData);
+            }
+        );
+
     }
 }

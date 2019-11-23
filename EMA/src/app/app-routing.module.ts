@@ -12,12 +12,12 @@ routes = [
         path: 'home',
         loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
         canActivate: [AuthGuardService]
-
     },
     {
         path: 'basket',
         loadChildren: () => import('./pages/basket/basket.module').then(m => m.BasketPageModule),
         canActivate: [AuthGuardService]
+
     },
     {
         path: 'signup',
@@ -37,7 +37,6 @@ routes = [
     {
         path: 'welcome',
         loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)
-
     },
 
 
