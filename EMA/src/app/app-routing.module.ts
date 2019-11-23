@@ -31,7 +31,6 @@ routes = [
     {
         path: 'provider-profile',
         loadChildren: () => import('./pages/provider-profile/provider-profile.module').then(m => m.ProviderProfilePageModule)
-
     },
 
     {

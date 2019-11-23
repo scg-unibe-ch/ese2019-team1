@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Img} from '../../services/img';
 import {AuthenticateService} from '../../services/authentication.service';
 import {Profile} from '../../services/profile';
@@ -6,8 +6,6 @@ import {ProfileHandlerService} from '../../services/profile-handler.service';
 import {UserHandler} from '../../services/user-handler';
 import {ProfileGuardService} from '../../services/profile-guard.service';
 import {ImageHandlerService} from '../../services/image-handler.service';
-import {finalize} from "rxjs/operators";
-import {templateJitUrl} from "@angular/compiler";
 
 
 @Component({
@@ -18,6 +16,7 @@ import {templateJitUrl} from "@angular/compiler";
 
 export class ProviderProfilePage implements OnInit {
     profileData: Profile;
+    mainProfileImageUrl: string;
     private dataLoaded = false;
     tempOwnerDescription;
     ownerDescription;
@@ -40,25 +39,37 @@ export class ProviderProfilePage implements OnInit {
     ngOnInit() {
         this.ownerButtonContent = 'Edit';
         this.serviceButtonContent = 'Edit';
-        this.loadProfileData();
-    }
-
-    private loadProfileData() {
-        this.userHandler.readUser(this.authGuard.afAuth.auth.currentUser.uid).then(
-            user => {
-                if (user.isProvider) {
-                    this.profileHandler.readProfile(user.ppid).then(
-                        p => {
-                            this.profileData = p as Profile;
-                            this.dataLoaded = true;
-                        }
-                    );
-                }
-            },
-            err => {
-                console.log(err);
+        this.loadProfileData().then(
+            res => {
+                this.loadMainProfileImage().then(
+                    () => {
+                        this.dataLoaded = res.valueOf();
+                    }
+                );
             }
         );
+    }
+
+    private loadProfileData(): Promise<boolean> {
+        return new Promise<boolean>(
+            (resolve, reject) => {
+                this.userHandler.readUser(this.authGuard.afAuth.auth.currentUser.uid).then(
+                    user => {
+                        if (user.isProvider) {
+                            this.profileHandler.readProfile(user.ppid).then(
+                                p => {
+                                    this.profileData = p as Profile;
+                                    resolve(true);
+                                }
+                            );
+                        }
+                    },
+                    err => {
+                        console.log(err);
+                        reject(false);
+                    }
+                );
+            });
     }
 
     async editOwner() {
@@ -96,10 +107,17 @@ export class ProviderProfilePage implements OnInit {
         // Todo: catch reject-case and let user know
         this.imageHandler.uploadImage(this.inputFile).then(
             img => {
-                this.profileData.mainImgUrl = img.url;
+                this.profileData.mainImgID = img.$key;
                 this.profileHandler.updateProfile(this.profileData);
             }
         );
 
+    }
+
+    async loadMainProfileImage() {
+        this.imageHandler.getImageURL(this.profileData.mainImgID).then(
+            url => this.mainProfileImageUrl = url,
+            err => console.log(err)
+        );
     }
 }

@@ -7,8 +7,8 @@ export interface Profile {
     category?: Categories;
     serviceDescription?: string;
     about?: string;
-    mainImgUrl?: string;
-    secondaryImgUrls?: Array<string>;
+    mainImgID?: string;
+    secondaryImgIDs?: Array<string>;
 }
 
 export enum Categories {

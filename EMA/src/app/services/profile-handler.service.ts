@@ -122,11 +122,11 @@ export class ProfileHandlerService {
                     if (doc.get('about') !== undefined) {
                         pprofile.about = doc.get('about') as string;
                     }
-                    if (doc.get('mainImgUrl') !== undefined) {
-                        pprofile.mainImgUrl = doc.get('mainImgUrl') as string;
+                    if (doc.get('mainImgID') !== undefined) {
+                        pprofile.mainImgID = doc.get('mainImgID') as string;
                     }
-                    if (doc.get('secondaryImgUrls') !== undefined) {
-                        pprofile.secondaryImgUrls = doc.get('secondaryImgUrls') as Array<string>;
+                    if (doc.get('secondaryImgIDs') !== undefined) {
+                        pprofile.secondaryImgIDs = doc.get('secondaryImgIDs') as Array<string>;
                     }
                     resolve(pprofile);
                 },

@@ -56,4 +56,20 @@ export class ImageHandlerService {
                     });
             });
     }
+
+    getImageURL(imagekey: string): Promise<string> {
+       return new Promise<string>(
+           (resolve, reject) => {
+               let url: string;
+               this.imgRef.doc(imagekey).ref.get().then(
+                   doc => {
+                       url = doc.get('url') as string;
+                       resolve(url);
+                   },
+
+                   err => reject(err)
+               );
+           });
+
+    }
 }
