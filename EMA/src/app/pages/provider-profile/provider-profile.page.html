@@ -4,21 +4,30 @@
     </ion-toolbar>
 </ion-header>
 
+        <ion-buttons class="edit">
+            <ion-button size="default" shape="round" fill="solid" color="light"> Edit your profile
+                <ion-icon name="create"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
 <ion-content class="content" *ngIf="dataLoaded">
     <div class="quick_display">
-        <form>
-            <label> Add your profile picture
-                <input #profilePicture type="file" accept="image/*" (change)="addProfilePicture($event.target.files.item(0))">
-            </label>
-        </form>
-        <img class="profile_image" [src]="mainProfileImageUrl">
+        <div class="pictureContainer">
+            <img class="profile_image" [src]="mainProfileImageUrl">
+            <form class="input-picture">
+                <label> Change your profile picture here
+                    <input #profilePicture type="file" accept="image/*"
+                           (change)="addProfilePicture($event.target.files.item(0))">
+                </label>
+            </form>
+        </div>
         <div class="essentials">
             <h2>This is my firm</h2>
             <p>We operate in space and are available 24/7.</p>
         </div>
     </div>
 
-    <div>
+    <div class="pictureContainer">
         <img class="pictures" src="../../../assets/images/im10.jpg">
     </div>
     <ion-card class="description" color="light">
