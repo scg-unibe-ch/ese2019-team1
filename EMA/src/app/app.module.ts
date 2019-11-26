@@ -21,10 +21,10 @@ import {ImageHandlerService} from './services/image-handler.service';
 import {ProfileHandlerService} from './services/profile-handler.service';
 import {IndexPageModule} from './index/index.module';
 import {ProviderProfilePageModule} from './pages/provider-profile/provider-profile.module';
-import {WelcomePage} from "./pages/welcome/welcome.page";
-import {WelcomePageModule} from "./pages/welcome/welcome.module";
-import {LoginPage} from "./pages/login/login.page";
-import {LoginPageModule} from "./pages/login/login.module";
+import {WelcomePage} from './pages/welcome/welcome.page';
+import {WelcomePageModule} from './pages/welcome/welcome.module';
+import {LoginPage} from './pages/login/login.page';
+import {LoginPageModule} from './pages/login/login.module';
 
 @NgModule({
     declarations:

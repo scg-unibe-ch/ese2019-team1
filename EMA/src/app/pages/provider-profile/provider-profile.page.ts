@@ -43,6 +43,7 @@ export class ProviderProfilePage implements OnInit {
     ngOnInit() {
         this.ownerButtonContent = 'Edit';
         this.serviceButtonContent = 'Edit';
+        this.editProfileButtonContent = 'Edit your profile';
         this.loadProfile(this.route.snapshot.paramMap.get('ppid'));
     }
 
