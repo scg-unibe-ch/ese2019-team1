@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NavController, ToastController} from '@ionic/angular';
+import {AuthenticateService} from '../../services/authentication.service';
+import {ProfileHandlerService} from '../../services/profile-handler.service';
 
 @Component({
   selector: 'app-signupprovider',
@@ -14,6 +16,8 @@ export class SignupproviderPage implements OnInit {
 
     constructor(public toastController: ToastController,
                 private navCtrl: NavController,
+                private authService: AuthenticateService,
+                private fs: ProfileHandlerService,
                 private formBuilder: FormBuilder) {
         this.signupForm = this.formBuilder.group({
             name: new FormControl('', Validators.compose([
@@ -42,10 +46,18 @@ export class SignupproviderPage implements OnInit {
 
     onSubmit(value) {
         this.submitted = true;
+        console.log('SIGNUP');
 
         if (this.signupForm.invalid) {
             return;
         }
+        this.authService.registerProvider({
+            email: this.signupForm.get('email').value,
+            providerName: this.signupForm.get('providerName').value,
+            category: this.signupForm.get('category').value
+
+
+            this.navCtrl.navigateForward('/home/feed');
 
 
     }

@@ -3,12 +3,10 @@ import {Img} from './img';
 export interface Profile {
     ppid: string;
     uid: string;
-    companyName?: string;
+    providerName: string;
     category?: Categories;
     serviceDescription?: string;
-    about?: string;
-    mainImgID?: string;
-    secondaryImgIDs?: Array<string>;
+    email: string;
 }
 
 export enum Categories {

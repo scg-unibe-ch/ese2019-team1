@@ -108,25 +108,19 @@ export class ProfileHandlerService {
             this.docRef.doc(ppid).ref.get().then((doc) => {
                     pprofile = {
                         ppid: doc.get('ppid') as string,
-                        uid: doc.get('uid') as string
+                        uid: doc.get('uid') as string,
+                        providerName: doc.get('providerName') as string,
+                        email: doc.get('email') as string,
+                        category: doc.get ( 'category') as Categories,
                     };
-                    if (doc.get('companyName') !== undefined) {
-                        pprofile.companyName = doc.get('companyName') as string;
+                    if (doc.get('providerName') !== undefined) {
+                        pprofile.providerName = doc.get('providerName') as string;
                     }
                     if (doc.get('category') !== undefined) {
                         pprofile.category = doc.get('category') as Categories;
                     }
                     if (doc.get('serviceDescription') !== undefined) {
                         pprofile.serviceDescription = doc.get('serviceDescription') as string;
-                    }
-                    if (doc.get('about') !== undefined) {
-                        pprofile.about = doc.get('about') as string;
-                    }
-                    if (doc.get('mainImgID') !== undefined) {
-                        pprofile.mainImgID = doc.get('mainImgID') as string;
-                    }
-                    if (doc.get('secondaryImgIDs') !== undefined) {
-                        pprofile.secondaryImgIDs = doc.get('secondaryImgIDs') as Array<string>;
                     }
                     resolve(pprofile);
                 },
