@@ -43,12 +43,6 @@ export class ProviderProfilePage implements OnInit {
 
     }
 
-/*    pushPage() {
-        this.navCtrl.push('home/provider-profile/:ppid', {
-            'ppid':
-        })
-
-    }*/
 
     ngOnInit() {
         this.ownerButtonContent = 'Edit';
