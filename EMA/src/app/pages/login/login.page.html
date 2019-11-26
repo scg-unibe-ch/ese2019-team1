@@ -1,8 +1,11 @@
 <ion-header>
-    <ion-toolbar id="toolbar" color="primary">
-        <ion-title id="title">Welcome to EMA</ion-title>
+    <ion-toolbar color="primary">
+        <ion-title>
+            <p align="center">Login</p>
+        </ion-title>
     </ion-toolbar>
 </ion-header>
+
 
 <ion-content id="content">
     <form id="form" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
