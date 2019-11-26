@@ -20,6 +20,5 @@ export class EventComponent implements OnInit {
   }
 
   navigateTo() {
-    this.router.navigateTo()
   }
 }
