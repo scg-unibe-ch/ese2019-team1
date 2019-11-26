@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { IonContent} from "@ionic/angular";
-import { ViewChild} from "@angular/core";
+import { IonContent} from '@ionic/angular';
+import { ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-messages',
@@ -8,6 +8,9 @@ import { ViewChild} from "@angular/core";
   styleUrls: ['./messages.page.scss'],
 })
 export class MessagesPage implements OnInit {
+
+  constructor() {
+  }
   messages = [
     {
       user: 'simon',
@@ -27,10 +30,11 @@ export class MessagesPage implements OnInit {
   ];
   currentUser = 'simon';
   newMsg = '';
+  // @ts-ignore
   @ViewChild(IonContent) content: IonContent;
-
-  constructor() {
-  }
+    ngOnInit(): void {
+        throw new Error('Method not implemented.');
+    }
 
   sendMessage() {
     this.messages.push({

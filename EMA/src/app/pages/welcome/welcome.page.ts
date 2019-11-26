@@ -10,6 +10,7 @@ import { IonSlides } from '@ionic/angular';
 })
 export class WelcomePage implements OnInit {
 
+    // @ts-ignore
     @ViewChild('slides') slides: IonSlides;
     constructor(private router: Router) {
     }
