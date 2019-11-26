@@ -17,8 +17,9 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFireStorageModule} from '@angular/fire/storage';
-import {ImageHandlerService} from "./services/image-handler.service";
-import {ProfileHandlerService} from "./services/profile-handler.service";
+import {ImageHandlerService} from './services/image-handler.service';
+import {ProfileHandlerService} from './services/profile-handler.service';
+import {IndexPageModule} from './index/index.module';
 
 @NgModule({
     declarations:
@@ -27,6 +28,7 @@ import {ProfileHandlerService} from "./services/profile-handler.service";
         ],
     entryComponents: [],
     imports: [
+        IndexPageModule,
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
