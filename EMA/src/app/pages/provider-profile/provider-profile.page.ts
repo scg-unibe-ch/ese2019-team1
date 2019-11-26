@@ -105,8 +105,8 @@ export class ProviderProfilePage implements OnInit {
         }
     }
 
-    isOwner() {
-        this.profileGuard.isProfileOwner(this.authGuard.afAuth.auth.currentUser.uid, this.profileData.ppid);
+    isOwner(): boolean {
+        return this.profileGuard.isProfileOwner(this.authGuard.afAuth.auth.currentUser.uid, this.profileData.ppid);
     }
 
     async addProfilePicture(imageInput: File) {

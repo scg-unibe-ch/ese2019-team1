@@ -11,13 +11,13 @@ import {Profile} from './profile';
 export class ProfileGuardService {
 
     constructor(private authService: AuthenticateService,
-                private userhandler: UserHandler,
-                private profilehandler: ProfileHandlerService) {
+                private userHandler: UserHandler,
+                private profileHandler: ProfileHandlerService) {
     }
 
     isProfileOwner(uid: string, ppid: string): boolean {
         let isOwner = false;
-        this.userhandler.readUser(uid).then(
+        this.userHandler.readUser(uid).then(
             user => {
                 isOwner = (user.isProvider && user.ppid === ppid);
             },
@@ -33,12 +33,12 @@ export class ProfileGuardService {
         return new Promise<Profile>(
             (resolve, reject) => {
                 let profile: Profile;
-                this.userhandler.readUser(uid).then(
+                this.userHandler.readUser(uid).then(
                     user => {
                         if (!user.isProvider) {
                             reject();
                         } else {
-                            this.profilehandler.readProfile(user.ppid).then(
+                            this.profileHandler.readProfile(user.ppid).then(
                                 providerProfile => {
                                     profile = providerProfile as Profile;
                                 },
