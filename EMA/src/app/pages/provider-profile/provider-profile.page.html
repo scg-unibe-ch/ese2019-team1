@@ -8,7 +8,7 @@
 <ion-content class="content" *ngIf="dataLoaded">
     <ion-buttons class="edit">
         <ion-button size="default" shape="round" fill="solid" color="light"
-                    (click)="controlEditMode()">{{editProfileButtonContent}}
+                    (click)="controlEditMode()" *ngIf="userIsOwner">{{editProfileButtonContent}}
             <ion-icon name="create"></ion-icon>
         </ion-button>
     </ion-buttons>

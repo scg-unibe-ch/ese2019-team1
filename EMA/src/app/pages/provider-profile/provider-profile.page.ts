@@ -19,6 +19,7 @@ export class ProviderProfilePage implements OnInit {
     profileData: Profile;
     mainProfileImageUrl: string;
     private dataLoaded = false;
+    private userIsOwner = false;
     tempOwnerDescription;
     ownerDescription;
     tempServiceDescription;
@@ -51,6 +52,7 @@ export class ProviderProfilePage implements OnInit {
     public loadProfile(ppid: string) {
         this.loadProfileData(ppid).then(
             res => {
+                this.isOwner();
                 this.loadMainProfileImage().then(
                     () => {
                         this.dataLoaded = res.valueOf();
@@ -106,8 +108,10 @@ export class ProviderProfilePage implements OnInit {
         }
     }
 
-    isOwner(): boolean {
-        return this.profileGuard.isProfileOwner(this.authGuard.afAuth.auth.currentUser.uid, this.profileData.ppid);
+    async isOwner() {
+       await this.profileGuard.isProfileOwner(this.authGuard.afAuth.auth.currentUser.uid, this.profileData.ppid).then(
+            async res => (this.userIsOwner = res.valueOf())
+        );
     }
 
     async addProfilePicture(imageInput: File) {
