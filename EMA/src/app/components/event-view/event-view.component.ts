@@ -1,6 +1,4 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {EventComponent} from '../event/event.component';
-import {range} from 'rxjs';
 
 @Component({
   selector: 'app-event-view',
@@ -23,7 +21,7 @@ export class EventViewComponent implements OnInit {
   @Input() self: EventViewComponent;
 
   constructor() {
-    this.eventsShown = [
+    this.events = [
       {title: 'title_1', text: 'this is a text that needs to be shown on the card. It describes the event.',
         image: '/assets/images/im5_lowres.jpg', service: 'photo'},
       {title: 'title_2', text: 'this is a text that needs to be shown on the card. It describes the event.',
@@ -40,6 +38,7 @@ export class EventViewComponent implements OnInit {
         image: '/assets/images/im7_lowres.jpg', service: 'venue'}
     ];
     this.reFit();
+    this.selectService('');
   }
 
   ngOnInit() {
@@ -62,12 +61,23 @@ export class EventViewComponent implements OnInit {
     }
   }
 
-  selectService(services) {
-    this.services = services;
-    this.events.forEach(function(event) {
-      if (event.service === 'venue') {
-        this.eventsShown.push(event);
+  public selectService(services) {
+    this.eventsShown = new Array();
+    if (services === '') {
+      let i = 0;
+      for (i = 0; i < this.events.length; i++) {
+        this.eventsShown.push(this.events[i]);
       }
-    });
+    } else {
+      let e = 0;
+      for (e = 0; e < services.length; e++) {
+        let i = 0;
+        for (i = 0; i < this.events.length; i++) {
+          if (this.events[i].service === services[e]) {
+            this.eventsShown.push(this.events[i]);
+          }
+        }
+      }
     }
+  }
 }
