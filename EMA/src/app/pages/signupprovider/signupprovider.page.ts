@@ -51,7 +51,7 @@ export class SignupproviderPage implements OnInit {
         if (this.signupForm.invalid) {
             return;
         }
-        this.authService.registerProvider({
+    /*    this.authService.registerProvider({
             email: this.signupForm.get('email').value,
             providerName: this.signupForm.get('providerName').value,
             category: this.signupForm.get('category').value
@@ -59,6 +59,6 @@ export class SignupproviderPage implements OnInit {
 
             this.navCtrl.navigateForward('/home/feed');
 
-
+*/
     }
 }
