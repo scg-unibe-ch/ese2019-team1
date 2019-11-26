@@ -24,12 +24,6 @@ const routes: Routes = [
 
             },
             {
-                path: 'basket',
-                loadChildren: () =>
-                    import('../pages/basket/basket.module').then(m => m.BasketPageModule)
-
-            },
-            {
                 path: 'settings',
                 loadChildren: () =>
                     import('../pages/settings/settings.module').then(m => m.SettingsPageModule)

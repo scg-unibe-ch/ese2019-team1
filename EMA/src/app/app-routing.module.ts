@@ -23,11 +23,6 @@ export const routes: Route[] = [
         canActivate: [AuthGuardService]
     },
     {
-        path: 'basket',
-        loadChildren: () => import('./pages/basket/basket.module').then(m => m.BasketPageModule),
-        canActivate: [AuthGuardService]
-    },
-    {
         path: 'signup',
         loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule)
     },
@@ -46,7 +41,6 @@ export const routes: Route[] = [
         path: 'login',
         component: LoginPage
     },
-
 ];
 
 @NgModule({

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { HomePage } from './home.page';
 import {HomeRouter} from './home.router';
-
+import { AutosizeModule } from "ngx-autosize";
 
 
 @NgModule({
