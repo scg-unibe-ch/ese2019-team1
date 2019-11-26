@@ -8,7 +8,7 @@
 <ion-content class="content" *ngIf="dataLoaded">
     <ion-buttons class="edit">
         <ion-button size="default" shape="round" fill="solid" color="light"
-                    (click)="controlEditMode()">{{editProfileButtonContent}}
+                    (click)="controlEditMode()" *ngIf="userIsOwner">{{editProfileButtonContent}}
             <ion-icon name="create"></ion-icon>
         </ion-button>
     </ion-buttons>
@@ -55,7 +55,7 @@
         </ion-card-header>
         <ion-card-content>
             <p>{{profileData.about}}</p>
-            <div *ngIf="clickedOwner" class="editSpace">
+            <div *ngIf="clickedOwner && editMode" class="editSpace">
                 <ion-textarea placeholder="Enter information" [(ngModel)]="tempOwnerDescription"></ion-textarea>
             </div>
             <ion-button class="edit/saveButton" (click)="editOwner()"

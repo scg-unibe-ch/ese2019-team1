@@ -1,4 +1,4 @@
-import {Component, Injectable, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
 import {UserHandler} from '../../services/user-handler';
@@ -37,7 +37,7 @@ export class SettingsPage {
         console.log('button clicked');
         this.auth.logoutUser();
         this.presentToast('Logged out', 1000);
-        this.navCtrl.navigateBack('/welcome');
+        this.navCtrl.navigateBack('');
     }
 
     createProviderAccount() {

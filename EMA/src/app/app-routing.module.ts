@@ -36,7 +36,6 @@ export const routes: Route[] = [
         loadChildren: () => import('./pages/signupprovider/signupprovider.module').then(m => m.SignupproviderPageModule),
         canActivate: [AuthGuardService]
     },
-
     {
         path: 'home/provider-profile/:ppid',
         component: ProviderProfilePage,
@@ -46,7 +45,6 @@ export const routes: Route[] = [
         path: 'login',
         component: LoginPage
     },
-
 ];
 
 @NgModule({

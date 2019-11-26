@@ -15,17 +15,21 @@ export class ProfileGuardService {
                 private profileHandler: ProfileHandlerService) {
     }
 
-    isProfileOwner(uid: string, ppid: string): boolean {
-        let isOwner = false;
-        this.userHandler.readUser(uid).then(
-            user => {
-                isOwner = (user.isProvider && user.ppid === ppid);
-            },
-            err => {
-                isOwner = false;
-            }
-        );
-        return isOwner;
+    isProfileOwner(uid: string, ppid: string): Promise<boolean> {
+        return new Promise<boolean>(
+            async (resolve, reject) => {
+                await this.userHandler.readUser(uid).then(
+                    user => {
+                        if (user.isProvider.valueOf() && user.ppid === ppid) {
+                            resolve(true);
+                        } else {
+                            reject(false);
+                        }
+                    },
+                    err => reject(false)
+                );
+
+            });
     }
 
 
