@@ -1,4 +1,6 @@
 import {AfterViewInit, Component, HostListener, Input, OnInit} from '@angular/core';
+import {ProfileHandlerService} from '../../services/profile-handler.service';
+import {Profile} from '../../services/profile';
 
 @Component({
   selector: 'app-event-view',
@@ -9,12 +11,14 @@ export class EventViewComponent implements OnInit, AfterViewInit {
 
   private events = new Array();
 
+  private profiles = new Array<Profile>();
+
   private width;
   private aspectRatio;
 
   @Input() self: EventViewComponent;
 
-  constructor() {
+  constructor(private profileHandler: ProfileHandlerService) {
     this.events = [
       {title: 'title_1', text: 'this is a text that needs to be shown on the card. It describes the event.',
         image: '/assets/images/im5_lowres.jpg', service: 'photo', show: true},
@@ -31,6 +35,11 @@ export class EventViewComponent implements OnInit, AfterViewInit {
       {title: 'title_7', text: 'this is a text that needs to be shown on the card. It describes the event.',
         image: '/assets/images/im7_lowres.jpg', service: 'venue', show: true}
     ];
+    this.getProfiles();
+  }
+
+  private async getProfiles() {
+      await this.profileHandler.getAllProfiles().then(res => this.profiles = res);
   }
 
   ngOnInit() {
@@ -43,10 +52,10 @@ export class EventViewComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.reFit();
+      this.reFit();
   }
 
-  reFit() {
+  private reFit() {
     const screenWidth = self.innerWidth;
     const screenHeight = self.innerHeight;
     this.aspectRatio = screenWidth / screenHeight;
@@ -56,6 +65,17 @@ export class EventViewComponent implements OnInit, AfterViewInit {
     for (i = 0; i < events.length; i++) {
       events[i].setAttribute('style', 'width: ' + this.width + '%;');
     }
+  }
+
+  private loadProfileDataInArray() {
+      let i = 0;
+      for (i = 0; i < this.profiles.length; i++) {
+          this.events.push({title: this.profiles[i].companyName,
+              text: this.profiles[i].serviceDescription,
+              image: this.profiles[i].secondaryImgIDs,
+              service: this.profiles[i].category,
+              show: true});
+      }
   }
 
   public selectService(services) {
