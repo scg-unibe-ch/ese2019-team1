@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomePage} from './home.page';
 
+
 const routes: Routes = [
     {
         path: '',
@@ -30,7 +31,7 @@ const routes: Routes = [
 
             },
             {
-                path: 'provider-profile',
+                path: 'home/provider-profile/:ppid',
                 loadChildren: () =>
                     import('../pages/provider-profile/provider-profile.module').then(m => m.ProviderProfilePageModule)
             }

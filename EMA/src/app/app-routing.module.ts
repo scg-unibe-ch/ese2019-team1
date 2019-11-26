@@ -31,7 +31,6 @@ export const routes: Route[] = [
         loadChildren: () => import('./pages/signupprovider/signupprovider.module').then(m => m.SignupproviderPageModule),
         canActivate: [AuthGuardService]
     },
-
     {
         path: 'home/provider-profile/:ppid',
         component: ProviderProfilePage,

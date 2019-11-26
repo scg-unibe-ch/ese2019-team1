@@ -46,7 +46,6 @@ export class UserHandler {
                         user.ppid = doc.get('ppid') as string;
                     }
                     return user;
-
                 });
                 resolve(user);
             }

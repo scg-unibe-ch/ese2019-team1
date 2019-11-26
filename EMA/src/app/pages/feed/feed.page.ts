@@ -20,7 +20,6 @@ export class FeedPage implements OnInit {
   }
 
   onFilterChanged(services) {
-    console.log(services.length);
     if (services.length < 1) {
       this.eventView.selectService('');
     } else {
