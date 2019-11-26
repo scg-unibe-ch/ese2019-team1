@@ -3,9 +3,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from './user';
 import {UserHandler} from './user-handler';
 import {Categories, Profile} from './profile';
-import {Img} from './img';
 import {ImageHandlerService} from './image-handler.service';
-import * as firebase from 'firebase';
 
 
 @Injectable({
