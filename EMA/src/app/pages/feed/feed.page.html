@@ -1,10 +1,21 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-title><p align="center">Feed</p></ion-title>
-
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <app-event-view></app-event-view>
+    <ion-item id="filter">
+        <ion-label position="floating">Service</ion-label>
+        <ion-select value="" [(ngModel)]="select" ngDefaultControl multiple="true" (ionChange)="eventView.selectService(select.value)">
+            <ion-select-option value="photo">Photographer</ion-select-option>
+            <ion-select-option value="venue">Venue</ion-select-option>
+            <ion-select-option value="music">Music</ion-select-option>
+            <ion-select-option value="catering">Catering</ion-select-option>
+            <ion-select-option value="other">Other</ion-select-option>
+        </ion-select>
+        <ion-icon name="photos" slot="end" align-self-center></ion-icon>
+    </ion-item>
+
+    <app-event-view [(ngModel)]="eventView" ngDefaultControl [self]="this"></app-event-view>
 </ion-content>

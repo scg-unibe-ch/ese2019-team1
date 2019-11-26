@@ -14,4 +14,12 @@ export class EventComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  getService() {
+    return this.event.service;
+  }
+
+  navigateTo() {
+    this.router.navigateTo()
+  }
 }

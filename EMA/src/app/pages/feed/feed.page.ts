@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FeedPage implements OnInit {
 
-  constructor() {
-  }
+  private eventView;
+  private select;
+
+  constructor() { }
 
   ngOnInit() {
-
   }
-
 }
