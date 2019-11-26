@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {AngularFireStorage} from '@angular/fire/storage';
-import {ProfileHandlerService} from './profile-handler.service';
 import {Img} from './img';
-import {AngularFirestore} from "@angular/fire/firestore";
+import {AngularFirestore} from '@angular/fire/firestore';
+import {finalize} from 'rxjs/operators';
 
 
 @Injectable({
@@ -16,11 +16,10 @@ export class ImageHandlerService {
     ) {
     }
 
-    private storageRef = this.afStorage.ref('/profileImages/');
-    private imgRef = this.afDB.collection('imageDB');
+    private imgRef = this.afDB.collection('imageDB/');
 
     /**
-     * uploads image to firestorage with a image key given from the firestore database.
+     * registers key in image database, which in hand is used to upload the file under that key to firestorage.
      * returns promise. resolve: returns Img object with download url and progress.
      * reject: something went wrong
      * @param image image data according to specs of Img class
@@ -29,22 +28,74 @@ export class ImageHandlerService {
      */
 
     uploadImage(image: Img): Promise<Img> {
-        let promise = new Promise<Img>((resolve, reject) => {
-            const imgRef = this.storageRef.child(image.$key);
-            imgRef.put(image.img).then(
-                (res) => {
-                    image.progress = (res.bytesTransferred / res.totalBytes) * 100;
-                },
-                err => {
-                    console.log(err);
-                    reject(err);
-                }).finally(
-                () => {
-                    image.url = imgRef.getDownloadURL();
-                    resolve(image);
-                });
-        });
-        console.log(promise);
-        return promise;
+        return new Promise<Img>(
+            (resolve, reject) => {
+                this.imgRef.add({
+                    name: image.name as string,
+                    createdAt: image.createdAt as Date,
+                    ownerId: image.ownerId as string,
+                }).then(
+                    res => {
+                        image.$key = res.id.toString();
+                    },
+                    err => {
+                        reject(err);
+                    }).then(
+                    () => {
+                        const task = this.afStorage.upload(image.$key, image.img);
+                        image.progress = task.percentageChanges();
+                        task.snapshotChanges().pipe(
+                            finalize(() => {
+                                this.afStorage.ref(image.$key).getDownloadURL().subscribe(
+                                    url => {
+                                        image.url = url as string;
+                                        this.imgRef.doc(image.$key).update({url: image.url}).then(
+                                            () => resolve(image));
+                                    });
+                            })).subscribe();
+                    });
+            });
+    }
+
+    /**
+     * retrieves the image location url as string from firestore vie image database
+     * @param imagekey ImageID
+     */
+
+    getImageURL(imagekey: string): Promise<string> {
+        return new Promise<string>(
+            (resolve, reject) => {
+                let url: string;
+                this.imgRef.doc(imagekey).ref.get().then(
+                    doc => {
+                        url = doc.get('url') as string;
+                        resolve(url);
+                    },
+
+                    err => reject(err)
+                );
+            });
+
+    }
+
+    /**
+     * deletes image entry from image DB and file from storage
+     * @param imagekey imageID of image to be deleted
+     */
+
+    deleteImage(imagekey: string): Promise<any> {
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.imgRef.doc(imagekey).delete().then(
+                    () => {
+                        this.afStorage.ref(imagekey).delete().pipe(
+                            finalize(() => {
+                                resolve();
+                            })
+                        ).subscribe();
+                    },
+                    err => reject(err)
+                );
+            });
     }
 }

@@ -4,9 +4,14 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="content">
+<ion-content class="content" *ngIf="dataLoaded">
     <div class="quick_display">
-        <img class="profile_image" src="../../../assets/images/im6.jpg">
+        <form>
+            <label> Add your profile picture
+                <input #profilePicture type="file" accept="image/*" (change)="addProfilePicture($event.target.files.item(0))">
+            </label>
+        </form>
+        <img class="profile_image" [src]="mainProfileImageUrl">
         <div class="essentials">
             <h2>This is my firm</h2>
             <p>We operate in space and are available 24/7.</p>
@@ -23,7 +28,7 @@
             </ion-card-title>
         </ion-card-header>
         <ion-card-content>
-           <p>{{serviceDescription}}</p>
+            <p>{{profileData.serviceDescription}}</p>
             <div *ngIf="clickedService" class="editSpace">
                 <ion-textarea placeholder="Enter information" [(ngModel)]="tempServiceDescription"></ion-textarea>
             </div>
@@ -38,7 +43,7 @@
             </ion-card-title>
         </ion-card-header>
         <ion-card-content>
-            <p>{{ownerDescription}}</p>
+            <p>{{profileData.about}}</p>
             <div *ngIf="clickedOwner" class="editSpace">
                 <ion-textarea placeholder="Enter information" [(ngModel)]="tempOwnerDescription"></ion-textarea>
             </div>

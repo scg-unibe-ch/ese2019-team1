@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from './user';
 import {UserHandler} from './user-handler';
 import {Categories, Profile} from './profile';
@@ -81,6 +81,24 @@ export class ProfileHandlerService {
     }
 
     /**
+     * updates provider Profile data.
+     * @param profile provider profile with changed data
+     */
+    updateProfile(profile: Profile): Promise<any> {
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.docRef.doc(profile.ppid).update(profile).then(
+                    () => {
+                        resolve();
+                    },
+                    err => {
+                        console.log(err);
+                        reject(err);
+                    });
+            });
+    }
+
+    /**
      * returns profile Data as defined in profile-interface
      * @param ppid profile-ID from user DB
      */
@@ -92,11 +110,23 @@ export class ProfileHandlerService {
                         ppid: doc.get('ppid') as string,
                         uid: doc.get('uid') as string
                     };
-                    if (doc.get('companyName') !== null) {
+                    if (doc.get('companyName') !== undefined) {
                         pprofile.companyName = doc.get('companyName') as string;
                     }
-                    if (doc.get('category') !== null) {
+                    if (doc.get('category') !== undefined) {
                         pprofile.category = doc.get('category') as Categories;
+                    }
+                    if (doc.get('serviceDescription') !== undefined) {
+                        pprofile.serviceDescription = doc.get('serviceDescription') as string;
+                    }
+                    if (doc.get('about') !== undefined) {
+                        pprofile.about = doc.get('about') as string;
+                    }
+                    if (doc.get('mainImgID') !== undefined) {
+                        pprofile.mainImgID = doc.get('mainImgID') as string;
+                    }
+                    if (doc.get('secondaryImgIDs') !== undefined) {
+                        pprofile.secondaryImgIDs = doc.get('secondaryImgIDs') as Array<string>;
                     }
                     resolve(pprofile);
                 },
@@ -104,76 +134,17 @@ export class ProfileHandlerService {
         });
     }
 
-    addMainImage(pprofile: Profile, image: Img): Promise<any> {
-        return new Promise<any>(
-            (resolve, reject) => {
-                const doc = this.imgRef.doc();
-                doc.set({
-                    imageName: image.name,
-                    createdAt: image.createdAt
-                }).then(
-                    async () => {
-                        image.$key = doc.ref.id;
-                        await this.imgRef.doc(image.$key).update({$key: image.$key});
-
-                        this.imageHandler
-                            .uploadImage(image)
-                            .then(
-                                async (img) => {
-                                    await this.imgRef
-                                        .doc(image.$key)
-                                        .update({url: img.url});
-                                },
-                                async err => {
-                                    await this.docRef.doc(image.$key).delete();
-                                    reject(err);
-                                });
-                    },
-                    err => reject(err)).then(
-                    () => {
-                        pprofile.mainImgUrl = image.url as string;
-                        this.docRef.doc(pprofile.ppid).update(pprofile).then(
-                            () => {
-                                resolve();
-                            }
-                        );
-
-                    });
-
+    /**
+     * returns all profiles in the Database as an Array
+     *
+     */
+    getAllProfiles(): Array<Profile> {
+        const profileList = Array<Profile>();
+        this.docRef.get().subscribe(snapshot => {
+            snapshot.forEach(doc => {
+                profileList.push(doc.data() as Profile);
             });
-
-    }
-
-    addSecondaryImage(pprofile: Profile, image: Img): Promise<any> {
-        return new Promise<any>(
-            (resolve, reject) => {
-                const doc = this.imgRef.doc();
-                doc.set({
-                    imageName: image.name,
-                    createdAt: image.createdAt
-                }).then(
-                    async () => {
-                        image.$key = doc.ref.id;
-                        await this.imgRef.doc(image.$key).update({$key: image.$key});
-
-                        this.imageHandler.uploadImage(image).then(
-                            async (img) => {
-                                await this.imgRef.doc(image.$key).update({});
-                            },
-                            async err => {
-                                await this.docRef.doc(image.$key).delete();
-                                reject(err);
-                            });
-                    },
-                    err => reject(err)).then(
-                    () => {
-                        this.docRef.doc(pprofile.ppid).update({
-                            secondaryImgUrls:
-                                firebase.firestore.FieldValue.arrayUnion(image.url)
-                        }).then(() => resolve());
-                    });
-
-            });
-
+        });
+        return profileList;
     }
 }
