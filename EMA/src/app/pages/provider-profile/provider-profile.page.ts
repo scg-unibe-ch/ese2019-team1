@@ -27,25 +27,26 @@ export class ProviderProfilePage implements OnInit, OnChanges {
     ownerButtonContent: string;
     serviceButtonContent: string;
     inputFile: Img;
+    editMode = false;
+    editProfileButtonContent: string;
 
     constructor(private authGuard: AuthenticateService,
                 private profileHandler: ProfileHandlerService,
                 private userHandler: UserHandler,
                 private profileGuard: ProfileGuardService,
                 private imageHandler: ImageHandlerService) {
-
     }
 
     ngOnInit() {
         this.ownerButtonContent = 'Edit';
         this.serviceButtonContent = 'Edit';
+        this.editProfileButtonContent = 'Edit your profile';
         this.loadProfile();
     }
+
     ngOnChanges(changes: SimpleChanges): void {
         this.loadProfile();
-
     }
-
 
     private loadProfile() {
         this.loadProfileData().then(
@@ -123,7 +124,6 @@ export class ProviderProfilePage implements OnInit, OnChanges {
                 this.profileHandler.updateProfile(this.profileData);
             }
         );
-
     }
 
     async loadMainProfileImage() {
@@ -131,5 +131,14 @@ export class ProviderProfilePage implements OnInit, OnChanges {
             url => this.mainProfileImageUrl = url,
             err => console.log(err)
         );
+    }
+
+    controlEditMode() {
+        this.editMode = !this.editMode;
+        if (this.editProfileButtonContent === 'Edit your profile') {
+            this.editProfileButtonContent = 'Exit edit mode';
+        } else if (this.editProfileButtonContent === 'Exit edit mode') {
+            this.editProfileButtonContent = 'Edit your profile';
+        }
     }
 }
