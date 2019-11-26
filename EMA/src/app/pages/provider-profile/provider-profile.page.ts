@@ -6,6 +6,7 @@ import {ProfileHandlerService} from '../../services/profile-handler.service';
 import {UserHandler} from '../../services/user-handler';
 import {ProfileGuardService} from '../../services/profile-guard.service';
 import {ImageHandlerService} from '../../services/image-handler.service';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -14,7 +15,7 @@ import {ImageHandlerService} from '../../services/image-handler.service';
     styleUrls: ['./provider-profile.page.scss'],
 })
 
-export class ProviderProfilePage implements OnInit, OnChanges {
+export class ProviderProfilePage implements OnInit {
     profileData: Profile;
     mainProfileImageUrl: string;
     private dataLoaded = false;
@@ -34,22 +35,20 @@ export class ProviderProfilePage implements OnInit, OnChanges {
                 private profileHandler: ProfileHandlerService,
                 private userHandler: UserHandler,
                 private profileGuard: ProfileGuardService,
-                private imageHandler: ImageHandlerService) {
+                private imageHandler: ImageHandlerService,
+                private route: ActivatedRoute) {
+
     }
 
     ngOnInit() {
         this.ownerButtonContent = 'Edit';
         this.serviceButtonContent = 'Edit';
-        this.editProfileButtonContent = 'Edit your profile';
-        this.loadProfile();
+        this.loadProfile(this.route.snapshot.paramMap.get('ppid'));
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        this.loadProfile();
-    }
 
-    private loadProfile() {
-        this.loadProfileData().then(
+    public loadProfile(ppid: string) {
+        this.loadProfileData(ppid).then(
             res => {
                 this.loadMainProfileImage().then(
                     () => {
@@ -60,13 +59,13 @@ export class ProviderProfilePage implements OnInit, OnChanges {
         );
     }
 
-    private loadProfileData(): Promise<boolean> {
+    private loadProfileData(ppid: string): Promise<boolean> {
         return new Promise<boolean>(
             (resolve, reject) => {
                 this.userHandler.readUser(this.authGuard.afAuth.auth.currentUser.uid).then(
                     user => {
                         if (user.isProvider) {
-                            this.profileHandler.readProfile(user.ppid).then(
+                            this.profileHandler.readProfile(ppid).then(
                                 p => {
                                     this.profileData = p as Profile;
                                     resolve(true);
@@ -122,8 +121,10 @@ export class ProviderProfilePage implements OnInit, OnChanges {
             img => {
                 this.profileData.mainImgID = img.$key;
                 this.profileHandler.updateProfile(this.profileData);
+                this.loadProfile(this.profileData.ppid);
             }
         );
+
     }
 
     async loadMainProfileImage() {
