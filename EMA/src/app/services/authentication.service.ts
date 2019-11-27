@@ -88,7 +88,7 @@ export class AuthenticateService {
 
     loginUser(value) {
         return new Promise<any>((resolve, reject) => {
-            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
                 () => {
                     this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password).then(
                         async result => {

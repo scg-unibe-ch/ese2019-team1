@@ -31,11 +31,12 @@ const routes: Routes = [
 
             },
             {
-                path: 'home/provider-profile/:ppid',
+                path: 'provider-profile/:ppid',
                 loadChildren: () =>
                     import('../pages/provider-profile/provider-profile.module').then(m => m.ProviderProfilePageModule)
             }
         ]
+
     }
 ];
 
