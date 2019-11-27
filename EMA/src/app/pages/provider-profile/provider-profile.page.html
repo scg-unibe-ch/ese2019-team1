@@ -1,0 +1,66 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title><p align="center">Your Profile</p></ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="content" *ngIf="dataLoaded">
+    <ion-buttons class="edit">
+        <ion-button size="default" shape="round" fill="solid" color="light"
+                    (click)="controlEditMode()" *ngIf="userIsOwner">{{editProfileButtonContent}}
+            <ion-icon name="create"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    <div class="quick_display">
+        <div class="pictureContainer">
+            <img class="profile_image" [src]="mainProfileImageUrl">
+            <form class="input-picture" *ngIf="editMode">
+                <label> Change your profile picture here
+                    <input #profilePicture type="file" accept="image/*"
+                           (change)="addProfilePicture($event.target.files.item(0))">
+                </label>
+            </form>
+        </div>
+        <div class="essentials">
+            <h2>This is my firm</h2>
+            <p>We operate in space and are available 24/7.</p>
+        </div>
+    </div>
+
+    <div class="pictureContainer">
+        <img class="pictures" src="../../../assets/images/im10.jpg">
+    </div>
+    <ion-card class="description" color="light">
+        <ion-card-header>
+            <ion-card-title>
+                <h4>Service Description</h4>
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <p>{{profileData.serviceDescription}}</p>
+            <div *ngIf="clickedService" class="editSpace">
+                <ion-textarea placeholder="Enter information" [(ngModel)]="tempServiceDescription"></ion-textarea>
+            </div>
+            <ion-button class="edit/saveButton" (click)="editService()"
+                        *ngIf="editMode">{{serviceButtonContent}}</ion-button>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card class="description" color="light">
+        <ion-card-header>
+            <ion-card-title>
+                <h4>About the owner</h4>
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <p>{{profileData.about}}</p>
+            <div *ngIf="clickedOwner && editMode" class="editSpace">
+                <ion-textarea placeholder="Enter information" [(ngModel)]="tempOwnerDescription"></ion-textarea>
+            </div>
+            <ion-button class="edit/saveButton" (click)="editOwner()"
+                        *ngIf="editMode">{{ownerButtonContent}}</ion-button>
+        </ion-card-content>
+    </ion-card>
+</ion-content>
+

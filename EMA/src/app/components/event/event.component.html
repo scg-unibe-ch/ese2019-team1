@@ -1,0 +1,12 @@
+<ion-card>
+  <img id="image" src={{event.image}} />
+  <ion-card-header>
+    <ion-card-subtitle id="subtitle">{{event.service}}</ion-card-subtitle>
+    <ion-card-title id="title">{{event.title}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <p id="text">{{event.text}}</p>
+    <ion-label slot="end" color="primary" routerLink="/home/feed" routerDirection="forward"><p id="text_2">learn more</p></ion-label>
+  </ion-card-content>
+</ion-card>

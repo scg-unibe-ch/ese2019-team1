@@ -24,3 +24,15 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+ion-header {
+  ion-toolbar {
+    ion-title {
+      background-image: url('./assets/icon/emapic.png');
+      background-repeat: no-repeat;
+      background-position: 5px 3px;
+      padding-left: 27px;
+      background-size: 50px;
+    }
+  }
+}

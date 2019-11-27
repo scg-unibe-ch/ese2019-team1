@@ -1,0 +1,61 @@
+.content {
+  display: flex;
+  margin-left: 5%;
+}
+
+.quick_display {
+  display: flex;
+  flex-direction: row;
+  size: auto;
+}
+
+.pictureContainer{
+  width: 50%;
+  margin-left: 10%;
+  margin-top: 2%;
+  margin-right: 2%;
+}
+
+.input-picture{
+  margin-top: 4%;
+}
+
+.profile_image {
+  display: block;
+  border-radius: 50%;
+}
+
+.essentials {
+  display: block;
+  margin-top: auto;
+  margin-right: auto;
+  margin-bottom: 6%;
+}
+
+.pictures {
+  display: flex;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.description {
+  display: block;
+  width: 75%;
+  margin-top: 2%;
+  margin-left: 10%;
+  margin-bottom: 2%;
+}
+
+.editSpace{
+  background-color: white;
+  border-radius: 4px;
+}
+
+.edit\/saveButton{
+  margin-top: 2%;
+}
+
+.edit{
+  margin-top: 2%;
+  margin-left: 80%;
+}

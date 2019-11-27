@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import {AngularFireAuth} from '@angular/fire/auth';
-import {FirestoreCRUDService} from './firestore-crud.service';
+import {UserHandler} from './user-handler';
 
 import {Router} from '@angular/router';
 import {Observable, Observer} from 'rxjs';
@@ -17,7 +17,7 @@ export class AuthenticateService {
 
     constructor(
         public afAuth: AngularFireAuth,
-        private fs: FirestoreCRUDService,
+        private fs: UserHandler,
         private router: Router
     ) {
         this.user = afAuth.authState;
@@ -48,7 +48,7 @@ export class AuthenticateService {
                     this.afAuth.auth.createUserWithEmailAndPassword(value.email, password).then(
                         result => {
                             this.userDetails = result.user;
-                            this.fs.addUser({...value, uid: result.user.uid}).then(
+                            this.fs.addUser({...value, uid: result.user.uid, isProvider: false}).then(
                                 () => {
                                     resolve(result);
                                 },
@@ -88,7 +88,7 @@ export class AuthenticateService {
 
     loginUser(value) {
         return new Promise<any>((resolve, reject) => {
-            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
                 () => {
                     this.afAuth.auth.signInWithEmailAndPassword(value.email, value.password).then(
                         async result => {
@@ -129,7 +129,9 @@ export class AuthenticateService {
             this.user.subscribe((user) => {
                 if (user) {
                     obs.next(true);
-                } else { obs.next(false); }
+                } else {
+                    obs.next(false);
+                }
                 obs.complete();
             });
         });

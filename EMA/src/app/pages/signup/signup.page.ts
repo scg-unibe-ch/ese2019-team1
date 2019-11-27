@@ -2,7 +2,7 @@ import {Component, Injectable, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NavController, ToastController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
-import {FirestoreCRUDService} from '../../services/firestore-crud.service';
+import {UserHandler} from '../../services/user-handler';
 
 @Injectable({
     providedIn: 'root'
@@ -20,7 +20,7 @@ export class SignupPage implements OnInit {
     constructor(public toastController: ToastController,
                 private navCtrl: NavController,
                 private authService: AuthenticateService,
-                private fs: FirestoreCRUDService,
+                private fs: UserHandler,
                 private formBuilder: FormBuilder) {
         this.signupForm = this.formBuilder.group({
             name: new FormControl('', Validators.compose([

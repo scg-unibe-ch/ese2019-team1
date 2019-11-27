@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {EventViewComponent} from '../../components/event-view/event-view.component';
 
 @Component({
   selector: 'app-feed',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FeedPage implements OnInit {
 
-  constructor() { }
+  private select;
 
-  ngOnInit() {
+  @ViewChild(EventViewComponent, null) eventView: EventViewComponent;
+
+  constructor() {
   }
 
+  ngOnInit() {
+    this.select = document.getElementById('select');
+  }
+
+  onFilterChanged(services) {
+    if (services.length < 1) {
+      this.eventView.selectService('');
+    } else {
+      this.eventView.selectService(services);
+    }
+  }
 }
