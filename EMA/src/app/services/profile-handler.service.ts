@@ -30,7 +30,7 @@ export class ProfileHandlerService {
         return new Promise<any>(async (resolve, reject) => {
             user.isProvider = true;
             await this.userHandler.updateUser(user).then(async () => {
-                await this.docRef.add({uid: user.uid}).then(async res => {
+                await this.docRef.add({uid: user.uid, isApproved: false}).then(async res => {
                     user.ppid = res.id;
                     await this.docRef.doc(user.ppid).update({ppid: user.ppid});
                     await this.userHandler.updateUser(user).then(() => {
@@ -44,12 +44,13 @@ export class ProfileHandlerService {
 
     /**
      * updates provider profile with additional data
-     * @param profileData profile data as defined in profile-interface
+     * @param ppid profileID
+     * @param profileData profile data (companyName, category, companyEmail)
      */
-    createProfile(profileData: Profile) {
+    createProfile(ppid: string, profileData) {
         return new Promise<any>((resolve, reject) => {
-            this.docRef.doc(profileData.ppid).set(profileData).then(
-                res => resolve(),
+            this.docRef.doc(ppid).update(profileData).then(
+                res => resolve(res),
                 err => reject(err)
             )
             ;

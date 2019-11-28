@@ -7,7 +7,6 @@ import {UserHandler} from '../../services/user-handler';
 import {ProfileGuardService} from '../../services/profile-guard.service';
 import {ImageHandlerService} from '../../services/image-handler.service';
 import {ActivatedRoute} from '@angular/router';
-import {NavController} from '@ionic/angular';
 
 
 @Component({
@@ -38,8 +37,7 @@ export class ProviderProfilePage implements OnInit {
                 private userHandler: UserHandler,
                 private profileGuard: ProfileGuardService,
                 private imageHandler: ImageHandlerService,
-                private route: ActivatedRoute,
-                private navCtrl: NavController) {
+                private route: ActivatedRoute) {
 
     }
 

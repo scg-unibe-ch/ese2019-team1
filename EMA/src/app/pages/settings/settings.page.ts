@@ -3,6 +3,8 @@ import {NavController, ToastController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
 import {UserHandler} from '../../services/user-handler';
 import {ProfileHandlerService} from '../../services/profile-handler.service';
+import {Router} from '@angular/router';
+
 
 @Component({
     selector: 'app-settings',
@@ -15,9 +17,10 @@ export class SettingsPage {
     private settings = {'': false};
 
     constructor(private navCtrl: NavController,
+                private router: Router,
                 private auth: AuthenticateService,
                 private toastCtrl: ToastController,
-                private crudServ: UserHandler,
+                private userHandler: UserHandler,
                 private profileHandler: ProfileHandlerService
     ) {
     }
@@ -41,15 +44,17 @@ export class SettingsPage {
     }
 
     createProviderAccount() {
-        this.crudServ.readUser(this.auth.afAuth.auth.currentUser.uid).then(
+        let ppid: string;
+        this.userHandler.readUser(this.auth.afAuth.auth.currentUser.uid).then(
             res => {
                 console.log(res);
                 this.profileHandler.createProvider(res).then(r => {
-                   console.log(r);
+                    console.log(r);
+                    ppid = res.ppid;
+                    this.router.navigate(['/signupprovider', ppid]);
                 });
             }
         );
-        this.navCtrl.navigateForward('/signupprovider');
     }
 
     private deleteAccount(del) {
