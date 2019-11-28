@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, HostListener, Input, OnInit} from '@angular/core';
 import {ProfileHandlerService} from '../../services/profile-handler.service';
-import {Profile} from '../../services/profile';
+import {Categories, Profile} from '../../services/profile';
 import {ImageHandlerService} from '../../services/image-handler.service';
 
 @Component({
@@ -82,11 +82,11 @@ export class EventViewComponent implements OnInit, AfterViewInit {
         }
     }
 
-  /**
-   * loads all profiles from database and converts them into events to be viewed in the feed page.
-   */
+    /**
+     * loads all profiles from database and converts them into events to be viewed in the feed page.
+     */
 
-  private loadEvents() {
+    private loadEvents() {
         this.profileHandler.getAllProfiles().then(
             async res => {
                 this.profiles = res;
@@ -103,7 +103,7 @@ export class EventViewComponent implements OnInit, AfterViewInit {
                         image: this.profiles[i].mainImgID !== undefined ?
                             await this.imageHander.getImageURL(this.profiles[i].mainImgID) as string :
                             '',
-                        service: this.profiles[i].category,
+                        service: Categories[this.profiles[i].category.valueOf()],
                         show: true
                     });
                 }
@@ -125,7 +125,7 @@ export class EventViewComponent implements OnInit, AfterViewInit {
             let e = 0;
             for (e = 0; e < services.length; e++) {
                 for (i = 0; i < this.events.length; i++) {
-                    if (this.events[i].service === services[e]) {
+                    if (this.events[i].service as Categories === services[e] as Categories) {
                         this.events[i].show = true;
                     }
                 }

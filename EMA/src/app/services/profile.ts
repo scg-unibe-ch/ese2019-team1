@@ -12,5 +12,5 @@ export interface Profile {
 }
 
 export enum Categories {
-    venue, music, photo, other
+    venue, music, photo, catering, other
 }
