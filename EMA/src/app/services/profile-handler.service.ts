@@ -136,17 +136,15 @@ export class ProfileHandlerService {
      * returns all profiles in the Database as an Array
      *
      */
-    getAllProfiles(): Promise<Array<Profile>> {
+    async getAllProfiles(): Promise<Array<Profile>> {
         return new Promise<Array<Profile>>(
-            (resolve) => {
-                const profileList = Array<Profile>();
-                this.docRef.get().subscribe(async snapshot => {
-                   await snapshot.forEach(doc => {
-                        profileList.push(doc.data() as Profile);
-                    });
-                });
-                resolve(profileList);
-            },
-        );
+            async resolve => {
+                const profileList: Array<Profile> = [];
+                await this.docRef.ref.get().then(
+                    doc => doc.forEach(entry => profileList.push(entry.data() as Profile))
+                );
+                await resolve(profileList);
+            });
     }
+
 }
