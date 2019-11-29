@@ -110,12 +110,18 @@ export class ProviderProfilePage implements OnInit {
     }
 
     async isOwner() {
-       await this.profileGuard.isProfileOwner(this.authGuard.afAuth.auth.currentUser.uid, this.profileData.ppid).then(
+        await this.profileGuard.isProfileOwner(this.authGuard.afAuth.auth.currentUser.uid, this.profileData.ppid).then(
             async res => (this.userIsOwner = res.valueOf())
         );
     }
 
-    async addProfilePicture(imageInput: File) {
+    /**
+     * uploads image for the profile
+     * @param imageInput image data accorign to IMG class
+     * @param isMainImage boolean if image is main profile image (shown on feed page) or secondary.
+     */
+
+    async addProfilePicture(imageInput: File, isMainImage: boolean) {
         console.log(imageInput.name);
         this.inputFile = new Img(imageInput);
         this.inputFile.ownerId = this.profileData.uid;
@@ -125,13 +131,21 @@ export class ProviderProfilePage implements OnInit {
         }
         this.imageHandler.uploadImage(this.inputFile).then(
             img => {
-                this.profileData.mainImgID = img.$key;
+                if (isMainImage) {
+                    this.profileData.mainImgID = img.$key;
+                } else {
+                    this.profileData.secondaryImgIDs.push(img.$key);
+                }
                 this.profileHandler.updateProfile(this.profileData);
                 this.loadProfile(this.profileData.ppid);
-            }
+            },
         );
 
     }
+
+    /**
+     * retrieves image url from database for the page to display
+     */
 
     async loadMainProfileImage() {
         this.imageHandler.getImageURL(this.profileData.mainImgID).then(

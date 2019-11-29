@@ -18,12 +18,12 @@
             <form class="input-picture" *ngIf="editMode">
                 <label> Change your profile picture here
                     <input #profilePicture type="file" accept="image/*"
-                           (change)="addProfilePicture($event.target.files.item(0))">
+                           (change)="addProfilePicture($event.target.files.item(0),true)">
                 </label>
             </form>
         </div>
         <div class="essentials">
-            <h2>This is my firm</h2>
+            <h2>{{profileData.companyName}}</h2>
             <p>We operate in space and are available 24/7.</p>
         </div>
     </div>
