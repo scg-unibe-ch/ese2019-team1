@@ -4,6 +4,7 @@ import {AuthGuardService} from './services/auth-guard.service';
 import {ProviderProfilePage} from './pages/provider-profile/provider-profile.page';
 import {WelcomePage} from './pages/welcome/welcome.page';
 import {LoginPage} from './pages/login/login.page';
+import {AdminPagePage} from './pages/admin-page/admin-page.page';
 
 export const routes: Route[] = [
     {
@@ -40,7 +41,13 @@ export const routes: Route[] = [
         path: 'login',
         component: LoginPage
     },
+    {
+        path: 'admin-page',
+        component: AdminPagePage,
+        canActivate: [AuthGuardService]
+    },
 ];
+
 
 @NgModule({
     imports: [

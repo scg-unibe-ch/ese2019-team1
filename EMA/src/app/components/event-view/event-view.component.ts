@@ -50,7 +50,7 @@ export class EventViewComponent implements OnInit, AfterViewInit {
                   image: '/assets/images/im7_lowres.jpg', service: 'venue', show: this.dataLoaded
               },
               {
-                  title: 'title_7', text: 'this is a text that needs to be shown on the card. It describes the event.',
+  ng                 title: 'title_7', text: 'this is a text that needs to be shown on the card. It describes the event.',
                   image: '/assets/images/im7_lowres.jpg', service: 'venue', show: this.dataLoaded
               }
           ];*/
@@ -82,6 +82,28 @@ export class EventViewComponent implements OnInit, AfterViewInit {
         }
     }
 
+    public selectService(services) {
+        if (services === '') {
+            let i = 0;
+            for (i = 0; i < this.events.length; i++) {
+                this.events[i].show = true;
+            }
+        } else {
+            let i = 0;
+            for (i = 0; i < this.events.length; i++) {
+                this.events[i].show = false;
+            }
+            let e = 0;
+            for (e = 0; e < services.length; e++) {
+                for (i = 0; i < this.events.length; i++) {
+                    if (this.events[i].service as Categories === services[e] as Categories) {
+                        this.events[i].show = true;
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * loads all profiles from database and converts them into events to be viewed in the feed page.
      */
@@ -109,27 +131,5 @@ export class EventViewComponent implements OnInit, AfterViewInit {
                 }
 
             });
-    }
-
-    public selectService(services) {
-        if (services === '') {
-            let i = 0;
-            for (i = 0; i < this.events.length; i++) {
-                this.events[i].show = true;
-            }
-        } else {
-            let i = 0;
-            for (i = 0; i < this.events.length; i++) {
-                this.events[i].show = false;
-            }
-            let e = 0;
-            for (e = 0; e < services.length; e++) {
-                for (i = 0; i < this.events.length; i++) {
-                    if (this.events[i].service as Categories === services[e] as Categories) {
-                        this.events[i].show = true;
-                    }
-                }
-            }
-        }
     }
 }

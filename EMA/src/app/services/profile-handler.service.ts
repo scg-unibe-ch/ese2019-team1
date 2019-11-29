@@ -176,5 +176,12 @@ export class ProfileHandlerService {
             });
     }
 
-
+    approveProfile(ppid: string): Promise<any> {
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.docRef.doc(ppid).update({isApproved: true}).then(
+                    () => resolve,
+                    err => reject(err));
+            });
+    }
 }
