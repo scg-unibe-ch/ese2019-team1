@@ -3,7 +3,6 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from './user';
 import {UserHandler} from './user-handler';
 import {Categories, Profile} from './profile';
-import {ImageHandlerService} from './image-handler.service';
 
 
 @Injectable({
@@ -13,28 +12,54 @@ export class ProfileHandlerService {
 
     constructor(
         private fs: AngularFirestore,
-        private userHandler: UserHandler,
-        private imageHandler: ImageHandlerService
+        private userHandler: UserHandler
     ) {
     }
 
     private docRef = this.fs.collection('ProviderProfiles/');
-    private imgRef = this.fs.collection('imgDB/');
+
+    /**
+     * This method first calls createProvider and sets a DB document with unique key. Once successful it will call
+     * initProfile and set the data given from the sign up form
+     * @param user User according to interface (retrieved from UserDB)
+     * @param profileData profile-data given from sign up form
+     */
+    createProfile(user: User, profileData): Promise<string> {
+        let ppid: string;
+        return new Promise<string>(
+            (resolve, reject) => {
+                this.createProvider(user).then(
+                    res => {
+                        ppid = res.ppid;
+                        this.initProfile(ppid, profileData).then(
+                            r => {
+                                resolve(ppid);
+                            },
+                            err => {
+                                reject(err);
+                            }
+                        );
+                    },
+                    err => reject(err)
+                );
+            }
+        );
+    }
 
     /**
      * updates user to an provider. updates first user database and stores provider-flag. it then opens up a new entry
      * with user-ID in the profile database and returns profile-ID which in turn is then also stored in the user DB.
      * @param user user data as defined in user-interface
      */
-    createProvider(user: User) {
-        return new Promise<any>(async (resolve, reject) => {
+    private createProvider(user: User): Promise<any> {
+        return new Promise<User>(async (resolve, reject) => {
             user.isProvider = true;
             await this.userHandler.updateUser(user).then(async () => {
                 await this.docRef.add({uid: user.uid, isApproved: false}).then(async res => {
                     user.ppid = res.id;
                     await this.docRef.doc(user.ppid).update({ppid: user.ppid});
                     await this.userHandler.updateUser(user).then(() => {
-                            resolve();
+                            resolve(user);
                         },
                         err => reject(err));
                 });
@@ -47,7 +72,7 @@ export class ProfileHandlerService {
      * @param ppid profileID
      * @param profileData profile data (companyName, category, companyEmail)
      */
-    createProfile(ppid: string, profileData) {
+    private initProfile(ppid: string, profileData) {
         return new Promise<any>((resolve, reject) => {
             this.docRef.doc(ppid).update(profileData).then(
                 res => resolve(res),

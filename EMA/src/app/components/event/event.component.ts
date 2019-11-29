@@ -20,6 +20,7 @@ export class EventComponent implements OnInit {
     return this.event.service;
   }
 
-  navigateTo() {
+  async navigateTo() {
+    await this.router.navigate(['home/provider-profile/', this.event.ppid.toString()]);
   }
 }
