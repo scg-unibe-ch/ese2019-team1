@@ -162,15 +162,19 @@ export class ProfileHandlerService {
      * returns all profiles in the Database as an Array
      *
      */
-    async getAllProfiles(): Promise<Array<Profile>> {
+    async getAllProfiles(approved: boolean = true): Promise<Array<Profile>> {
         return new Promise<Array<Profile>>(
             async resolve => {
                 const profileList: Array<Profile> = [];
                 await this.docRef.ref.get().then(
-                    doc => doc.forEach(entry => profileList.push(entry.data() as Profile))
-                );
+                    doc => doc.forEach(entry => {
+                        if (entry.data().isApproved === approved) {
+                            profileList.push(entry.data() as Profile);
+                        }
+                    }));
                 await resolve(profileList);
             });
     }
+
 
 }
