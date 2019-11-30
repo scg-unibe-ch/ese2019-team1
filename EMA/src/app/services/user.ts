@@ -5,4 +5,5 @@ export interface User {
     email: string;
     isProvider: boolean;
     ppid?: string;
+    isAdmin?: boolean;
 }

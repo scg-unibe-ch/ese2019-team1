@@ -10,6 +10,7 @@ import {User} from './user';
 export class UserHandler {
 
     private userRef: AngularFirestoreCollection;
+
     constructor(
         private aFs: AngularFirestore
     ) {
@@ -44,6 +45,9 @@ export class UserHandler {
                     };
                     if (user.isProvider) {
                         user.ppid = doc.get('ppid') as string;
+                    }
+                    if (doc.get('isAdmin') as boolean) {
+                        user.isAdmin = true;
                     }
                     return user;
                 });
