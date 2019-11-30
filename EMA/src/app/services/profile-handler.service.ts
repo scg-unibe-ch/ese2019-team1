@@ -85,30 +85,43 @@ export class ProfileHandlerService {
 
     /**
      * deletes profile and resets provider-user to a regular-user
-     * @param pprofile profile-Data as defined in profile-interface
+     * @param ppid ID of profile to be deleted
      */
-    deleteProfile(pprofile: Profile) {
-        return new Promise((resolve, reject) => {
-            let usr: User = null;
-            this.docRef.doc(pprofile.ppid).delete().then(() => {
-                this.userHandler.readUser(pprofile.uid).then((user) => {
-                    usr = user;
-                }, err => reject(err));
-            }, err => reject(err));
-            if (usr !== null) {
-                usr.isProvider = false;
-                usr.ppid = null;
-            }
-            this.userHandler.updateUser(usr).then((res) => resolve(res));
+    async deleteProfile(ppid: string): Promise<any> {
+        return new Promise<any>(async (resolve, reject) => {
+            let user: User;
+            let uId: string;
+            await this.docRef.doc(ppid).ref.get().then(
+                doc => uId = doc.get('uid') as string,
+                err => reject(err)
+            ).then(
+                async () => await this.userHandler.readUser(uId).then(
+                    res => user = res,
+                    err => reject(err)
+                )
+            );
+            await this.docRef.doc(ppid).delete().then(
+                async () => {
+                    user.ppid = null;
+                    user.isProvider = false;
+                    await this.userHandler.updateUser(user).then(
+                        res => resolve(),
+                        err => reject(err)
+                    );
+                }
+            );
         });
-
     }
 
     /**
      * updates provider Profile data.
      * @param profile provider profile with changed data
      */
-    updateProfile(profile: Profile): Promise<any> {
+    updateProfile(profile
+                      :
+                      Profile
+    ):
+        Promise<any> {
         return new Promise<any>(
             (resolve, reject) => {
                 this.docRef.doc(profile.ppid).update(profile).then(
@@ -126,7 +139,11 @@ export class ProfileHandlerService {
      * returns profile Data as defined in profile-interface
      * @param ppid profile-ID from user DB
      */
-    readProfile(ppid: string): Promise<Profile> {
+    readProfile(ppid
+                    :
+                    string
+    ):
+        Promise<Profile> {
         return new Promise<Profile>((resolve, reject) => {
             let pprofile: Profile = null;
             this.docRef.doc(ppid).ref.get().then((doc) => {
@@ -162,7 +179,13 @@ export class ProfileHandlerService {
      * returns all profiles in the Database as an Array
      *
      */
-    async getAllProfiles(approved: boolean = true): Promise<Array<Profile>> {
+    async
+
+    getAllProfiles(approved
+                       :
+                       boolean = true
+    ):
+        Promise<Array<Profile>> {
         return new Promise<Array<Profile>>(
             async resolve => {
                 const profileList: Array<Profile> = [];
@@ -176,7 +199,11 @@ export class ProfileHandlerService {
             });
     }
 
-    approveProfile(ppid: string): Promise<any> {
+    approveProfile(ppid
+                       :
+                       string
+    ):
+        Promise<any> {
         return new Promise<any>(
             (resolve, reject) => {
                 this.docRef.doc(ppid).update({isApproved: true}).then(

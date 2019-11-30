@@ -20,7 +20,6 @@ export class AdminViewComponent implements OnInit {
         private profileHandler: ProfileHandlerService,
         private imageHandler: ImageHandlerService
     ) {
-        this.loadEvents();
     }
 
     private loadEvents() {
@@ -50,6 +49,7 @@ export class AdminViewComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.loadEvents();
     }
 
 }

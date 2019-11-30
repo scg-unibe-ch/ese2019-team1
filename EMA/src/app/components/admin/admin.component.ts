@@ -9,18 +9,21 @@ import {ProfileHandlerService} from '../../services/profile-handler.service';
 })
 export class AdminComponent implements OnInit {
   @Input() admin;
+  private ppid: string;
   constructor(
       private router: Router,
       private profileHandler: ProfileHandlerService
-  ) { }
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.ppid = this.admin.ppid;
+  }
 
   async approveProfile() {
-   await this.profileHandler.approveProfile(this.admin.ppid);
+   await this.profileHandler.approveProfile(this.ppid);
   }
   async deleteProfile() {
-   await this.profileHandler.deleteProfile(this.admin.ppid);
+   await this.profileHandler.deleteProfile(this.ppid);
   }
 
 }
