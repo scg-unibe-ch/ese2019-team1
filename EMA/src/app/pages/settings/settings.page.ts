@@ -2,6 +2,9 @@ import {Component} from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
+import {User} from '../../services/user';
+import {UserHandler} from '../../services/user-handler';
+
 
 
 @Component({
@@ -13,12 +16,17 @@ export class SettingsPage {
 
     private profile = {'': false};
     private settings = {'': false};
+    private isAdmin: boolean;
 
     constructor(private navCtrl: NavController,
                 private router: Router,
                 private auth: AuthenticateService,
-                private toastCtrl: ToastController
-    ) {
+                private toastCtrl: ToastController,
+                private userHandler: UserHandler) {
+        const uid = this.auth.afAuth.auth.currentUser.uid;
+        this.userHandler.readUser(uid).then(
+            usr => this.isAdmin = usr.isAdmin
+        );
     }
 
     private items = new Array(10);
@@ -50,6 +58,10 @@ export class SettingsPage {
         } else {
             return;
         }
+    }
+
+    async adminPage() {
+        await this.navCtrl.navigateForward('home/admin-page');
     }
 
     async presentToast(msg, time) {
