@@ -17,12 +17,16 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [FeedPage, EventComponent, EventViewComponent]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes)
+    ],
+    exports: [
+        EventViewComponent,
+        EventComponent
+    ],
+    declarations: [FeedPage, EventComponent, EventViewComponent]
 })
 export class FeedPageModule {}

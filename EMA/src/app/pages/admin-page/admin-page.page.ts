@@ -8,7 +8,7 @@ import {AdminViewComponent} from '../../components/admin-view/admin-view.compone
 })
 export class AdminPagePage implements OnInit {
 
-  @ViewChild(AdminViewComponent, null) eventView: AdminViewComponent;
+  @ViewChild(AdminViewComponent, null) adminView: AdminViewComponent;
 
   constructor() { }
 

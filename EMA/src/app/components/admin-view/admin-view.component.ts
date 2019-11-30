@@ -1,13 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Categories, Profile} from "../../services/profile";
-import {ProfileHandlerService} from "../../services/profile-handler.service";
-import {ImageHandlerService} from "../../services/image-handler.service";
+import {Categories, Profile} from '../../services/profile';
+import {ProfileHandlerService} from '../../services/profile-handler.service';
+import {ImageHandlerService} from '../../services/image-handler.service';
 
 @Component({
     selector: 'app-admin-view',
     templateUrl: './admin-view.component.html',
     styleUrls: ['./admin-view.component.scss'],
 })
+
 export class AdminViewComponent implements OnInit {
 
     private adminEvents = [];

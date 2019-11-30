@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>AdminPage</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-title>AdminPage</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+    <app-admin-view [(ngModel)]="adminView" ngDefaultControl [self]="this" ></app-admin-view>
 </ion-content>

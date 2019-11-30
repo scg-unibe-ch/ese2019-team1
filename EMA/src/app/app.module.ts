@@ -33,7 +33,6 @@ import {AdminPagePageModule} from './pages/admin-page/admin-page.module';
     imports: [
         WelcomePageModule,
         ProviderProfilePageModule,
-        AdminPagePageModule,
         LoginPageModule,
         BrowserModule,
         IonicModule.forRoot(),

@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {ProfileHandlerService} from '../../services/profile-handler.service';
 
 @Component({
   selector: 'app-admin',
@@ -9,11 +10,17 @@ import {Router} from "@angular/router";
 export class AdminComponent implements OnInit {
   @Input() admin;
   constructor(
-      private router: Router
+      private router: Router,
+      private profileHandler: ProfileHandlerService
   ) { }
 
   ngOnInit() {}
 
-  approveProfile() {}
+  async approveProfile() {
+   await this.profileHandler.approveProfile(this.admin.ppid);
+  }
+  async deleteProfile() {
+   await this.profileHandler.deleteProfile(this.admin.ppid);
+  }
 
 }
