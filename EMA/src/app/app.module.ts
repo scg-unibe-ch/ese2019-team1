@@ -41,7 +41,7 @@ import {AdminPagePageModule} from './pages/admin-page/admin-page.module';
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
         AngularFirestoreModule,
-        AngularFireStorageModule
+        AngularFireStorageModule,
     ],
     providers: [
         StatusBar,
@@ -52,8 +52,7 @@ import {AdminPagePageModule} from './pages/admin-page/admin-page.module';
         ProfileHandlerService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
-    exports: [
-    ],
+    exports: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {
