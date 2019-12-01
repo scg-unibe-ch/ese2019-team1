@@ -17,45 +17,18 @@ export class ProfileGuardService {
 
     isProfileOwner(uid: string, ppid: string): Promise<boolean> {
         return new Promise<boolean>(
-            async (resolve, reject) => {
+            async (resolve) => {
                 await this.userHandler.readUser(uid).then(
                     user => {
                         if (user.isProvider.valueOf() && user.ppid === ppid) {
                             resolve(true);
                         } else {
-                            reject(false);
+                            resolve(false);
                         }
                     },
-                    err => reject(false)
+                    err => resolve(false)
                 );
 
-            });
-    }
-
-
-    getProfile(uid: string): Promise<Profile> {
-        return new Promise<Profile>(
-            (resolve, reject) => {
-                let profile: Profile;
-                this.userHandler.readUser(uid).then(
-                    user => {
-                        if (!user.isProvider) {
-                            reject();
-                        } else {
-                            this.profileHandler.readProfile(user.ppid).then(
-                                providerProfile => {
-                                    profile = providerProfile as Profile;
-                                },
-                                err => reject(err)
-                            );
-                        }
-                    });
-
-                if (profile != null) {
-                    resolve(profile);
-                } else {
-                    reject();
-                }
             });
     }
 }

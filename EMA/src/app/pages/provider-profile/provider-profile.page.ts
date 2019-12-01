@@ -52,8 +52,8 @@ export class ProviderProfilePage implements OnInit {
 
     public loadProfile(ppid: string) {
         this.loadProfileData(ppid).then(
-            res => {
-                this.isOwner();
+            async res => {
+                await this.isOwner();
                 this.loadMainProfileImage().then(
                     () => {
                         this.dataLoaded = res.valueOf();
@@ -65,24 +65,19 @@ export class ProviderProfilePage implements OnInit {
 
     private loadProfileData(ppid: string): Promise<boolean> {
         return new Promise<boolean>(
-            (resolve, reject) => {
-                this.userHandler.readUser(this.authGuard.afAuth.auth.currentUser.uid).then(
-                    user => {
-                        if (user.isProvider) {
-                            this.profileHandler.readProfile(ppid).then(
-                                p => {
-                                    this.profileData = p as Profile;
-                                    resolve(true);
-                                }
-                            );
-                        }
+            (resolve) => {
+                this.profileHandler.readProfile(ppid).then(
+                    p => {
+                        this.profileData = p as Profile;
+                        resolve(true);
                     },
                     err => {
                         console.log(err);
-                        reject(false);
+                        resolve(false);
                     }
                 );
-            });
+            }
+        );
     }
 
     async editOwner() {
