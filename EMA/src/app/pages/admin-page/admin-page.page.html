@@ -1,9 +1,15 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title>AdminPage</ion-title>
+    <ion-toolbar id="toolbar" color="primary">
+        <ion-title>
+            <p align="center">Admin Page</p>
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button id="back"></ion-back-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <app-admin-view [(ngModel)]="adminView" ngDefaultControl [self]="this" ></app-admin-view>
+    <p>Admin Page works. But where is my back button?</p>
+    <app-admin-view [(ngModel)]="adminView" ngDefaultControl [self]="this"></app-admin-view>
 </ion-content>
