@@ -21,7 +21,7 @@ export class AuthenticateService {
         private router: Router
     ) {
         this.user = afAuth.authState;
-        this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+        this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
             () => {
                 this.user.subscribe((user) => {
                     if (user) {
@@ -43,7 +43,7 @@ export class AuthenticateService {
      */
     registerUser(value, password) {
         return new Promise<any>(((resolve, reject) => {
-            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
                 () => {
                     this.afAuth.auth.createUserWithEmailAndPassword(value.email, password).then(
                         result => {

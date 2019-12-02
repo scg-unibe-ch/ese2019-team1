@@ -117,11 +117,7 @@ export class ProfileHandlerService {
      * updates provider Profile data.
      * @param profile provider profile with changed data
      */
-    updateProfile(profile
-                      :
-                      Profile
-    ):
-        Promise<any> {
+    updateProfile(profile: Profile): Promise<any> {
         return new Promise<any>(
             (resolve, reject) => {
                 this.docRef.doc(profile.ppid).update(profile).then(
@@ -139,11 +135,7 @@ export class ProfileHandlerService {
      * returns profile Data as defined in profile-interface
      * @param ppid profile-ID from user DB
      */
-    readProfile(ppid
-                    :
-                    string
-    ):
-        Promise<Profile> {
+    readProfile(ppid: string): Promise<Profile> {
         return new Promise<Profile>((resolve, reject) => {
             let pprofile: Profile = null;
             this.docRef.doc(ppid).ref.get().then((doc) => {
@@ -179,13 +171,7 @@ export class ProfileHandlerService {
      * returns all profiles in the Database as an Array
      *
      */
-    async
-
-    getAllProfiles(approved
-                       :
-                       boolean = true
-    ):
-        Promise<Array<Profile>> {
+    async getAllProfiles(approved: boolean = true): Promise<Array<Profile>> {
         return new Promise<Array<Profile>>(
             async resolve => {
                 const profileList: Array<Profile> = [];
@@ -199,11 +185,7 @@ export class ProfileHandlerService {
             });
     }
 
-    approveProfile(ppid
-                       :
-                       string
-    ):
-        Promise<any> {
+    approveProfile(ppid: string): Promise<any> {
         return new Promise<any>(
             (resolve, reject) => {
                 this.docRef.doc(ppid).update({isApproved: true}).then(
