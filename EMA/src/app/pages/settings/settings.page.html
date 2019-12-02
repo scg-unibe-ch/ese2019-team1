@@ -5,15 +5,12 @@
 </ion-header>
 
 <ion-content>
-    <ion-card>
-        <ion-card-header name="profile" button="true" (click)="changeState(this.profile)">
-            <ion-card-title class="card_title">Profile
-                <ion-icon *ngIf="!expanded(this.profile)" name="arrow-dropdown"></ion-icon>
-                <ion-icon *ngIf="expanded(this.profile)" name="arrow-dropup"></ion-icon>
-            </ion-card-title>
+    <ion-card class="content">
+        <ion-card-header>
+            <ion-card-title class="card_title">Profile</ion-card-title>
         </ion-card-header>
 
-        <ion-card-content *ngIf="expanded(this.profile)">
+        <ion-card-content>
             <ion-item>
                 <p>Logout</p>
                 <ion-button (click)="logout()" slot="end">
@@ -37,15 +34,12 @@
         </ion-card-content>
     </ion-card>
 
-    <ion-card>
-        <ion-card-header name="settings" button="true" (click)="changeState(this.settings)">
-            <ion-card-title>Settings
-                <ion-icon *ngIf="!expanded(this.settings)" name="arrow-dropdown"></ion-icon>
-                <ion-icon *ngIf="expanded(this.settings)" name="arrow-dropup"></ion-icon>
-            </ion-card-title>
+    <ion-card class="content">
+        <ion-card-header name="settings">
+            <ion-card-title>Settings</ion-card-title>
         </ion-card-header>
 
-        <ion-card-content *ngIf="expanded(this.settings)">
+        <ion-card-content>
             <ion-item *ngIf="isAdmin">
                 <p>Admin Page</p>
                 <ion-button (click)="adminPage()" slot="end">
