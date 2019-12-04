@@ -40,7 +40,7 @@ export class AdminViewComponent implements OnInit {
                         image: this.profiles[i].mainImgID !== undefined ?
                             await this.imageHandler.getImageURL(this.profiles[i].mainImgID) as string :
                             '',
-                        service: Categories[this.profiles[i].category.valueOf()],
+                        service: Categories[this.profiles[i].category],
                         show: true
                     });
                 }

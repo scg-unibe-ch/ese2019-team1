@@ -177,7 +177,7 @@ export class ProfileHandlerService {
                 const profileList: Array<Profile> = [];
                 await this.docRef.ref.get().then(
                     doc => doc.forEach(entry => {
-                        if (entry.data().isApproved === approved) {
+                        if (entry.data().isApproved as boolean === approved) {
                             profileList.push(entry.data() as Profile);
                         }
                     }));
