@@ -10,6 +10,8 @@ export class FeedPage implements OnInit {
 
     private select;
 
+    private tabBarHintHidden = false;
+    private filterHintHidden = true;
 
     @ViewChild(EventViewComponent, null) eventView: EventViewComponent;
 
@@ -25,6 +27,24 @@ export class FeedPage implements OnInit {
             this.eventView.selectService('');
         } else {
             this.eventView.selectService(services);
+        }
+    }
+
+    private setTabBarHintHidden(hidden: boolean) {
+        this.tabBarHintHidden = hidden;
+
+        if (this.tabBarHintHidden) {
+            this.setFilterHintHidden(false);
+        }
+    }
+
+    private setFilterHintHidden(hidden: boolean) {
+        this.filterHintHidden = hidden;
+
+        if (!this.filterHintHidden) {
+            document.getElementById('filter').style.zIndex = '95';
+        } else {
+            document.getElementById('filter').style.zIndex = 'initial';
         }
     }
 }

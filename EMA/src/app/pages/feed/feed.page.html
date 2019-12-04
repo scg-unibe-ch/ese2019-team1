@@ -20,4 +20,12 @@
     </ion-item>
 
     <app-event-view [(ngModel)]="eventView" ngDefaultControl [self]="this"></app-event-view>
+
 </ion-content>
+
+
+<app-hint id="tabBarHint" [hidden]="tabBarHintHidden" [text]="'Navigate through the app using the Tab-Bar at the bottom!'" [top]="'80%'" (closed)="setTabBarHintHidden(true)"></app-hint>
+<app-hint id="filterHint" [hidden]="filterHintHidden" [text]="'You can filter your Feed, to only show services you need!'" [top]="" (closed)="setFilterHintHidden(true)"></app-hint>
+
+<div id="screenOverlay_1" [hidden]="filterHintHidden && tabBarHintHidden"></div>
+<div id="screenOverlay_2" [hidden]="filterHintHidden && tabBarHintHidden"></div>
