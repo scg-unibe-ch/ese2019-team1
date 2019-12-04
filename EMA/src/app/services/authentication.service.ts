@@ -48,7 +48,7 @@ export class AuthenticateService {
                     this.afAuth.auth.createUserWithEmailAndPassword(value.email, password).then(
                         result => {
                             this.userDetails = result.user;
-                            this.fs.addUser({...value, uid: result.user.uid, isProvider: false}).then(
+                            this.fs.addUser({...value, uid: result.user.uid, isProvider: false, showHints: true}).then(
                                 () => {
                                     resolve(result);
                                 },

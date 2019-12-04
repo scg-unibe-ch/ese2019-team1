@@ -6,4 +6,5 @@ export interface User {
     isProvider: boolean;
     ppid?: string;
     isAdmin?: boolean;
+    showHints?: boolean;
 }

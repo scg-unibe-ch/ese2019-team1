@@ -49,6 +49,9 @@ export class UserHandler {
                     if (doc.get('isAdmin') as boolean) {
                         user.isAdmin = true;
                     }
+                    if (doc.get('showHints') as boolean) {
+                        user.showHints = doc.get('showHints');
+                    }
                     return user;
                 });
                 resolve(user);
@@ -56,6 +59,17 @@ export class UserHandler {
 
 
         });
+    }
+
+    setShowHints(uid: string, flag: boolean) {
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.userRef.doc(uid).set({showHints: flag}).then(
+                    () => resolve,
+                    err => reject(err)
+                );
+            }
+        );
     }
 
     /**
