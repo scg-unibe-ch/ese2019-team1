@@ -36,6 +36,11 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
+        <form *ngIf="editMode">
+            <label>Change pictures here
+                <input #images type="file" accept="images/*">
+            </label>
+        </form>
     </ion-card>
 
     <ion-card class="description" color="light">
