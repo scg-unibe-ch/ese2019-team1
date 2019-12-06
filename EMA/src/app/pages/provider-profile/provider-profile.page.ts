@@ -30,6 +30,7 @@ export class ProviderProfilePage implements OnInit {
     inputFile: Img;
     editMode = false;
     editProfileButtonContent: string;
+    private images = [1, 2, 3, 4, 5, 6];
 
     constructor(private authGuard: AuthenticateService,
                 private profileHandler: ProfileHandlerService,
