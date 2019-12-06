@@ -29,6 +29,8 @@
     "angular-xeditable": "^0.10.2",
     "cordova-android": "8.1.0",
     "cordova-plugin-firebase-messaging": "^4.0.1",
+    "cordova-support-android-plugin": "^1.0.1",
+    "cordova-support-google-services": "^1.3.2",
     "core-js": "^2.5.4",
     "firebase": "^7.2.1",
     "ionic-angular": "latest",
@@ -84,7 +86,11 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-firebase-messaging": {}
+      "cordova-plugin-firebase-messaging": {
+        "FIREBASE_ANALYTICS_VERSION": "17.2.+",
+        "FIREBASE_MESSAGING_VERSION": "20.0.+",
+        "ANDROIDX_CORE_VERSION": "1.0.+"
+      }
     },
     "platforms": [
       "android"

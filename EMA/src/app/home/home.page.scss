@@ -11,3 +11,22 @@
   border: 1px;
   background-color: white;
 }
+
+
+#tabBarOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 90;
+}
+
+#tabBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}

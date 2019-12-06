@@ -46,6 +46,11 @@
                     <ion-icon name="cube"></ion-icon>
                 </ion-button>
             </ion-item>
+
+            <ion-item>
+                <p>Show Hints</p>
+                <ion-checkbox [checked]="showHints" slot="end" color="primary" (ionChange)="showHintsChanged()"></ion-checkbox>
+            </ion-item>
         </ion-card-content>
     </ion-card>
 </ion-content>

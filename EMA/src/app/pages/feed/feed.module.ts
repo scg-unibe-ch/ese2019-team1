@@ -26,7 +26,8 @@ const routes: Routes = [
     ],
     exports: [
         EventViewComponent,
-        EventComponent
+        EventComponent,
+        HintComponent
     ],
     declarations: [FeedPage, EventComponent, EventViewComponent, HintComponent]
 })

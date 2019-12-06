@@ -5,10 +5,17 @@
   z-index: 5;
 }
 
+#welcomeHint {
+  position: fixed;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
+
 #tabBarHint {
   position: fixed;
-  top: 65%;
-  height: 100%;
+  bottom: 5%;
   left: 0;
   width: 100%;
   z-index: 100;
@@ -16,11 +23,18 @@
 
 #filterHint {
   position: fixed;
-  top: 25%;
-  height: 100%;
+  top: 22%;
   left: 0;
   width: 100%;
   z-index: 101;
+}
+
+#feedHint {
+  position: fixed;
+  top: 22%;
+  left: 0;
+  width: 100%;
+  z-index: 102;
 }
 
 #screenOverlay_1 {
@@ -40,7 +54,7 @@
   left: 0;
   width: 100%;
   background: rgba(0, 0, 0, 0.1);
-  z-index: 99;
+  z-index: 98;
 }
 
 

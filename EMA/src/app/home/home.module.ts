@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {HomePage} from './home.page';
 import {HomeRouter} from './home.router';
+import {FeedPageModule} from '../pages/feed/feed.module';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import {HomeRouter} from './home.router';
         FormsModule,
         IonicModule,
         HomeRouter,
+        FeedPageModule,
     ],
     declarations: [HomePage]
 })

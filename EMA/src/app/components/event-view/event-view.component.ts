@@ -18,42 +18,14 @@ export class EventViewComponent implements OnInit, AfterViewInit {
     private width;
     private aspectRatio;
 
+    private ready;
+
     @Input() self: EventViewComponent;
 
     constructor(private profileHandler: ProfileHandlerService,
                 private imageHander: ImageHandlerService
     ) {
         this.loadEvents();
-        /*this.events = [
-              {
-                  title: 'title_1', text: 'this is a text that needs to be shown on the card. It describes the event.',
-                  image: '/assets/images/im5_lowres.jpg', service: 'photo', show: this.dataLoaded
-              },
-              {
-                  title: 'title_2', text: 'this is a text that needs to be shown on the card. It describes the event.',
-                  image: '/assets/images/im7_lowres.jpg', service: 'other', show: this.dataLoaded
-              },
-              {
-                  title: 'title_3', text: 'this is a text that needs to be shown on the card. It describes the event.',
-                  image: '/assets/images/im7_lowres.jpg', service: 'music', show: this.dataLoaded
-              },
-              {
-                  title: 'title_4', text: 'this is a text that needs to be shown on the card. It describes the event.',
-                  image: '/assets/images/im7_lowres.jpg', service: 'photo', show: this.dataLoaded
-              },
-              {
-                  title: 'title_5', text: 'this is a text that needs to be shown on the card. It describes the event.',
-                  image: '/assets/images/im7_lowres.jpg', service: 'music', show: this.dataLoaded
-              },
-              {
-                  title: 'title_6', text: 'this is a text that needs to be shown on the card. It describes the event.',
-                  image: '/assets/images/im7_lowres.jpg', service: 'venue', show: this.dataLoaded
-              },
-              {
-  ng                 title: 'title_7', text: 'this is a text that needs to be shown on the card. It describes the event.',
-                  image: '/assets/images/im7_lowres.jpg', service: 'venue', show: this.dataLoaded
-              }
-          ];*/
     }
 
 
@@ -68,6 +40,12 @@ export class EventViewComponent implements OnInit, AfterViewInit {
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         this.reFit();
+    }
+
+    afterNgFor(last: boolean) {
+        if (last) {
+            this.reFit();
+        }
     }
 
     private reFit() {
@@ -108,8 +86,8 @@ export class EventViewComponent implements OnInit, AfterViewInit {
      * loads all profiles from database and converts them into events to be viewed in the feed page.
      */
 
-    private loadEvents() {
-        this.profileHandler.getAllProfiles().then(
+     private async loadEvents() {
+        await this.profileHandler.getAllProfiles().then(
             async res => {
                 this.profiles = res;
             }).then(
@@ -129,7 +107,6 @@ export class EventViewComponent implements OnInit, AfterViewInit {
                         show: true
                     });
                 }
-
             });
     }
 }

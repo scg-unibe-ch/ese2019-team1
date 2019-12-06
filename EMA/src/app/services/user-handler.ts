@@ -42,6 +42,7 @@ export class UserHandler {
                         name: doc.get('name') as string,
                         email: doc.get('email') as string,
                         isProvider: doc.get('isProvider') as boolean,
+                        showHints: doc.get('showHints') as boolean
                     };
                     if (user.isProvider) {
                         user.ppid = doc.get('ppid') as string;
@@ -49,9 +50,9 @@ export class UserHandler {
                     if (doc.get('isAdmin') as boolean) {
                         user.isAdmin = true;
                     }
-                    if (doc.get('showHints') as boolean) {
+                    /*if (doc.get('showHints') as boolean) {
                         user.showHints = doc.get('showHints');
-                    }
+                    }*/
                     return user;
                 });
                 resolve(user);

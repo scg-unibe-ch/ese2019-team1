@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-hint',
   templateUrl: './hint.component.html',
   styleUrls: ['./hint.component.scss'],
 })
-export class HintComponent implements OnInit, AfterViewInit {
+export class HintComponent implements OnInit {
 
   @Input() private text;
   @Input() private top;
@@ -17,9 +17,5 @@ export class HintComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-  }
-
-  ngAfterViewInit() {
-    //document.getElementById('hintCard').style.top = this.top;
   }
 }

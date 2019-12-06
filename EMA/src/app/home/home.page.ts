@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ProfileHandlerService} from '../services/profile-handler.service';
 import {UserHandler} from '../services/user-handler';
 import {AuthenticateService} from '../services/authentication.service';
-import {Router, Routes} from '@angular/router';
+import {Router} from '@angular/router';
+import {Events} from '@ionic/angular';
 
 @Component({
     selector: 'app-home',
@@ -14,10 +15,13 @@ export class HomePage implements OnInit {
     isProvider: boolean;
     ppid: string;
 
+    private tabBarOverlayHidden = true;
+
     constructor(private profileHandler: ProfileHandlerService,
                 private userHandler: UserHandler,
                 private authService: AuthenticateService,
-                private router: Router) {
+                private router: Router,
+                private events: Events) {
         this.userHandler.readUser(this.authService.afAuth.auth.currentUser.uid).then(
             user => {
                 this.isProvider = user.isProvider.valueOf();
@@ -26,6 +30,13 @@ export class HomePage implements OnInit {
                 }
             }
         );
+
+        events.subscribe('hints-closed', () => {
+            this.tabBarOverlayHidden = true;
+        });
+        events.subscribe('hints-opened', () => {
+            this.tabBarOverlayHidden = false;
+        });
     }
 
    async pushPage() {
@@ -36,5 +47,4 @@ export class HomePage implements OnInit {
     ngOnInit() {
 
     }
-
 }
