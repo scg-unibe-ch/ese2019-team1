@@ -21,7 +21,6 @@ export class ProviderProfilePage implements OnInit {
     private dataLoaded = false;
     private userIsOwner = false;
     tempOwnerDescription;
-    ownerDescription;
     tempServiceDescription;
     serviceDescription;
     clickedOwner = false;
