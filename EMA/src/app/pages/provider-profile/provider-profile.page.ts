@@ -33,6 +33,7 @@ export class ProviderProfilePage implements OnInit {
     editProfileButtonContent: string;
     private images = [1, 2, 3, 4, 5, 6];
 
+
     constructor(private authGuard: AuthenticateService,
                 private profileHandler: ProfileHandlerService,
                 private userHandler: UserHandler,

@@ -24,8 +24,8 @@ export class HomePage implements OnInit {
                 private events: Events) {
         this.userHandler.readUser(this.authService.afAuth.auth.currentUser.uid).then(
             user => {
-                this.isProvider = user.isProvider.valueOf();
-                if (user.isProvider.valueOf()) {
+                this.isProvider = user.isProvider;
+                if (user.isProvider) {
                     this.ppid = user.ppid;
                 }
             }

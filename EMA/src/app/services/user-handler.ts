@@ -65,7 +65,7 @@ export class UserHandler {
     setShowHints(uid: string, flag: boolean) {
         return new Promise<any>(
             (resolve, reject) => {
-                this.userRef.doc(uid).set({showHints: flag}).then(
+                this.userRef.doc(uid).update({showHints: flag}).then(
                     () => resolve,
                     err => reject(err)
                 );

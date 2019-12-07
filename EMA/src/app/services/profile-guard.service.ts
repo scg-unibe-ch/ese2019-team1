@@ -20,7 +20,7 @@ export class ProfileGuardService {
             async (resolve) => {
                 await this.userHandler.readUser(uid).then(
                     user => {
-                        if (user.isProvider.valueOf() && user.ppid === ppid) {
+                        if (user.isProvider && user.ppid === ppid) {
                             resolve(true);
                         } else {
                             resolve(false);
