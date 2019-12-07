@@ -18,10 +18,10 @@ import {ActivatedRoute} from '@angular/router';
 export class ProviderProfilePage implements OnInit {
     profileData: Profile;
     mainProfileImageUrl: string;
+    secondaryImageUrls: Array<string>;
     private dataLoaded = false;
     private userIsOwner = false;
     tempOwnerDescription;
-    ownerDescription;
     tempServiceDescription;
     serviceDescription;
     clickedOwner = false;
@@ -31,6 +31,7 @@ export class ProviderProfilePage implements OnInit {
     inputFile: Img;
     editMode = false;
     editProfileButtonContent: string;
+    private images = [1, 2, 3, 4, 5, 6];
 
     constructor(private authGuard: AuthenticateService,
                 private profileHandler: ProfileHandlerService,
@@ -38,6 +39,8 @@ export class ProviderProfilePage implements OnInit {
                 private profileGuard: ProfileGuardService,
                 private imageHandler: ImageHandlerService,
                 private route: ActivatedRoute) {
+
+        this.secondaryImageUrls = [];
 
     }
 
@@ -51,13 +54,17 @@ export class ProviderProfilePage implements OnInit {
 
 
     public loadProfile(ppid: string) {
+        this.secondaryImageUrls = [];
         this.loadProfileData(ppid).then(
             async res => {
                 await this.isOwner();
                 this.loadMainProfileImage().then(
-                    () => {
-                        this.dataLoaded = res.valueOf();
-                    }
+                    () =>
+                        this.loadSecImages().then(
+                            () => {
+                                this.dataLoaded = res.valueOf();
+                            }
+                        )
                 );
             }
         );
@@ -121,7 +128,7 @@ export class ProviderProfilePage implements OnInit {
         this.inputFile = new Img(imageInput);
         this.inputFile.ownerId = this.profileData.uid;
         // Todo: catch reject-case and let user know
-        if (this.profileData.mainImgID !== undefined) {
+        if (isMainImage && this.profileData.mainImgID !== undefined) {
             await this.imageHandler.deleteImage(this.profileData.mainImgID);
         }
         this.imageHandler.uploadImage(this.inputFile).then(
@@ -129,7 +136,12 @@ export class ProviderProfilePage implements OnInit {
                 if (isMainImage) {
                     this.profileData.mainImgID = img.$key;
                 } else {
-                    this.profileData.secondaryImgIDs.push(img.$key);
+                    if (this.profileData.secondaryImgIDs === undefined) {
+                        this.profileData.secondaryImgIDs = [];
+                        this.profileData.secondaryImgIDs.push(img.$key);
+                    } else {
+                        this.profileData.secondaryImgIDs.push(img.$key);
+                    }
                 }
                 this.profileHandler.updateProfile(this.profileData);
                 this.loadProfile(this.profileData.ppid);
@@ -147,6 +159,33 @@ export class ProviderProfilePage implements OnInit {
             url => this.mainProfileImageUrl = url,
             err => console.log(err)
         );
+    }
+
+    async loadSecImages() {
+        if (this.profileData.secondaryImgIDs === undefined) {
+            return;
+        }
+        await this.profileData.secondaryImgIDs.forEach(
+            (imgID) => {
+                this.imageHandler.getImageURL(imgID).then(
+                    url => this.secondaryImageUrls.push(url),
+                    err => console.log(err)
+                );
+            }
+        );
+    }
+
+    deleteSecondaryImg(index: number) {
+        const imgID = this.profileData.secondaryImgIDs[index];
+        this.profileData.secondaryImgIDs.splice(index, 1);
+        this.imageHandler.deleteImage(imgID).then(
+            async () => {
+                await this.profileHandler.updateProfile(this.profileData).then(
+                    () => this.loadProfile(this.profileData.ppid)
+                );
+            }
+        );
+
     }
 
     controlEditMode() {
