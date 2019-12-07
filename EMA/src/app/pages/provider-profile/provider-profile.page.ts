@@ -54,16 +54,17 @@ export class ProviderProfilePage implements OnInit {
 
 
     public loadProfile(ppid: string) {
+        this.secondaryImageUrls = [];
         this.loadProfileData(ppid).then(
             async res => {
                 await this.isOwner();
                 this.loadMainProfileImage().then(
                     () =>
-                    this.loadSecImages().then(
-                        () => {
-                            this.dataLoaded = res.valueOf();
-                        }
-                    )
+                        this.loadSecImages().then(
+                            () => {
+                                this.dataLoaded = res.valueOf();
+                            }
+                        )
                 );
             }
         );
@@ -172,6 +173,19 @@ export class ProviderProfilePage implements OnInit {
                 );
             }
         );
+    }
+
+    deleteSecondaryImg(index: number) {
+        const imgID = this.profileData.secondaryImgIDs[index];
+        this.profileData.secondaryImgIDs.splice(index, 1);
+        this.imageHandler.deleteImage(imgID).then(
+            async () => {
+                await this.profileHandler.updateProfile(this.profileData).then(
+                    () => this.loadProfile(this.profileData.ppid)
+                );
+            }
+        );
+
     }
 
     controlEditMode() {
