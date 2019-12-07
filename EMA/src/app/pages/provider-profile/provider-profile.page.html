@@ -1,6 +1,8 @@
-<ion-header>
+<ion-header *ngIf="dataLoaded">
     <ion-toolbar color="primary">
-        <ion-title><p align="center">Your Profile</p></ion-title>
+        <ion-title *ngIf="userIsOwner"><p align="center">Your Profile</p></ion-title>
+        <ion-title *ngIf="!userIsOwner"><p align="center">{{profileData.companyName}}'s Profile</p></ion-title>
+
     </ion-toolbar>
 </ion-header>
 
@@ -31,14 +33,15 @@
     <ion-card class="images">
         <ion-grid>
             <ion-row>
-                <ion-col col-4 *ngFor="let image of images">
-                    <img class="image-container" alt="image not found" src="assets/images/im{{image}}.jpg"/>
+                <ion-col col-4 *ngFor="let image of secondaryImageUrls">
+                    <img class="image-container" alt="image not found" [src]="image"/>
                 </ion-col>
             </ion-row>
         </ion-grid>
         <form *ngIf="editMode">
             <label>Change pictures here
-                <input #images type="file" accept="images/*">
+                <input #images type="file" accept="images/*"
+                       (change)="addProfilePicture($event.target.files.item(0),false)">
             </label>
         </form>
     </ion-card>

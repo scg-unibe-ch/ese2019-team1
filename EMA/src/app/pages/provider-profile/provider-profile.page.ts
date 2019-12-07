@@ -18,6 +18,7 @@ import {ActivatedRoute} from '@angular/router';
 export class ProviderProfilePage implements OnInit {
     profileData: Profile;
     mainProfileImageUrl: string;
+    secondaryImageUrls: Array<string>;
     private dataLoaded = false;
     private userIsOwner = false;
     tempOwnerDescription;
@@ -39,6 +40,8 @@ export class ProviderProfilePage implements OnInit {
                 private imageHandler: ImageHandlerService,
                 private route: ActivatedRoute) {
 
+        this.secondaryImageUrls = [];
+
     }
 
 
@@ -55,9 +58,12 @@ export class ProviderProfilePage implements OnInit {
             async res => {
                 await this.isOwner();
                 this.loadMainProfileImage().then(
-                    () => {
-                        this.dataLoaded = res.valueOf();
-                    }
+                    () =>
+                    this.loadSecImages().then(
+                        () => {
+                            this.dataLoaded = res.valueOf();
+                        }
+                    )
                 );
             }
         );
@@ -121,7 +127,7 @@ export class ProviderProfilePage implements OnInit {
         this.inputFile = new Img(imageInput);
         this.inputFile.ownerId = this.profileData.uid;
         // Todo: catch reject-case and let user know
-        if (this.profileData.mainImgID !== undefined) {
+        if (isMainImage && this.profileData.mainImgID !== undefined) {
             await this.imageHandler.deleteImage(this.profileData.mainImgID);
         }
         this.imageHandler.uploadImage(this.inputFile).then(
@@ -129,7 +135,12 @@ export class ProviderProfilePage implements OnInit {
                 if (isMainImage) {
                     this.profileData.mainImgID = img.$key;
                 } else {
-                    this.profileData.secondaryImgIDs.push(img.$key);
+                    if (this.profileData.secondaryImgIDs === undefined) {
+                        this.profileData.secondaryImgIDs = [];
+                        this.profileData.secondaryImgIDs.push(img.$key);
+                    } else {
+                        this.profileData.secondaryImgIDs.push(img.$key);
+                    }
                 }
                 this.profileHandler.updateProfile(this.profileData);
                 this.loadProfile(this.profileData.ppid);
@@ -146,6 +157,20 @@ export class ProviderProfilePage implements OnInit {
         this.imageHandler.getImageURL(this.profileData.mainImgID).then(
             url => this.mainProfileImageUrl = url,
             err => console.log(err)
+        );
+    }
+
+    async loadSecImages() {
+        if (this.profileData.secondaryImgIDs === undefined) {
+            return;
+        }
+        await this.profileData.secondaryImgIDs.forEach(
+            (imgID) => {
+                this.imageHandler.getImageURL(imgID).then(
+                    url => this.secondaryImageUrls.push(url),
+                    err => console.log(err)
+                );
+            }
         );
     }
 
