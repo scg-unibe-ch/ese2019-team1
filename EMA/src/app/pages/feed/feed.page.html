@@ -20,4 +20,13 @@
     </ion-item>
 
     <app-event-view [(ngModel)]="eventView" ngDefaultControl [self]="this"></app-event-view>
+
 </ion-content>
+
+<app-hint id="welcomeHint" [hidden]="welcomeHintHidden" [text]="'Welcome to our Platform. First we will give you some Hints on how to use the App'" (closed)="setWelcomeHintHidden(true)"></app-hint>
+<app-hint id="tabBarHint" [hidden]="tabBarHintHidden" [text]="'Navigate through the app using the Tab-Bar at the bottom!'" (closed)="setTabBarHintHidden(true)"></app-hint>
+<app-hint id="filterHint" [hidden]="filterHintHidden" [text]="'You can filter your Feed, to only show services you need!'" (closed)="setFilterHintHidden(true)"></app-hint>
+<app-hint id="feedHint" [hidden]="feedHintHidden" [text]="'If you are interested in a service, click on learn more!'" (closed)="setFeedHintHidden(true)"></app-hint>
+
+<div id="screenOverlay_1" [hidden]="!showingHint()"></div>
+<div id="screenOverlay_2" [hidden]="!showingHint()"></div>

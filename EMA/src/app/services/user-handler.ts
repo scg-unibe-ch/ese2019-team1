@@ -10,6 +10,7 @@ import {User} from './user';
 export class UserHandler {
 
     private userRef: AngularFirestoreCollection;
+
     constructor(
         private aFs: AngularFirestore
     ) {
@@ -41,10 +42,17 @@ export class UserHandler {
                         name: doc.get('name') as string,
                         email: doc.get('email') as string,
                         isProvider: doc.get('isProvider') as boolean,
+                        showHints: doc.get('showHints') as boolean
                     };
                     if (user.isProvider) {
                         user.ppid = doc.get('ppid') as string;
                     }
+                    if (doc.get('isAdmin') as boolean) {
+                        user.isAdmin = true;
+                    }
+                    /*if (doc.get('showHints') as boolean) {
+                        user.showHints = doc.get('showHints');
+                    }*/
                     return user;
                 });
                 resolve(user);
@@ -52,6 +60,17 @@ export class UserHandler {
 
 
         });
+    }
+
+    setShowHints(uid: string, flag: boolean) {
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.userRef.doc(uid).update({showHints: flag}).then(
+                    () => resolve,
+                    err => reject(err)
+                );
+            }
+        );
     }
 
     /**

@@ -5,34 +5,37 @@
 <ion-tabs>
 
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="feed">
+
+    <ion-tab-button tab="feed" class="addMore" title="Feed" (hintOpend)="this.tabBarOverlayHidden = false">
       <ion-icon name="paper"></ion-icon>
-      <!--<ion-label>Feed</ion-label>-->
     </ion-tab-button>
 
-    <ion-tab-button tab="messages">
+    <ion-tab-button tab="messages" class="addMore" title="Messages">
       <ion-icon name="send"></ion-icon>
-      <!--<ion-label>Messages</ion-label>-->
     </ion-tab-button>
 
-    <ion-tab-button tab="notifications">
+    <ion-tab-button tab="notifications" class="addMore" title="Notifications">
       <ion-icon name="notifications"></ion-icon>
-      <!--<ion-label>Notifications</ion-label>-->
     </ion-tab-button>
 
-<!--    <ion-tab-button tab="basket">
-      <ion-icon name="basket"></ion-icon>
-      &lt;!&ndash;<ion-label>Basket</ion-label>&ndash;&gt;
-    </ion-tab-button>-->
-
-    <ion-tab-button tab="settings">
+    <ion-tab-button tab="settings" class="addMore" title="Settings">
       <ion-icon name="settings"></ion-icon>
-      <!--<ion-label>Settings</ion-label>-->
     </ion-tab-button>
 
-    <ion-tab-button tab="provider-profile" *ngIf="isProvider" (click)="pushPage()" >
+    <ion-tab-button tab="provider-profile" *ngIf="isProvider" (click)="pushPage()" class="addMore" title="Profile">
       <ion-icon name="contact"></ion-icon>
     </ion-tab-button>
+
   </ion-tab-bar>
 
 </ion-tabs>
+
+<ion-tab-bar id="tabBar" [hidden]="tabBarOverlayHidden"></ion-tab-bar>
+
+<!--
+<app-hint id="tabBarHint" [hidden]="tabBarHintHidden" [text]="'Navigate through the app using the Tab-Bar at the bottom!'" (closed)="setTabBarHintHidden(true)"></app-hint>
+<app-hint id="filterHint" [hidden]="filterHintHidden" [text]="'You can filter your Feed, to only show services you need!'" (closed)="setFilterHintHidden(true)"></app-hint>
+
+<div id="screenOverlay_1" [hidden]="filterHintHidden && tabBarHintHidden"></div>
+<div id="screenOverlay_2" [hidden]="filterHintHidden && tabBarHintHidden"></div>
+-->

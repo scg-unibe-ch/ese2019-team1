@@ -3,7 +3,6 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from './user';
 import {UserHandler} from './user-handler';
 import {Categories, Profile} from './profile';
-import {ImageHandlerService} from './image-handler.service';
 
 
 @Injectable({
@@ -13,28 +12,54 @@ export class ProfileHandlerService {
 
     constructor(
         private fs: AngularFirestore,
-        private userHandler: UserHandler,
-        private imageHandler: ImageHandlerService
+        private userHandler: UserHandler
     ) {
     }
 
     private docRef = this.fs.collection('ProviderProfiles/');
-    private imgRef = this.fs.collection('imgDB/');
+
+    /**
+     * This method first calls createProvider and sets a DB document with unique key. Once successful it will call
+     * initProfile and set the data given from the sign up form
+     * @param user User according to interface (retrieved from UserDB)
+     * @param profileData profile-data given from sign up form
+     */
+    createProfile(user: User, profileData): Promise<string> {
+        let ppid: string;
+        return new Promise<string>(
+            (resolve, reject) => {
+                this.createProvider(user).then(
+                    res => {
+                        ppid = res.ppid;
+                        this.initProfile(ppid, profileData).then(
+                            r => {
+                                resolve(ppid);
+                            },
+                            err => {
+                                reject(err);
+                            }
+                        );
+                    },
+                    err => reject(err)
+                );
+            }
+        );
+    }
 
     /**
      * updates user to an provider. updates first user database and stores provider-flag. it then opens up a new entry
      * with user-ID in the profile database and returns profile-ID which in turn is then also stored in the user DB.
      * @param user user data as defined in user-interface
      */
-    createProvider(user: User) {
-        return new Promise<any>(async (resolve, reject) => {
+    private createProvider(user: User): Promise<any> {
+        return new Promise<User>(async (resolve, reject) => {
             user.isProvider = true;
             await this.userHandler.updateUser(user).then(async () => {
-                await this.docRef.add({uid: user.uid}).then(async res => {
+                await this.docRef.add({uid: user.uid, isApproved: false}).then(async res => {
                     user.ppid = res.id;
                     await this.docRef.doc(user.ppid).update({ppid: user.ppid});
                     await this.userHandler.updateUser(user).then(() => {
-                            resolve();
+                            resolve(user);
                         },
                         err => reject(err));
                 });
@@ -44,12 +69,13 @@ export class ProfileHandlerService {
 
     /**
      * updates provider profile with additional data
-     * @param profileData profile data as defined in profile-interface
+     * @param ppid profileID
+     * @param profileData profile data (companyName, category, companyEmail)
      */
-    createProfile(profileData: Profile) {
+    private initProfile(ppid: string, profileData) {
         return new Promise<any>((resolve, reject) => {
-            this.docRef.doc(profileData.ppid).set(profileData).then(
-                res => resolve(),
+            this.docRef.doc(ppid).update(profileData).then(
+                res => resolve(res),
                 err => reject(err)
             )
             ;
@@ -59,23 +85,32 @@ export class ProfileHandlerService {
 
     /**
      * deletes profile and resets provider-user to a regular-user
-     * @param pprofile profile-Data as defined in profile-interface
+     * @param ppid ID of profile to be deleted
      */
-    deleteProfile(pprofile: Profile) {
-        return new Promise((resolve, reject) => {
-            let usr: User = null;
-            this.docRef.doc(pprofile.ppid).delete().then(() => {
-                this.userHandler.readUser(pprofile.uid).then((user) => {
-                    usr = user;
-                }, err => reject(err));
-            }, err => reject(err));
-            if (usr !== null) {
-                usr.isProvider = false;
-                usr.ppid = null;
-            }
-            this.userHandler.updateUser(usr).then((res) => resolve(res));
+    async deleteProfile(ppid: string): Promise<any> {
+        return new Promise<any>(async (resolve, reject) => {
+            let user: User;
+            let uId: string;
+            await this.docRef.doc(ppid).ref.get().then(
+                doc => uId = doc.get('uid') as string,
+                err => reject(err)
+            ).then(
+                async () => await this.userHandler.readUser(uId).then(
+                    res => user = res,
+                    err => reject(err)
+                )
+            );
+            await this.docRef.doc(ppid).delete().then(
+                async () => {
+                    user.ppid = null;
+                    user.isProvider = false;
+                    await this.userHandler.updateUser(user).then(
+                        res => resolve(),
+                        err => reject(err)
+                    );
+                }
+            );
         });
-
     }
 
     /**
@@ -136,17 +171,26 @@ export class ProfileHandlerService {
      * returns all profiles in the Database as an Array
      *
      */
-    getAllProfiles(): Promise<Array<Profile>> {
+    async getAllProfiles(approved: boolean = true): Promise<Array<Profile>> {
         return new Promise<Array<Profile>>(
-            (resolve) => {
-                const profileList = Array<Profile>();
-                this.docRef.get().subscribe(async snapshot => {
-                   await snapshot.forEach(doc => {
-                        profileList.push(doc.data() as Profile);
-                    });
-                });
-                resolve(profileList);
-            },
-        );
+            async resolve => {
+                const profileList: Array<Profile> = [];
+                await this.docRef.ref.get().then(
+                    doc => doc.forEach(entry => {
+                        if (entry.data().isApproved as boolean === approved) {
+                            profileList.push(entry.data() as Profile);
+                        }
+                    }));
+                await resolve(profileList);
+            });
+    }
+
+    approveProfile(ppid: string): Promise<any> {
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.docRef.doc(ppid).update({isApproved: true}).then(
+                    () => resolve,
+                    err => reject(err));
+            });
     }
 }

@@ -7,6 +7,6 @@
 
   <ion-card-content>
     <p id="text">{{event.text}}</p>
-    <ion-label slot="end" color="primary" routerLink="/home/feed" routerDirection="forward"><p id="text_2">learn more</p></ion-label>
+    <ion-button slot="end" color="primary" routerLink="/home/feed" (click)=navigateTo()><p id="text_2">learn more</p></ion-button>
   </ion-card-content>
 </ion-card>
