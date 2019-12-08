@@ -11,25 +11,19 @@
         </ion-card-header>
 
         <ion-card-content>
-            <ion-item>
+            <ion-item (click)="logout()">
                 <p>Logout</p>
-                <ion-button (click)="logout()" slot="end">
-                    <ion-icon name="log-out"></ion-icon>
-                </ion-button>
+                <ion-icon name="log-out" slot="end" color="primary"></ion-icon>
             </ion-item>
 
-            <ion-item>
+            <ion-item (click)="createProviderAccount()">
                 <p>Create Provider Account</p>
-                <ion-button (click)="createProviderAccount()" slot="end">
-                    <ion-icon name="add-circle-outline"></ion-icon>
-                </ion-button>
+                <ion-icon name="add-circle-outline" slot="end" color="primary"></ion-icon>
             </ion-item>
 
-            <ion-item>
+            <ion-item (click)="confirmDeleteAccount()">
                 <p>Delete Account</p>
-                <ion-button (click)="confirmDeleteAccount()" slot="end">
-                    <ion-icon name="trash"></ion-icon>
-                </ion-button>
+                <ion-icon name="trash" slot="end" color="primary"></ion-icon>
             </ion-item>
         </ion-card-content>
     </ion-card>
@@ -40,11 +34,9 @@
         </ion-card-header>
 
         <ion-card-content>
-            <ion-item *ngIf="isAdmin">
+            <ion-item *ngIf="isAdmin" (click)="adminPage()">
                 <p>Admin Page</p>
-                <ion-button (click)="adminPage()" slot="end">
-                    <ion-icon name="cube"></ion-icon>
-                </ion-button>
+                <ion-icon name="cube" slot="end" color="primary"></ion-icon>
             </ion-item>
 
             <ion-item>

@@ -18,8 +18,6 @@ export class EventViewComponent implements OnInit, AfterViewInit {
     private width;
     private aspectRatio;
 
-    private ready;
-
     @Input() self: EventViewComponent;
 
     constructor(private profileHandler: ProfileHandlerService,

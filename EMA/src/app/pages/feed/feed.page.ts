@@ -97,11 +97,11 @@ export class FeedPage implements OnInit {
 
         this.hintHiddenChanged();
 
-        this.userHandler.readUser(this.authService.afAuth.auth.currentUser.uid).then(
+        /*this.userHandler.readUser(this.authService.afAuth.auth.currentUser.uid).then(
             thisUser => {
                 this.userHandler.setShowHints(this.authService.afAuth.auth.currentUser.uid, false);
             }
-        );
+        );*/
     }
 
     private hintHiddenChanged() {

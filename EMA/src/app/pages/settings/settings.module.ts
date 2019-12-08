@@ -15,6 +15,9 @@ const routes: Routes = [
         children: [
             {
                 path: 'signupprovider'
+            },
+            {
+                path: 'admin-page'
             }
         ]
     }

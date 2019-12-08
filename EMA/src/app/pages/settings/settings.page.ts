@@ -1,8 +1,7 @@
-import {Component, ViewChild} from '@angular/core';
-import {IonCheckbox, NavController, ToastController} from '@ionic/angular';
+import {Component} from '@angular/core';
+import {NavController, ToastController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
-import {User} from '../../services/user';
 import {UserHandler} from '../../services/user-handler';
 
 
@@ -51,7 +50,7 @@ export class SettingsPage {
     }
 
     async adminPage() {
-        await this.navCtrl.navigateForward('home/admin-page');
+        await this.navCtrl.navigateForward('admin-page');
     }
 
     async presentToast(msg, time) {
