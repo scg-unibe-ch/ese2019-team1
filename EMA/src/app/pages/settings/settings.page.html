@@ -11,12 +11,17 @@
         </ion-card-header>
 
         <ion-card-content>
-            <ion-item (click)="logout()">
+            <ion-item id="logout" (click)="logout()">
                 <p>Logout</p>
                 <ion-icon name="log-out" slot="end" color="primary"></ion-icon>
             </ion-item>
 
-            <ion-item (click)="createProviderAccount()">
+            <ion-item (click)="changeEmail()">
+                <p>Change Email Address</p>
+                <ion-icon name="mail" slot="end" color="primary"></ion-icon>
+            </ion-item>
+
+            <ion-item id="createProviderAccount" (click)="createProviderAccount()">
                 <p>Create Provider Account</p>
                 <ion-icon name="add-circle-outline" slot="end" color="primary"></ion-icon>
             </ion-item>
@@ -39,10 +44,18 @@
                 <ion-icon name="cube" slot="end" color="primary"></ion-icon>
             </ion-item>
 
-            <ion-item>
+            <ion-item id="hintCheckbox">
                 <p>Show Hints</p>
-                <ion-checkbox [checked]="showHints" slot="end" color="primary" (ionChange)="showHintsChanged()"></ion-checkbox>
+                <ion-checkbox [checked]="showHintsChecked" slot="end" color="primary" (ionChange)="showHintsChanged($event)"></ion-checkbox>
             </ion-item>
         </ion-card-content>
     </ion-card>
 </ion-content>
+
+<app-hint id="settingsHint" [hidden]="settingsHintHidden" [text]="'On this tab you can configure your Account!'" (closed)="setSettingsHintHidden(true)"></app-hint>
+<app-hint id="logoutHint" [hidden]="logoutHintHidden" [text]="'You can log out, by clicking on Logout!'" (closed)="setLogoutHintHidden(true)"></app-hint>
+<app-hint id="providerAccountHint" [hidden]="providerAccountHintHidden" [text]="'By creating a provider account, you get the chance to present your service on our platform!'" (closed)="setProviderAccountHintHidden(true)"></app-hint>
+<app-hint id="hintHint" [hidden]="hintHintHidden" [text]="'If you don\'t want to see these Hints again, you can uncheck it here!'" (closed)="setHintHintHidden(true)"></app-hint>
+
+<div id="screenOverlay_1" [hidden]="!showingHint()"></div>
+<div id="screenOverlay_2" [hidden]="!showingHint()"></div>

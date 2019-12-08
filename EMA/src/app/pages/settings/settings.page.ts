@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {NavController, ToastController} from '@ionic/angular';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Events, IonCheckbox, NavController, ToastController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 import {UserHandler} from '../../services/user-handler';
@@ -11,22 +11,39 @@ import {UserHandler} from '../../services/user-handler';
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage {
+export class SettingsPage implements OnInit{
 
     private isAdmin: boolean;
 
-    private showHints: boolean;
+    private showHintsChecked: boolean;
+
+    private settingsHintHidden = true;
+    private logoutHintHidden = true;
+    private providerAccountHintHidden = true;
+    private hintHintHidden = true;
+
+    @ViewChild(IonCheckbox, null) checkbox: IonCheckbox;
 
     constructor(private navCtrl: NavController,
                 private router: Router,
                 private auth: AuthenticateService,
                 private toastCtrl: ToastController,
-                private userHandler: UserHandler) {
+                private userHandler: UserHandler,
+                private events: Events) {
         const uid = this.auth.afAuth.auth.currentUser.uid;
         this.userHandler.readUser(uid).then(
-            usr => this.isAdmin = usr.isAdmin,
-            usr => this.showHints = usr.showHints
+            user => {
+                this.isAdmin = user.isAdmin;
+                this.checkbox.checked = user.showHints;
+                this.showHintsChecked = user.showHints;
+                if (user.showHints) {
+                    this.setSettingsHintHidden(false);
+                }
+            }
         );
+    }
+
+    ngOnInit() {
     }
 
     logout() {
@@ -34,6 +51,10 @@ export class SettingsPage {
         this.auth.logoutUser();
         this.presentToast('Logged out', 1000);
         this.navCtrl.navigateBack('');
+    }
+
+    private changeEmail() {
+
     }
 
     async createProviderAccount() {
@@ -85,8 +106,78 @@ export class SettingsPage {
         await toast.present();
     }
 
-    private showHintsChanged() {
-        this.showHints = this.showHints === true ? false : true;
-        this.userHandler.setShowHints(this.auth.afAuth.auth.currentUser.uid, this.showHints);
+
+
+    private showingHint(): boolean {
+        return !(this.settingsHintHidden && this.providerAccountHintHidden && this.logoutHintHidden && this.hintHintHidden);
+    }
+
+    private setSettingsHintHidden(hidden: boolean) {
+        this.settingsHintHidden = hidden;
+
+        this.hintHiddenChanged();
+
+        if (this.settingsHintHidden) {
+            this.setLogoutHintHidden(false);
+        }
+    }
+
+    private setLogoutHintHidden(hidden: boolean) {
+        this.logoutHintHidden = hidden;
+
+        this.hintHiddenChanged();
+
+        if (!this.logoutHintHidden) {
+            document.getElementById('logout').style.zIndex = '95';
+        } else {
+            document.getElementById('logout').style.zIndex = 'auto';
+        }
+
+        if (this.logoutHintHidden) {
+            this.setProviderAccountHintHidden(false);
+        }
+    }
+
+    private setProviderAccountHintHidden(hidden: boolean) {
+        this.providerAccountHintHidden = hidden;
+
+        this.hintHiddenChanged();
+
+        if (!this.providerAccountHintHidden) {
+            document.getElementById('createProviderAccount').style.zIndex = '95';
+        } else {
+            document.getElementById('createProviderAccount').style.zIndex = 'auto';
+        }
+
+        if (this.providerAccountHintHidden) {
+            this.setHintHintHidden(false);
+        }
+    }
+
+    private setHintHintHidden(hidden: boolean) {
+        this.hintHintHidden = hidden;
+
+        this.hintHiddenChanged();
+
+        if (!this.hintHintHidden) {
+            document.getElementById('hintCheckbox').style.zIndex = '95';
+        } else {
+            document.getElementById('hintCheckbox').style.zIndex = 'auto';
+        }
+    }
+
+    private hintHiddenChanged() {
+        if (!this.showingHint()) {
+            this.events.publish('hints-closed');
+        } else {
+            this.events.publish('hints-opened');
+        }
+    }
+
+    private showHintsChanged(e) {
+        if (this.showHintsChecked !== e.currentTarget.checked) {
+            this.showHintsChecked = e.currentTarget.checked;
+            this.userHandler.setShowHints(this.auth.afAuth.auth.currentUser.uid, this.showHintsChecked);
+        }
     }
 }
