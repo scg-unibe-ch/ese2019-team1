@@ -5,48 +5,57 @@
 </ion-header>
 
 <ion-content>
-    <ion-card>
-        <ion-card-header name="profile" button="true" (click)="changeState(this.profile)">
-            <ion-card-title class="card_title">Profile
-                <ion-icon *ngIf="!expanded(this.profile)" name="arrow-dropdown"></ion-icon>
-                <ion-icon *ngIf="expanded(this.profile)" name="arrow-dropup"></ion-icon>
-            </ion-card-title>
+    <ion-card class="content">
+        <ion-card-header>
+            <ion-card-title class="card_title">Profile</ion-card-title>
         </ion-card-header>
 
-        <ion-card-content *ngIf="expanded(this.profile)">
-            <ion-item>
+        <ion-card-content>
+            <ion-item id="logout" (click)="logout()">
                 <p>Logout</p>
-                <ion-button (click)="logout()" slot="end">
-                    <ion-icon name="log-out"></ion-icon>
-                </ion-button>
+                <ion-icon name="log-out" slot="end" color="primary"></ion-icon>
             </ion-item>
 
-            <ion-item>
+            <ion-item (click)="changeEmail()">
+                <p>Change Email Address</p>
+                <ion-icon name="mail" slot="end" color="primary"></ion-icon>
+            </ion-item>
+
+            <ion-item id="createProviderAccount" (click)="createProviderAccount()">
                 <p>Create Provider Account</p>
-                <ion-button (click)="createProviderAccount()" slot="end">
-                    <ion-icon name="add-circle-outline"></ion-icon>
-                </ion-button>
+                <ion-icon name="add-circle-outline" slot="end" color="primary"></ion-icon>
             </ion-item>
 
-            <ion-item>
+            <ion-item (click)="confirmDeleteAccount()">
                 <p>Delete Account</p>
-                <ion-button (click)="confirmDeleteAccount()" slot="end">
-                    <ion-icon name="trash"></ion-icon>
-                </ion-button>
+                <ion-icon name="trash" slot="end" color="primary"></ion-icon>
             </ion-item>
         </ion-card-content>
     </ion-card>
 
-    <ion-card>
-        <ion-card-header name="settings" button="true" (click)="changeState(this.settings)">
-            <ion-card-title>Settings
-                <ion-icon *ngIf="!expanded(this.settings)" name="arrow-dropdown"></ion-icon>
-                <ion-icon *ngIf="expanded(this.settings)" name="arrow-dropup"></ion-icon>
-            </ion-card-title>
+    <ion-card class="content">
+        <ion-card-header name="settings">
+            <ion-card-title>Settings</ion-card-title>
         </ion-card-header>
 
-        <ion-card-content *ngIf="expanded(this.settings)">
-            <p></p>
+        <ion-card-content>
+            <ion-item *ngIf="isAdmin" (click)="adminPage()">
+                <p>Admin Page</p>
+                <ion-icon name="cube" slot="end" color="primary"></ion-icon>
+            </ion-item>
+
+            <ion-item id="hintCheckbox">
+                <p>Show Hints</p>
+                <ion-checkbox [checked]="showHintsChecked" slot="end" color="primary" (ionChange)="showHintsChanged($event)"></ion-checkbox>
+            </ion-item>
         </ion-card-content>
     </ion-card>
 </ion-content>
+
+<app-hint id="settingsHint" [hidden]="settingsHintHidden" [text]="'On this tab you can configure your Account!'" (closed)="setSettingsHintHidden(true)"></app-hint>
+<app-hint id="logoutHint" [hidden]="logoutHintHidden" [text]="'You can log out, by clicking on Logout!'" (closed)="setLogoutHintHidden(true)"></app-hint>
+<app-hint id="providerAccountHint" [hidden]="providerAccountHintHidden" [text]="'By creating a provider account, you get the chance to present your service on our platform!'" (closed)="setProviderAccountHintHidden(true)"></app-hint>
+<app-hint id="hintHint" [hidden]="hintHintHidden" [text]="'If you don\'t want to see these Hints again, you can uncheck it here!'" (closed)="setHintHintHidden(true)"></app-hint>
+
+<div id="screenOverlay_1" [hidden]="!showingHint()"></div>
+<div id="screenOverlay_2" [hidden]="!showingHint()"></div>

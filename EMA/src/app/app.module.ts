@@ -19,7 +19,10 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {ImageHandlerService} from './services/image-handler.service';
 import {ProfileHandlerService} from './services/profile-handler.service';
-import {IndexPageModule} from './index/index.module';
+import {ProviderProfilePageModule} from './pages/provider-profile/provider-profile.module';
+import {WelcomePageModule} from './pages/welcome/welcome.module';
+import {LoginPageModule} from './pages/login/login.module';
+import {AdminPagePageModule} from './pages/admin-page/admin-page.module';
 
 @NgModule({
     declarations:
@@ -28,7 +31,9 @@ import {IndexPageModule} from './index/index.module';
         ],
     entryComponents: [],
     imports: [
-        IndexPageModule,
+        WelcomePageModule,
+        ProviderProfilePageModule,
+        LoginPageModule,
         BrowserModule,
         IonicModule.forRoot(),
         AppRoutingModule,
@@ -36,7 +41,7 @@ import {IndexPageModule} from './index/index.module';
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
         AngularFirestoreModule,
-        AngularFireStorageModule
+        AngularFireStorageModule,
     ],
     providers: [
         StatusBar,
@@ -47,8 +52,7 @@ import {IndexPageModule} from './index/index.module';
         ProfileHandlerService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
-    exports: [
-    ],
+    exports: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {

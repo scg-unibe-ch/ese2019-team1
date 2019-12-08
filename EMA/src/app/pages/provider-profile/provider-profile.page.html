@@ -1,26 +1,33 @@
-<ion-header>
+<ion-header *ngIf="dataLoaded">
     <ion-toolbar color="primary">
-        <ion-title><p align="center">Your Profile</p></ion-title>
+        <ion-title *ngIf="userIsOwner"><p align="center">Your Profile</p></ion-title>
+        <ion-title *ngIf="!userIsOwner"><p align="center">{{profileData.companyName}}'s Profile</p></ion-title>
     </ion-toolbar>
 </ion-header>
 
+
 <ion-content class="content" *ngIf="dataLoaded">
+    <ion-buttons class="edit">
+        <ion-button size="default" shape="round" fill="solid" color="light"
+                    (click)="controlEditMode()" *ngIf="userIsOwner">{{editProfileButtonContent}}
+            <ion-icon name="create"></ion-icon>
+        </ion-button>
+    </ion-buttons>
     <div class="quick_display">
-        <form>
-            <label> Add your profile picture
-                <input #profilePicture type="file" accept="image/*" (change)="addProfilePicture($event.target.files.item(0))">
-            </label>
-        </form>
-        <img class="profile_image" [src]="mainProfileImageUrl">
+        <div class="pictureContainer">
+            <img class="profile_image" [src]="mainProfileImageUrl">
+            <form class="input-picture" *ngIf="editMode">
+                <label> Change your profile picture here
+                    <input #profilePicture type="file" accept="image/*"
+                           (change)="addProfilePicture($event.target.files.item(0),true)">
+                </label>
+            </form>
+        </div>
         <div class="essentials">
-            <h2>This is my firm</h2>
-            <p>We operate in space and are available 24/7.</p>
+            <h2>{{profileData.companyName}}</h2>
         </div>
     </div>
 
-    <div>
-        <img class="pictures" src="../../../assets/images/im10.jpg">
-    </div>
     <ion-card class="description" color="light">
         <ion-card-header>
             <ion-card-title>
@@ -32,7 +39,8 @@
             <div *ngIf="clickedService" class="editSpace">
                 <ion-textarea placeholder="Enter information" [(ngModel)]="tempServiceDescription"></ion-textarea>
             </div>
-            <ion-button class="edit/saveButton" (click)="editService()">{{serviceButtonContent}}</ion-button>
+            <ion-button class="edit/saveButton" (click)="editService()"
+                        *ngIf="editMode">{{serviceButtonContent}}</ion-button>
         </ion-card-content>
     </ion-card>
 
@@ -44,11 +52,30 @@
         </ion-card-header>
         <ion-card-content>
             <p>{{profileData.about}}</p>
-            <div *ngIf="clickedOwner" class="editSpace">
+            <div *ngIf="clickedOwner && editMode" class="editSpace">
                 <ion-textarea placeholder="Enter information" [(ngModel)]="tempOwnerDescription"></ion-textarea>
             </div>
-            <ion-button class="edit/saveButton" (click)="editOwner()">{{ownerButtonContent}}</ion-button>
+            <ion-button class="edit/saveButton" (click)="editOwner()"
+                        *ngIf="editMode">{{ownerButtonContent}}</ion-button>
         </ion-card-content>
     </ion-card>
 
+    <ion-card class="images">
+        <ion-grid>
+            <ion-row>
+                <ion-col col-4 *ngFor="let image of secondaryImageUrls; index as i" name="i">
+                    <img class="image-container" alt="image not found" [src]="image" />
+                    <ion-button *ngIf="editMode" (click)="deleteSecondaryImg(i)">Delete image</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <form *ngIf="editMode">
+            <label>Change pictures here
+                <input #images type="file" accept="images/*"
+                       (change)="addProfilePicture($event.target.files.item(0),false)">
+            </label>
+        </form>
+    </ion-card>
+
 </ion-content>
+

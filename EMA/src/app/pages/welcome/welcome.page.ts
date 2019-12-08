@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-
+import { ViewChild } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
 
 @Component({
     selector: 'app-welcome',
@@ -9,6 +10,8 @@ import {Router} from '@angular/router';
 })
 export class WelcomePage implements OnInit {
 
+    // @ts-ignore
+    @ViewChild('slides') slides: IonSlides;
     constructor(private router: Router) {
     }
 
@@ -23,6 +26,13 @@ export class WelcomePage implements OnInit {
 
     navigateToLoginPage() {
         this.router.navigate(['/login']);
+    }
+    nextSlide() {
+        this.slides.slideNext();
+    }
+
+    prevSlide() {
+        this.slides.slidePrev();
     }
 }
 

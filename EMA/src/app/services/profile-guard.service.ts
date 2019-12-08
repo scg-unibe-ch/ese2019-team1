@@ -11,47 +11,24 @@ import {Profile} from './profile';
 export class ProfileGuardService {
 
     constructor(private authService: AuthenticateService,
-                private userhandler: UserHandler,
-                private profilehandler: ProfileHandlerService) {
+                private userHandler: UserHandler,
+                private profileHandler: ProfileHandlerService) {
     }
 
-    isProfileOwner(uid: string, ppid: string): boolean {
-        let isOwner = false;
-        this.userhandler.readUser(uid).then(
-            user => {
-                isOwner = (user.isProvider && user.ppid === ppid);
-            },
-            err => {
-                isOwner = false;
-            }
-        );
-        return isOwner;
-    }
-
-
-    getProfile(uid: string): Promise<Profile> {
-        return new Promise<Profile>(
-            (resolve, reject) => {
-                let profile: Profile;
-                this.userhandler.readUser(uid).then(
+    isProfileOwner(uid: string, ppid: string): Promise<boolean> {
+        return new Promise<boolean>(
+            async (resolve) => {
+                await this.userHandler.readUser(uid).then(
                     user => {
-                        if (!user.isProvider) {
-                            reject();
+                        if (user.isProvider && user.ppid === ppid) {
+                            resolve(true);
                         } else {
-                            this.profilehandler.readProfile(user.ppid).then(
-                                providerProfile => {
-                                    profile = providerProfile as Profile;
-                                },
-                                err => reject(err)
-                            );
+                            resolve(false);
                         }
-                    });
+                    },
+                    err => resolve(false)
+                );
 
-                if (profile != null) {
-                    resolve(profile);
-                } else {
-                    reject();
-                }
             });
     }
 }
