@@ -2,7 +2,6 @@
     <ion-toolbar color="primary">
         <ion-title *ngIf="userIsOwner"><p align="center">Your Profile</p></ion-title>
         <ion-title *ngIf="!userIsOwner"><p align="center">{{profileData.companyName}}'s Profile</p></ion-title>
-
     </ion-toolbar>
 </ion-header>
 
@@ -26,7 +25,6 @@
         </div>
         <div class="essentials">
             <h2>{{profileData.companyName}}</h2>
-            <p>We operate in space and are available 24/7.</p>
         </div>
     </div>
 
