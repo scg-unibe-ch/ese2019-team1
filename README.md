@@ -8,7 +8,7 @@ Preliminary installations:
   Firebase environment either directly hosted on https://firebase.google.com
   or your own server environment via Firebase SDK kit https://firebase.google.com/docs/admin/setup
 Deployment:
-  First you need to enter your enviroments variables in /home/as/WebstormProjects/ese2019-team1/EMA/src/enviroment.prod.ts
+  First you need to enter your enviroments variables in {USER_HOME}/WebstormProjects/ese2019-team1/EMA/src/enviroment.prod.ts
   eg: 
   <pre><code>export const environment = {
   production: true,
