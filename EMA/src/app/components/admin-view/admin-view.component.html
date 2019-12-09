@@ -2,3 +2,8 @@
     {{afterNgFor(last)}}
     <app-admin *ngIf="admin.show === true" [admin]="admin"></app-admin>
 </div>
+
+<div class="users" *ngFor="let adminU of adminUserEvents; let lastest = last">
+    {{afterNgFor(lastest)}}
+    <app-admin *ngIf="adminU.show === true" [admin]="adminU"></app-admin>
+</div>

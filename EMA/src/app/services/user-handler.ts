@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {User} from './user';
+import {Profile} from "./profile";
 
 @Injectable(
     {
@@ -91,5 +92,23 @@ export class UserHandler {
      */
     deleteUser(uid: string) {
         return this.aFs.doc('UserDB/' + uid).delete();
+    }
+
+    /**
+     * returns all profiles in the Database as an Array
+     *
+     */
+    async getAllUserProfiles(approved: boolean = true): Promise<Array<User>> {
+        return new Promise<Array<User>>(
+            async resolve => {
+                const profileList: Array<User> = [];
+                await this.userRef.ref.get().then(
+                    doc => doc.forEach(entry => {
+                        if (entry.data().isApproved as boolean === approved) {
+                            profileList.push(entry.data() as User);
+                        }
+                    }));
+                await resolve(profileList);
+            });
     }
 }

@@ -1,0 +1,4 @@
+<div class="user" *ngFor="let user of users; let last = last">
+    {{afterNgFor(last)}}
+    <app-event *ngIf="user.show === true" [user]="user"></app-event>
+</div>

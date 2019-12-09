@@ -1,7 +1,9 @@
 import {AfterViewInit, Component, HostListener, Input, OnInit} from '@angular/core';
 import {Categories, Profile} from '../../services/profile';
+import {User} from '../../services/user';
 import {ProfileHandlerService} from '../../services/profile-handler.service';
 import {ImageHandlerService} from '../../services/image-handler.service';
+import {UserHandler} from '../../services/user-handler';
 
 @Component({
     selector: 'app-admin-view',
@@ -12,9 +14,12 @@ import {ImageHandlerService} from '../../services/image-handler.service';
 export class AdminViewComponent implements OnInit, AfterViewInit {
 
     private adminEvents = new Array();
+    private adminUsers = new Array();
 
     private profiles = new Array<Profile>();
+    private users = new Array<User>();
     private dataLoaded = false;
+    private dataLoad = false;
 
     private width;
     private aspectRatio;
@@ -23,9 +28,11 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
 
     constructor(
         private profileHandler: ProfileHandlerService,
-        private imageHandler: ImageHandlerService
+        private imageHandler: ImageHandlerService,
+        private userHandler: UserHandler
     ) {
         this.loadEvents();
+        this.loadUsers();
     }
 
     ngOnInit() {
@@ -56,6 +63,12 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
         for (i = 0; i < events.length; i++) {
             events[i].setAttribute('style', 'width: ' + this.width + '%;');
         }
+        const users = document.getElementsByClassName('users');
+        let j = 0;
+        this.width = 100 / (Math.floor(this.aspectRatio + 1));
+        for (j = 0; j < users.length; j++) {
+            users[j].setAttribute('style', 'width: ' + this.width + '%;');
+        }
     }
 
     private loadEvents() {
@@ -76,6 +89,26 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
                             await this.imageHandler.getImageURL(this.profiles[i].mainImgID) as string :
                             '',
                         service: Categories[this.profiles[i].category],
+                        show: true
+                    });
+                }
+            });
+    }
+
+    private loadUsers() {
+        this.userHandler.getAllUserProfiles(false).then(
+            async res => {
+                this.users = res;
+            }).then(
+            () => this.dataLoaded = true).then(
+            async () => {
+                let
+                    i = 0;
+                for (i = 0; i < this.users.length; i++) {
+                    this.adminUsers.push({
+                        uid: this.users[i].uid,
+                        name: this.users[i].name,
+                        username: this.users[i].username,
                         show: true
                     });
                 }
