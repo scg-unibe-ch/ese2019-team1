@@ -3,7 +3,7 @@
     <app-admin *ngIf="admin.show === true" [admin]="admin"></app-admin>
 </div>
 
-<div class="user" *ngFor="let admin of adminUserEvents; let lastest = last">
+<div class="user" *ngFor="let admin of adminUsers; let lastest = last">
     {{afterNgFor(lastest)}}
     <app-admin *ngIf="admin.show === true" [admin]="admin"></app-admin>
 </div>

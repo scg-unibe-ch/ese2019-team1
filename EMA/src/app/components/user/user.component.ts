@@ -19,7 +19,6 @@ export class UserComponent implements OnInit {
     getService() {
         return this.user.service;
     }
-//TODO: navigate to what?
     async navigateTo() {
         await this.router.navigate(['home/user-profile/', this.user.uid.toString()]);
     }

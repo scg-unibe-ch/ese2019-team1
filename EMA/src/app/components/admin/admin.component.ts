@@ -9,15 +9,18 @@ import {UserHandler} from '../../services/user-handler';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-  @Input() admin;
+  @Input() admin; adminU;
   private ppid: string;
+//  private uid: string;
   constructor(
       private router: Router,
       private profileHandler: ProfileHandlerService,
+ //     private userHandler: UserHandler
   ) {}
 
   ngOnInit() {
     this.ppid = this.admin.ppid;
+ //   this.uid = this.adminU.uid;
   }
 
   async approveProfile() {
@@ -25,6 +28,7 @@ export class AdminComponent implements OnInit {
   }
   async deleteProfile() {
    await this.profileHandler.deleteProfile(this.ppid);
+ //  await this.userHandler.deleteUser((this.uid));
   }
 
 }

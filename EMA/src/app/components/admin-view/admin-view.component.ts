@@ -47,6 +47,11 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
         this.reFit();
     }
 
+ /*   @HostListener('window:resize', ['$user'])
+    onResized(user) {
+        this.reFit();
+    }
+*/
     afterNgFor(last: boolean) {
         if (last) {
             this.reFit();
