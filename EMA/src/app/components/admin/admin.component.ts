@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {ProfileHandlerService} from '../../services/profile-handler.service';
+import {UserHandler} from '../../services/user-handler';
 
 @Component({
   selector: 'app-admin',
@@ -12,7 +13,7 @@ export class AdminComponent implements OnInit {
   private ppid: string;
   constructor(
       private router: Router,
-      private profileHandler: ProfileHandlerService
+      private profileHandler: ProfileHandlerService,
   ) {}
 
   ngOnInit() {

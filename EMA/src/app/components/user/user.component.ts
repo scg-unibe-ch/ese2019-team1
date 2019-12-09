@@ -21,6 +21,6 @@ export class UserComponent implements OnInit {
     }
 //TODO: navigate to what?
     async navigateTo() {
-        await this.router.navigate(['home/user-profile/', this.user.ppid.toString()]);
+        await this.router.navigate(['home/user-profile/', this.user.uid.toString()]);
     }
 }

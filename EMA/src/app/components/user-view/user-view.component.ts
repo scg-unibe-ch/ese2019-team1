@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, HostListener, Input, OnInit} from '@angular/core';
 import {ProfileHandlerService} from '../../services/profile-handler.service';
 import {User} from '../../services/user';
+import {UserHandler} from '../../services/user-handler';
 import {ImageHandlerService} from '../../services/image-handler.service';
 
 @Component({
@@ -10,17 +11,17 @@ import {ImageHandlerService} from '../../services/image-handler.service';
 })
 export class UserViewComponent implements OnInit, AfterViewInit {
 
-    private users = new Array();
+    private user = new Array();
 
     private users = new Array<User>();
-    private dataLoaded = false;
+    private dataLoad = false;
 
     private width;
     private aspectRatio;
 
     @Input() self: UserViewComponent;
 
-    constructor(private userHandler: ProfileHandlerService,
+    constructor(private userHandler: UserHandler,
     ) {
         this.loadUsers();
     }
@@ -61,20 +62,12 @@ export class UserViewComponent implements OnInit, AfterViewInit {
         if (services === '') {
             let i = 0;
             for (i = 0; i < this.users.length; i++) {
-                this.users[i].show = true;
+                this.user[i].show = true;
             }
         } else {
             let i = 0;
             for (i = 0; i < this.users.length; i++) {
-                this.users[i].show = false;
-            }
-            let e = 0;
-            for (e = 0; e < services.length; e++) {
-                for (i = 0; i < this.users.length; i++) {
-                    if (this.users[i].service as Categories === services[e] as Categories) {
-                        this.users[i].show = true;
-                    }
-                }
+                this.user[i].show = false;
             }
         }
     }
@@ -88,15 +81,16 @@ export class UserViewComponent implements OnInit, AfterViewInit {
             async res => {
                 this.users = res;
             }).then(
-            () => this.dataLoaded = true).then(
+            () => this.dataLoad = true).then(
             async () => {
                 let
                     i = 0;
                 for (i = 0; i < this.users.length; i++) {
-                    this.users.push({
-                        ppid: this.users[i].ppid,
-                        name: this.users[i].name,
+                    this.user.push({
+                        uid: this.users[i].uid,
                         username: this.users[i].username,
+                        email: this.users[i].email,
+                        isProvider: this.users[i].isProvider
                     });
                 }
             });

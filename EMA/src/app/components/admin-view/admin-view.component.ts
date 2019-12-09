@@ -100,7 +100,7 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
             async res => {
                 this.users = res;
             }).then(
-            () => this.dataLoaded = true).then(
+            () => this.dataLoad = true).then(
             async () => {
                 let
                     i = 0;
