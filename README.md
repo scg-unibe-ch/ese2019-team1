@@ -1,7 +1,7 @@
 # ese2019-team1
 
 ## Description
-This project is an Event Management Platform. 
+This project is an Event Management Platform. Choose between several types of service providers such as venue owners, photographers, musicians, caterers and others to plan your perfect event! Or grow your business. Register now and make a profile to offer your services as provider.
 
 ## Installation
 Preliminary installations:
@@ -31,8 +31,14 @@ Deployment:
    <code> firebase deploy {build location}</code>
 
 ## Usage
-xy
+Once you have installed our project, you can directly register yourself and get started.
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## Documentation
+You can find our project documentation on https://github.com/scg-unibe-ch/ese2019-team1 in our wiki.
 
 ## Credits
-Credits go to:
-Adrian, Leila, Romana, Veronika and Joel.
+Credits go to: Adrian, Joel, Veronika, Leila and Romana.
+And of course credits go to our Professor Nierstrasz and our assistant Nitish Patkar.
