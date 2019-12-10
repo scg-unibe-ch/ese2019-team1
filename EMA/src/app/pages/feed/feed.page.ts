@@ -13,12 +13,12 @@ import {Router} from '@angular/router';
 })
 export class FeedPage implements OnInit {
 
-    private select;
+    select;
 
-    private welcomeHintHidden = true;
-    private tabBarHintHidden = true;
-    private filterHintHidden = true;
-    private feedHintHidden = true;
+    welcomeHintHidden = true;
+    tabBarHintHidden = true;
+    filterHintHidden = true;
+    feedHintHidden = true;
 
     @ViewChild(EventViewComponent, null) eventView: EventViewComponent;
 
@@ -52,11 +52,11 @@ export class FeedPage implements OnInit {
         }
     }
 
-    private showingHint(): boolean {
+    showingHint(): boolean {
         return !(this.welcomeHintHidden && this.filterHintHidden && this.tabBarHintHidden && this.feedHintHidden);
     }
 
-    private setWelcomeHintHidden(hidden: boolean) {
+    setWelcomeHintHidden(hidden: boolean) {
         this.welcomeHintHidden = hidden;
 
         this.hintHiddenChanged();
@@ -66,7 +66,7 @@ export class FeedPage implements OnInit {
         }
     }
 
-    private setTabBarHintHidden(hidden: boolean) {
+    setTabBarHintHidden(hidden: boolean) {
         this.tabBarHintHidden = hidden;
 
         this.hintHiddenChanged();
@@ -76,7 +76,7 @@ export class FeedPage implements OnInit {
         }
     }
 
-    private setFilterHintHidden(hidden: boolean) {
+    setFilterHintHidden(hidden: boolean) {
         this.filterHintHidden = hidden;
 
         this.hintHiddenChanged();
@@ -92,7 +92,7 @@ export class FeedPage implements OnInit {
         }
     }
 
-    private setFeedHintHidden(hidden: boolean) {
+    setFeedHintHidden(hidden: boolean) {
         this.feedHintHidden = hidden;
 
         this.hintHiddenChanged();
@@ -104,7 +104,7 @@ export class FeedPage implements OnInit {
         );*/
     }
 
-    private hintHiddenChanged() {
+    hintHiddenChanged() {
         if (!this.showingHint()) {
             this.events.publish('hints-closed');
         } else if (!this.tabBarHintHidden) {

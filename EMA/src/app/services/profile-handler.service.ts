@@ -193,4 +193,13 @@ export class ProfileHandlerService {
                     err => reject(err));
             });
     }
+
+    changeProviderEmail(ppid: string, newEmail: string): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            this.docRef.doc(ppid).update({companyEmail: newEmail}).then(
+                () => resolve(),
+                (err) => reject(err)
+            );
+        });
+    }
 }
