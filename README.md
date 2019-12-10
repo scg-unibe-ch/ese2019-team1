@@ -29,6 +29,14 @@ Deployment:
    <code> ng build --watch</code>
    and deploy to your firebase hosting via:
    <code> firebase deploy {build location}</code>
+ 
+ Create site admin-user:
+    to create an admin user, just go to the site and register as regular user. Now you need to change into the database
+    console of the firestore. you will find one entry under 'UserDB' which is your user ID. Click on your UserID and set 
+    manualy a flag <code>isAdmin: true</code>.
+    Congratulation, your user is has now site-admin rights.
+    
+ 
 
 ## Usage
 Once you have installed our project, you can directly register yourself and get started.
