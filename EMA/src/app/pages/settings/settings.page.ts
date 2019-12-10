@@ -1,8 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Events, IonCheckbox, NavController, ToastController, IonContent} from '@ionic/angular';
+import {Events, IonCheckbox, NavController, ToastController, IonContent, AlertController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 import {UserHandler} from '../../services/user-handler';
+import {User} from '../../services/user';
 
 @Component({
     selector: 'app-settings',
@@ -21,12 +22,14 @@ export class SettingsPage implements OnInit {
     private logoutHintHidden = true;
     private providerAccountHintHidden = true;
     private hintHintHidden = true;
+    private user: User;
 
     @ViewChild(IonCheckbox, null) checkbox: IonCheckbox;
 
     @ViewChild('content', null) content: IonContent;
 
     constructor(private navCtrl: NavController,
+                private alertCtrl: AlertController,
                 private router: Router,
                 private auth: AuthenticateService,
                 private toastCtrl: ToastController,
@@ -35,6 +38,7 @@ export class SettingsPage implements OnInit {
         const uid = this.auth.afAuth.auth.currentUser.uid;
         this.userHandler.readUser(uid).then(
             user => {
+                this.user = user;
                 this.isAdmin = user.isAdmin;
                 this.checkbox.checked = user.showHints;
                 this.showHintsChecked = user.showHints;
@@ -55,7 +59,37 @@ export class SettingsPage implements OnInit {
         this.navCtrl.navigateBack('');
     }
 
-    private changeEmail() {
+    async changeEmail() {
+        const alert = await this.alertCtrl.create({
+            header: 'change Email',
+            inputs: [
+                {
+                    name: 'email',
+                    placeholder: 'Your new email'
+                }
+            ],
+            buttons: [
+                {
+                    text: 'cancel',
+                    role: 'cancel'
+                },
+                {
+                    text: 'change',
+                    handler: async data => {
+                        await this.auth.changeEmail(data.email).then(
+                            () => {
+                                this.user.email = data.email;
+                                this.userHandler.updateUser(this.user).then(
+                                    () => this.presentToast('Email successfully changed', 1000),
+                                    err => this.presentToast('something went wrong, try again later', 1000)
+                                );
+                            }
+                        );
+                    }
+                }
+            ]
+        });
+        alert.present();
     }
 
     async createProviderAccount() {

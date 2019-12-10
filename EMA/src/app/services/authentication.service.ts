@@ -150,5 +150,15 @@ export class AuthenticateService {
             });
         });
     }
+    changeEmail(email: string): Promise<any> {
+        return new Promise<any>(
+            async (resolve, reject) => {
+             await this.afAuth.auth.currentUser.updateEmail(email).then(
+                  () => resolve(),
+                  err => reject(err)
+              );
+          }
+        );
+    }
 
 }

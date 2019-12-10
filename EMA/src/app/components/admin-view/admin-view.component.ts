@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, HostListener, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Categories, Profile} from '../../services/profile';
 import {ProfileHandlerService} from '../../services/profile-handler.service';
 import {ImageHandlerService} from '../../services/image-handler.service';
@@ -29,7 +29,10 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+
     }
+
+
 
     ngAfterViewInit() {
         this.reFit();
