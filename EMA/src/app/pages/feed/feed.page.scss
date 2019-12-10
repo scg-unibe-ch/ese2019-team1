@@ -1,7 +1,7 @@
 #filter {
   position: sticky;
-  top: 0pt;
-  left: 0pt;
+  top: 0;
+  left: 0;
   z-index: 5;
 }
 
@@ -15,7 +15,7 @@
 
 #tabBarHint {
   position: fixed;
-  bottom: 5%;
+  bottom: 2%;
   left: 0;
   width: 100%;
   z-index: 100;
@@ -23,7 +23,6 @@
 
 #filterHint {
   position: fixed;
-  top: 22%;
   left: 0;
   width: 100%;
   z-index: 101;

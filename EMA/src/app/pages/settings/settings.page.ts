@@ -1,19 +1,19 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Events, IonCheckbox, NavController, ToastController} from '@ionic/angular';
+import {Events, IonCheckbox, NavController, ToastController, IonContent} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 import {UserHandler} from '../../services/user-handler';
-
-
 
 @Component({
     selector: 'app-settings',
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
 })
-export class SettingsPage implements OnInit{
+export class SettingsPage implements OnInit {
 
     private isAdmin: boolean;
+
+    private headerBottom: number;
 
     private showHintsChecked: boolean;
 
@@ -23,6 +23,8 @@ export class SettingsPage implements OnInit{
     private hintHintHidden = true;
 
     @ViewChild(IonCheckbox, null) checkbox: IonCheckbox;
+
+    @ViewChild('content', null) content: IonContent;
 
     constructor(private navCtrl: NavController,
                 private router: Router,
@@ -54,7 +56,6 @@ export class SettingsPage implements OnInit{
     }
 
     private changeEmail() {
-
     }
 
     async createProviderAccount() {
@@ -122,29 +123,53 @@ export class SettingsPage implements OnInit{
         }
     }
 
-    private setLogoutHintHidden(hidden: boolean) {
+    private async setLogoutHintHidden(hidden: boolean) {
         this.logoutHintHidden = hidden;
 
         this.hintHiddenChanged();
 
         if (!this.logoutHintHidden) {
-            document.getElementById('logout').style.zIndex = '95';
+            const logout = document.getElementById('logout');
+            const logoutHint = document.getElementById('logoutHint');
+            this.headerBottom = document.getElementById('header').getBoundingClientRect().bottom;
+            logout.style.zIndex = '95';
+
+            await this.content.getScrollElement().then(res => {
+                res.scrollTo(0, 0);
+                res.scrollTo(0, logout.getBoundingClientRect().top - (3 * this.headerBottom / 2));
+            });
+
+            let top = logout.getBoundingClientRect().bottom;
+            top = top + (logout.getBoundingClientRect().height / 10);
+            logoutHint.style.top = top + 'px';
         } else {
             document.getElementById('logout').style.zIndex = 'auto';
         }
 
         if (this.logoutHintHidden) {
-            this.setProviderAccountHintHidden(false);
+            await this.setProviderAccountHintHidden(false);
         }
     }
 
-    private setProviderAccountHintHidden(hidden: boolean) {
+    private async setProviderAccountHintHidden(hidden: boolean) {
         this.providerAccountHintHidden = hidden;
 
         this.hintHiddenChanged();
 
         if (!this.providerAccountHintHidden) {
-            document.getElementById('createProviderAccount').style.zIndex = '95';
+            const providerAccount = document.getElementById('createProviderAccount');
+            const providerAccountHint = document.getElementById('providerAccountHint');
+            this.headerBottom = document.getElementById('header').getBoundingClientRect().bottom;
+            providerAccount.style.zIndex = '95';
+
+            await this.content.getScrollElement().then(res => {
+                res.scrollTo(0, 0);
+                res.scrollTo(0, providerAccount.getBoundingClientRect().top - (3 * this.headerBottom / 2));
+            });
+
+            let top = providerAccount.getBoundingClientRect().bottom;
+            top = top + (providerAccount.getBoundingClientRect().height / 10);
+            providerAccountHint.style.top = top + 'px';
         } else {
             document.getElementById('createProviderAccount').style.zIndex = 'auto';
         }
@@ -154,15 +179,39 @@ export class SettingsPage implements OnInit{
         }
     }
 
-    private setHintHintHidden(hidden: boolean) {
+    private async setHintHintHidden(hidden: boolean) {
         this.hintHintHidden = hidden;
 
         this.hintHiddenChanged();
 
         if (!this.hintHintHidden) {
-            document.getElementById('hintCheckbox').style.zIndex = '95';
+            const hintCheckbox = document.getElementById('hintCheckbox');
+            const hintHint = document.getElementById('hintHint');
+            hintCheckbox.style.zIndex = '95';
+            const hintHeight = await hintHint.getBoundingClientRect().height;
+
+            await this.content.getScrollElement().then(res => {
+                res.scrollTo(0, 0);
+                res.scrollTo(0, hintCheckbox.getBoundingClientRect().top - (3 * this.headerBottom / 2));
+            });
+
+            let top = hintCheckbox.getBoundingClientRect().top - hintHint.getBoundingClientRect().height;
+            top = top - (hintCheckbox.getBoundingClientRect().height / 10);
+
+            hintHint.style.top = top + 'px';
         } else {
             document.getElementById('hintCheckbox').style.zIndex = 'auto';
+
+            await this.content.getScrollElement().then(res => {
+                res.scrollTo(0, 0);
+            });
+
+            this.userHandler.readUser(this.auth.afAuth.auth.currentUser.uid).then(
+                thisUser => {
+                    this.userHandler.setShowHints(this.auth.afAuth.auth.currentUser.uid, false);
+                    this.showHintsChecked = false;
+                }
+            );
         }
     }
 
