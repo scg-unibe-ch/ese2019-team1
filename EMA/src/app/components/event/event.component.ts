@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-event',
@@ -9,16 +10,13 @@ export class EventComponent implements OnInit {
 
   @Input() event;
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
   }
 
-  getService() {
-    return this.event.service;
-  }
-
-  navigateTo() {
+  async navigateTo() {
+    await this.router.navigate(['home/provider-profile/', this.event.ppid.toString()]);
   }
 }

@@ -1,0 +1,14 @@
+<ion-header>
+    <ion-toolbar id="toolbar" color="primary">
+        <ion-title>
+            <p align="center">AdminPage</p>
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button id="back"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <app-admin-view [(ngModel)]="adminView" ngDefaultControl [self]="this" ></app-admin-view>
+</ion-content>

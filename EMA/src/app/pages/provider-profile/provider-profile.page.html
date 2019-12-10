@@ -1,7 +1,9 @@
-<ion-header>
+<ion-header *ngIf="dataLoaded">
     <ion-toolbar color="primary">
-        <ion-title><p align="center">Your Profile</p></ion-title>
+        <ion-title *ngIf="userIsOwner"><p align="center">Your Profile</p></ion-title>
+        <ion-title *ngIf="!userIsOwner"><p align="center">{{profileData.companyName}}'s Profile</p></ion-title>
     </ion-toolbar>
+    <ion-button>send a message</ion-button>
 </ion-header>
 
 
@@ -18,19 +20,15 @@
             <form class="input-picture" *ngIf="editMode">
                 <label> Change your profile picture here
                     <input #profilePicture type="file" accept="image/*"
-                           (change)="addProfilePicture($event.target.files.item(0))">
+                           (change)="addProfilePicture($event.target.files.item(0),true)">
                 </label>
             </form>
         </div>
         <div class="essentials">
-            <h2>This is my firm</h2>
-            <p>We operate in space and are available 24/7.</p>
+            <h2>{{profileData.companyName}}</h2>
         </div>
     </div>
 
-    <div class="pictureContainer">
-        <img class="pictures" src="../../../assets/images/im10.jpg">
-    </div>
     <ion-card class="description" color="light">
         <ion-card-header>
             <ion-card-title>
@@ -62,5 +60,23 @@
                         *ngIf="editMode">{{ownerButtonContent}}</ion-button>
         </ion-card-content>
     </ion-card>
+
+    <ion-card class="images">
+        <ion-grid>
+            <ion-row>
+                <ion-col col-4 *ngFor="let image of secondaryImageUrls; index as i" name="i">
+                    <img class="image-container" alt="image not found" [src]="image" />
+                    <ion-button *ngIf="editMode" (click)="deleteSecondaryImg(i)">Delete image</ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <form *ngIf="editMode">
+            <label>Change pictures here
+                <input #images type="file" accept="images/*"
+                       (change)="addProfilePicture($event.target.files.item(0),false)">
+            </label>
+        </form>
+    </ion-card>
+
 </ion-content>
 

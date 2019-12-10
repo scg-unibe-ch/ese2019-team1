@@ -21,7 +21,7 @@ export class AuthenticateService {
         private router: Router
     ) {
         this.user = afAuth.authState;
-        this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+        this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
             () => {
                 this.user.subscribe((user) => {
                     if (user) {
@@ -43,12 +43,12 @@ export class AuthenticateService {
      */
     registerUser(value, password) {
         return new Promise<any>(((resolve, reject) => {
-            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(
+            this.afAuth.auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(
                 () => {
                     this.afAuth.auth.createUserWithEmailAndPassword(value.email, password).then(
                         result => {
                             this.userDetails = result.user;
-                            this.fs.addUser({...value, uid: result.user.uid, isProvider: false}).then(
+                            this.fs.addUser({...value, uid: result.user.uid, isProvider: false, showHints: true}).then(
                                 () => {
                                     resolve(result);
                                 },
@@ -118,6 +118,16 @@ export class AuthenticateService {
             });
     }
 
+    resetPassword(email: string): Promise<any> {
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.afAuth.auth.sendPasswordResetEmail(email).then(
+                    (res) => resolve,
+                    err => reject(err)
+                );
+            }
+        );
+    }
 
     /**
      * returns boolean if user token is found in session storage

@@ -1,0 +1,4 @@
+<div class="event" *ngFor="let admin of adminEvents; let last = last">
+    {{afterNgFor(last)}}
+    <app-admin *ngIf="admin.show === true" [admin]="admin"></app-admin>
+</div>

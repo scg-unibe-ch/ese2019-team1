@@ -4,8 +4,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-grid>
+<ion-content >
+  <ion-grid class="content">
     <ion-row *ngFor="let messages of messages">
       <ion-col size="9" *ngIf="currentUser !== messages.user" class="message other-message">
         <b>{{messages.user}}</b><br>

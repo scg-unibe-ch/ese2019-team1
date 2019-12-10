@@ -1,23 +1,33 @@
-
 <ion-content>
     <div class="slides-container">
-    <ion-slides #slides class="slides-container">
-        <ion-slide class="slide-page-one">
-            <img src="/assets/welcome/slide1.jpg" alt=""/>
-        </ion-slide>
+        <ion-slides #slides class="slides-container">
+            <ion-slide class="slide-page">
+                <div id="img1">
+                    <img src="/assets/welcome/slide1.jpg" alt=""/>
+                </div>
+                <button class="side-button" type="submit" ion-button color="light"
+                        class="swiper-button-next swiper-button-black"
+                        (click)="nextSlide()"></button>
+            </ion-slide>
 
-        <ion-slide  class="slide-page-two">
-            <img src="/assets/welcome/slide2.jpg" alt=""/>
-        </ion-slide>
+            <ion-slide class="slide-page">
+                <img src="/assets/welcome/slide2.jpg" alt=""/>
+                <button class="side-button" type="submit" ion-button color="light"
+                        class="swiper-button-next swiper-button-black"
+                        (click)="nextSlide()"></button>
+                <button type="submit" ion-button color="light" class="swiper-button-prev swiper-button-black"
+                        (click)="prevSlide()"></button>
+            </ion-slide>
 
-        <ion-slide  class="slide-page-three">
-            <h1>Slide 3</h1>
-        </ion-slide>
+            <ion-slide class="slide-page">
+                <img src="/assets/welcome/slide3.jpg" alt=""/>
+                <button type="submit" ion-button color="light" class="swiper-button-prev swiper-button-black"
+                        (click)="prevSlide()"></button>
+            </ion-slide>
 
-    </ion-slides>
-        <button type="submit" ion-button color="light" class="swiper-button-prev swiper-button-black" (click)="prevSlide()"></button>
-        <button type="submit" ion-button color="light" class="swiper-button-next swiper-button-black" (click)="nextSlide()"></button>
+        </ion-slides>
     </div>
-    <ion-button id="startButton" expand="block" color='warning' size="large" (click)="navigateToLoginPage()">Start</ion-button>
+    <ion-button id="startButton" expand="block" color='warning' size="large" (click)="navigateToLoginPage()">Start
+    </ion-button>
 </ion-content>
 

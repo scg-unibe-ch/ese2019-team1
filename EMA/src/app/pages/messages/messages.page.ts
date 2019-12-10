@@ -20,12 +20,12 @@ export class MessagesPage implements OnInit {
     {
       user: 'tina',
       createdAt: 1554090856000,
-      msg: 'Trying to make the messangerfkt work. You?'
+      msg: 'Nothing much. Just working on this site. You?'
     },
     {
       user: 'simon',
       createdAt: 1554090856000,
-      msg: 'Doing everything else'
+      msg: 'Same same'
     },
   ];
   currentUser = 'simon';
@@ -33,7 +33,7 @@ export class MessagesPage implements OnInit {
   // @ts-ignore
   @ViewChild(IonContent) content: IonContent;
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
+        // throw new Error('Method not implemented.');
     }
 
   sendMessage() {
