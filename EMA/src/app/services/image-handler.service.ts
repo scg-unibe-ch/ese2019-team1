@@ -21,7 +21,7 @@ export class ImageHandlerService {
     /**
      * registers key in image database, which in hand is used to upload the file under that key to firestorage.
      * returns promise. resolve: returns Img object with download url and progress.
-     * reject: something went wrong
+     * reject: something went wrong. key gets deleted in image db
      * @param image image data according to specs of Img class
      * @see Img
      *
@@ -58,7 +58,7 @@ export class ImageHandlerService {
     }
 
     /**
-     * retrieves the image location url as string from firestore vie image database
+     * retrieves the image location url as string from firestore via image database
      * @param imagekey ImageID
      */
 

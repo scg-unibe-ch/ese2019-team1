@@ -118,6 +118,10 @@ export class AuthenticateService {
             });
     }
 
+    /**
+     * if user forgot password. sends email with change link
+     * @param email email address of the user
+     */
     resetPassword(email: string): Promise<any> {
         return new Promise<any>(
             (resolve, reject) => {

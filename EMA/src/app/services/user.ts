@@ -1,3 +1,7 @@
+/**
+ *  User data interface used trough out interaction between back end
+ */
+
 export interface User {
     uid: string;
     username: string;

@@ -169,7 +169,7 @@ export class ProfileHandlerService {
 
     /**
      * returns all profiles in the Database as an Array
-     *
+     *  user for displaying profile on feed/admin page
      */
     async getAllProfiles(approved: boolean = true): Promise<Array<Profile>> {
         return new Promise<Array<Profile>>(
@@ -185,6 +185,10 @@ export class ProfileHandlerService {
             });
     }
 
+    /**
+     * For Admin. Sets approved flag to true, and profile will be displayed on feed page
+     * @param ppid profile id of the profile to be approved
+     */
     approveProfile(ppid: string): Promise<any> {
         return new Promise<any>(
             (resolve, reject) => {
@@ -194,6 +198,11 @@ export class ProfileHandlerService {
             });
     }
 
+    /**
+     * changes company email for profile
+     * @param ppid profile id, where email need to be changed
+     * @param newEmail email address as string
+     */
     changeProviderEmail(ppid: string, newEmail: string): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             this.docRef.doc(ppid).update({companyEmail: newEmail}).then(

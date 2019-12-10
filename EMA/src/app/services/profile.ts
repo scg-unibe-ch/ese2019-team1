@@ -1,3 +1,7 @@
+/**
+ * profile interface used throughout interactions between back and front end
+ */
+
 export interface Profile {
     // ppid, uid will be assigned at creation
     ppid: string;
