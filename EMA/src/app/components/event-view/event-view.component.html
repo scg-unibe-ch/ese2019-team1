@@ -1,3 +1,4 @@
-<div class="event" *ngFor="let event of events">
+<div class="event" *ngFor="let event of events; let last = last">
+    {{afterNgFor(last)}}
     <app-event *ngIf="event.show === true" [event]="event"></app-event>
 </div>

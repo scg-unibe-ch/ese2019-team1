@@ -8,6 +8,8 @@ import {IonicModule} from '@ionic/angular';
 import {SettingsPage} from './settings.page';
 import {AuthenticateService} from '../../services/authentication.service';
 
+import {ComponentsModules} from '../../components/components.modules';
+
 const routes: Routes = [
     {
         path: '',
@@ -15,6 +17,9 @@ const routes: Routes = [
         children: [
             {
                 path: 'signupprovider'
+            },
+            {
+                path: 'admin-page'
             }
         ]
     }
@@ -25,6 +30,7 @@ const routes: Routes = [
         CommonModule,
         FormsModule,
         IonicModule,
+        ComponentsModules,
         RouterModule.forChild(routes)
     ],
     declarations: [SettingsPage],

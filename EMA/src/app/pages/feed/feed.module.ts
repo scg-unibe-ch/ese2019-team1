@@ -9,6 +9,8 @@ import { FeedPage } from './feed.page';
 import {EventComponent} from '../../components/event/event.component';
 import {EventViewComponent} from '../../components/event-view/event-view.component';
 
+import {ComponentsModules} from '../../components/components.modules';
+
 const routes: Routes = [
   {
     path: '',
@@ -17,12 +19,17 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [FeedPage, EventComponent, EventViewComponent]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ComponentsModules,
+        RouterModule.forChild(routes)
+    ],
+    exports: [
+        EventViewComponent,
+        EventComponent
+    ],
+    declarations: [FeedPage, EventComponent, EventViewComponent]
 })
 export class FeedPageModule {}
