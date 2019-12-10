@@ -16,10 +16,6 @@ export class EventComponent implements OnInit {
   ngOnInit() {
   }
 
-  getService() {
-    return this.event.service;
-  }
-
   async navigateTo() {
     await this.router.navigate(['home/provider-profile/', this.event.ppid.toString()]);
   }

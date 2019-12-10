@@ -75,7 +75,14 @@ export class SettingsPage implements OnInit {
         await this.navCtrl.navigateForward('admin-page');
     }
 
-    async presentToast(msg, time) {
+    /**
+     * Presents a toast using {@link ToastController} displaying the
+     * msg for the given time}.
+     *
+     * @param msg Message displayed on screen
+     * @param time Duration of the toast
+     */
+    private async presentToast(msg, time) {
         const toast = await this.toastCtrl.create({
             message: msg,
             duration: time
@@ -83,7 +90,11 @@ export class SettingsPage implements OnInit {
         await toast.present();
     }
 
-    async confirmDeleteAccount() {
+    /**
+     * Presents a toast using {@link ToastController}, which asks the user
+     * if he wants to delete the Account or not.
+     */
+    private async confirmDeleteAccount() {
         const toast = await this.toastCtrl.create({
             message: 'Are you sure want to delete your Account?',
             position: 'bottom',
@@ -108,11 +119,21 @@ export class SettingsPage implements OnInit {
     }
 
 
-
+    /**
+     * @return true if a hint is currently displayed.
+     */
     private showingHint(): boolean {
         return !(this.settingsHintHidden && this.providerAccountHintHidden && this.logoutHintHidden && this.hintHintHidden);
     }
 
+
+    /**
+     * Sets the {@link settingsHintHidden} value to the parameter hidden.
+     * If hidden is 'true', the {@link setLogoutHintHidden} gets called with the
+     * argument 'false' to display the next hint.
+     *
+     * @param hidden value to be assigned to {@link settingsHintHidden}
+     */
     private setSettingsHintHidden(hidden: boolean) {
         this.settingsHintHidden = hidden;
 
@@ -123,6 +144,15 @@ export class SettingsPage implements OnInit {
         }
     }
 
+    /**
+     * Sets the {@link logoutHintHidden} value to the parameter hidden.
+     * If hidden is 'false', the Hint element gets positioned correctly
+     * and the Logout Buttons zIndex is set to '95' making it visible.
+     * Else the Logout Buttons zIndex is reset and the {@link setProviderAccountHintHidden}
+     * is called to display the next hint.
+     *
+     * @param hidden value to be assigned to {@link logoutHintHidden}
+     */
     private async setLogoutHintHidden(hidden: boolean) {
         this.logoutHintHidden = hidden;
 
@@ -144,13 +174,19 @@ export class SettingsPage implements OnInit {
             logoutHint.style.top = top + 'px';
         } else {
             document.getElementById('logout').style.zIndex = 'auto';
-        }
-
-        if (this.logoutHintHidden) {
-            await this.setProviderAccountHintHidden(false);
+            this.setProviderAccountHintHidden(false);
         }
     }
 
+    /**
+     * Sets the {@link providerAccountHintHidden} value to the parameter hidden.
+     * If hidden is 'false', the Hint element gets positioned correctly
+     * and the create-Provider-Account-Buttons zIndex is set to '95' making it visible.
+     * Else the create-Provider-Account-Buttons zIndex is reset and the
+     * {@link setHintHintHidden} is called to display the next hint.
+     *
+     * @param hidden value to be assigned to {@link providerAccountHintHidden}
+     */
     private async setProviderAccountHintHidden(hidden: boolean) {
         this.providerAccountHintHidden = hidden;
 
@@ -172,13 +208,18 @@ export class SettingsPage implements OnInit {
             providerAccountHint.style.top = top + 'px';
         } else {
             document.getElementById('createProviderAccount').style.zIndex = 'auto';
-        }
-
-        if (this.providerAccountHintHidden) {
             this.setHintHintHidden(false);
         }
     }
 
+    /**
+     * Sets the {@link hintHintHidden} value to the parameter hidden.
+     * If hidden is 'false', the Hint element gets positioned correctly.
+     * Else the showHints checkbox gets unchecked and the database value
+     * 'showHints' of the user is set to false.
+     *
+     * @param hidden value to be assigned to {@link hintHintHidden}
+     */
     private async setHintHintHidden(hidden: boolean) {
         this.hintHintHidden = hidden;
 
@@ -215,6 +256,10 @@ export class SettingsPage implements OnInit {
         }
     }
 
+    /**
+     * Publishes a event, to let the Homepage know if the tab bar needs to be darkened
+     * due to a hint show on screen.
+     */
     private hintHiddenChanged() {
         if (!this.showingHint()) {
             this.events.publish('hints-closed');
@@ -223,6 +268,12 @@ export class SettingsPage implements OnInit {
         }
     }
 
+    /**
+     * Sets the 'showHints' value of to user in the database to the value of the checkbox,
+     * using the setShowHints method of the {@link UserHandler}.
+     *
+     * @param e ion-checkbox element
+     */
     private showHintsChanged(e) {
         if (this.showHintsChecked !== e.currentTarget.checked) {
             this.showHintsChecked = e.currentTarget.checked;

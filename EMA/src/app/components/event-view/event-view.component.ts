@@ -35,17 +35,32 @@ export class EventViewComponent implements OnInit, AfterViewInit {
         this.selectService('');
     }
 
+    /**
+     * Calls the {@link reFit} method every time the window size
+     * of the client has been resized.
+     *
+     * @param event window:resize event
+     */
     @HostListener('window:resize', ['$event'])
     onResize(event) {
         this.reFit();
     }
 
+    /**
+     * Calls the {@link reFit} method after the last element
+     * in *ngFor is initialised.
+     *
+     * @param last is last element of *ngFor
+     */
     afterNgFor(last: boolean) {
         if (last) {
             this.reFit();
         }
     }
 
+    /**
+     * Resize the Event Cards to fill out the screen efficiently.
+     */
     private reFit() {
         const screenWidth = self.innerWidth;
         const screenHeight = self.innerHeight;
@@ -58,6 +73,12 @@ export class EventViewComponent implements OnInit, AfterViewInit {
         }
     }
 
+    /**
+     * Sets the 'show' value of the events to true, if the provided
+     * service is part of the parameter services.
+     *
+     * @param services the services to be displayed
+     */
     public selectService(services) {
         if (services === '') {
             let i = 0;
@@ -83,7 +104,6 @@ export class EventViewComponent implements OnInit, AfterViewInit {
     /**
      * loads all profiles from database and converts them into events to be viewed in the feed page.
      */
-
      private async loadEvents() {
         await this.profileHandler.getAllProfiles().then(
             async res => {
