@@ -1,39 +1,39 @@
-<ion-header>
+<ion-header id="header">
     <ion-toolbar color="primary">
         <ion-title><p align="center">Settings</p></ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-card class="content">
+<ion-content id="content" #content>
+    <ion-card class="cards">
         <ion-card-header>
             <ion-card-title class="card_title">Profile</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
-            <ion-item id="logout" (click)="logout()">
+            <ion-item button id="logout" (click)="logout()">
                 <p>Logout</p>
                 <ion-icon name="log-out" slot="end" color="primary"></ion-icon>
             </ion-item>
 
-            <ion-item (click)="changeEmail()">
+            <ion-item button (click)="changeEmail()">
                 <p>Change Email Address</p>
                 <ion-icon name="mail" slot="end" color="primary"></ion-icon>
             </ion-item>
 
-            <ion-item id="createProviderAccount" (click)="createProviderAccount()">
+            <ion-item button id="createProviderAccount" (click)="createProviderAccount()">
                 <p>Create Provider Account</p>
                 <ion-icon name="add-circle-outline" slot="end" color="primary"></ion-icon>
             </ion-item>
 
-            <ion-item (click)="confirmDeleteAccount()">
+            <ion-item button (click)="confirmDeleteAccount()">
                 <p>Delete Account</p>
                 <ion-icon name="trash" slot="end" color="primary"></ion-icon>
             </ion-item>
         </ion-card-content>
     </ion-card>
 
-    <ion-card class="content">
+    <ion-card class="cards">
         <ion-card-header name="settings">
             <ion-card-title>Settings</ion-card-title>
         </ion-card-header>

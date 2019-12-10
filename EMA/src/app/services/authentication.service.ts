@@ -118,6 +118,16 @@ export class AuthenticateService {
             });
     }
 
+    resetPassword(email: string): Promise<any> {
+        return new Promise<any>(
+            (resolve, reject) => {
+                this.afAuth.auth.sendPasswordResetEmail(email).then(
+                    (res) => resolve,
+                    err => reject(err)
+                );
+            }
+        );
+    }
 
     /**
      * returns boolean if user token is found in session storage

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {NavController, ToastController} from '@ionic/angular';
+import {AlertController, NavController, ToastController} from '@ionic/angular';
 import {AuthenticateService} from '../../services/authentication.service';
 
 @Component({
@@ -16,7 +16,8 @@ export class LoginPage implements OnInit {
     constructor(public toastController: ToastController,
                 private navCtrl: NavController,
                 private authService: AuthenticateService,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private alertCtrl: AlertController) {
         this.loginForm = this.formBuilder.group({
             email: new FormControl('', Validators.compose([
                 Validators.required,
@@ -55,6 +56,33 @@ export class LoginPage implements OnInit {
                 console.log('Error:' + error);
                 this.presentToast('no user with these credentials', 1000);
             });
+    }
+    async presentPasswordResetPopUp() {
+        const alert = await this.alertCtrl.create({
+            header: 'reset password',
+            inputs: [
+                {
+                    name: 'email',
+                    placeholder: 'Your Email'
+                }
+            ],
+            buttons: [
+                {
+                    text: 'cancel',
+                    role: 'cancel'
+                },
+                {
+                    text: 'reset password',
+                    handler: async data => {
+                        await this.authService.resetPassword(data.email).then(
+                            async res => (await this.presentToast('password reset, check Email', 1000)),
+                            async err => (await this.presentToast('Error, no user with this E-mail', 1000))
+                        );
+                    }
+                }
+            ]
+        });
+        alert.present();
     }
 
 }

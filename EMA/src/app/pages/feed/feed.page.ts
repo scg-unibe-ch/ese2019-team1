@@ -82,7 +82,11 @@ export class FeedPage implements OnInit {
         this.hintHiddenChanged();
 
         if (!this.filterHintHidden) {
-            document.getElementById('filter').style.zIndex = '95';
+            const filter = document.getElementById('filter');
+            filter.style.zIndex = '95';
+            let top = filter.getBoundingClientRect().bottom;
+            top = top + (filter.getBoundingClientRect().height / 10);
+            document.getElementById('filterHint').style.top = top + 'px';
         } else {
             document.getElementById('filter').style.zIndex = '5';
         }
@@ -96,12 +100,6 @@ export class FeedPage implements OnInit {
         this.feedHintHidden = hidden;
 
         this.hintHiddenChanged();
-
-        /*this.userHandler.readUser(this.authService.afAuth.auth.currentUser.uid).then(
-            thisUser => {
-                this.userHandler.setShowHints(this.authService.afAuth.auth.currentUser.uid, false);
-            }
-        );*/
     }
 
     hintHiddenChanged() {
