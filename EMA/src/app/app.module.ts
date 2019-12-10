@@ -22,7 +22,6 @@ import {ProfileHandlerService} from './services/profile-handler.service';
 import {ProviderProfilePageModule} from './pages/provider-profile/provider-profile.module';
 import {WelcomePageModule} from './pages/welcome/welcome.module';
 import {LoginPageModule} from './pages/login/login.module';
-import {AdminPagePageModule} from './pages/admin-page/admin-page.module';
 
 @NgModule({
     declarations:
@@ -41,7 +40,7 @@ import {AdminPagePageModule} from './pages/admin-page/admin-page.module';
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
         AngularFirestoreModule,
-        AngularFireStorageModule,
+        AngularFireStorageModule
     ],
     providers: [
         StatusBar,

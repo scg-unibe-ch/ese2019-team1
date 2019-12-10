@@ -10,8 +10,8 @@ import {AuthenticateService} from '../../services/authentication.service';
 })
 export class LoginPage implements OnInit {
 
-    private loginForm: FormGroup;
-    private submitted = false;
+    loginForm: FormGroup;
+    submitted = false;
 
     constructor(public toastController: ToastController,
                 private navCtrl: NavController,

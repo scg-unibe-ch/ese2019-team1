@@ -11,13 +11,13 @@ import {ImageHandlerService} from '../../services/image-handler.service';
 
 export class AdminViewComponent implements OnInit, AfterViewInit {
 
-    private adminEvents = new Array();
+    adminEvents = new Array();
 
-    private profiles = new Array<Profile>();
-    private dataLoaded = false;
+    profiles = new Array<Profile>();
+    dataLoaded = false;
 
-    private width;
-    private aspectRatio;
+    width;
+    aspectRatio;
 
     @Input() self: AdminViewComponent;
 
@@ -46,7 +46,7 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
         }
     }
 
-    private reFit() {
+    reFit() {
         const screenWidth = self.innerWidth;
         const screenHeight = self.innerHeight;
         this.aspectRatio = screenWidth / screenHeight;
@@ -58,7 +58,7 @@ export class AdminViewComponent implements OnInit, AfterViewInit {
         }
     }
 
-    private loadEvents() {
+    loadEvents() {
         this.profileHandler.getAllProfiles(false).then(
             async res => {
                 this.profiles = res;

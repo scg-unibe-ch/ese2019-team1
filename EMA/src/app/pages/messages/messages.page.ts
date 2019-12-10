@@ -33,7 +33,7 @@ export class MessagesPage implements OnInit {
   // @ts-ignore
   @ViewChild(IonContent) content: IonContent;
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
+        // throw new Error('Method not implemented.');
     }
 
   sendMessage() {
